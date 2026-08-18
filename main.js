@@ -1,24 +1,25 @@
 /**
- * Daniil Gandapas (Asm-o-Dan) — Portfolio & Engineering Systems Workbench
- * Main Application Logic & Interactive Systems Engine
+ * AsmODan — Cyber-Occult Grimoire & Arcane Systems Engine
+ * D&D 5e Mechanics, Concentric Architecture Inspector, and Altar CLI
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const data = window.ASM_PORTFOLIO || {};
+  const charSheet = data.characterSheet || {};
   const hrData = data.hrQuickFacts || {};
   const projectsData = data.projectsData || [];
   const skillsData = data.skillsData || [];
   const timelineData = data.timelineData || [];
   const teamValues = data.teamValues || [];
-  const virtualFS = data.virtualFS || { "/": [], "/projects": [], files: {} };
+  const virtualFS = data.virtualFS || { "/": [], "/grimoire": [], files: {} };
 
   // Active state
-  let currentView = 'overview';
+  let currentView = 'sanctum';
   let activeProjectId = projectsData[0] ? projectsData[0].id : 'drugs-engine';
   let activeLayerIndex = 0;
   let activeCategoryFilter = 'all';
 
-  // Terminal state
+  // Terminal & Game state
   let terminalHistory = [];
   let historyIndex = -1;
   let tanksGameActive = false;
@@ -36,18 +37,41 @@ document.addEventListener('DOMContentLoaded', () => {
   refreshIcons();
 
   // =========================================================================
-  // 2. Perspective Router / View Switcher
+  // 2. D&D 5e Stat Block Renderer
+  // =========================================================================
+  function renderDndStats() {
+    const statsContainer = document.getElementById('dnd-stats-grid');
+    if (!statsContainer || !charSheet.stats) return;
+    statsContainer.innerHTML = '';
+
+    charSheet.stats.forEach(stat => {
+      const box = document.createElement('div');
+      box.className = 'dnd-stat-box';
+      box.title = stat.desc;
+      box.innerHTML = `
+        <div class="dnd-stat-code">${stat.code}</div>
+        <div class="dnd-stat-score">${stat.score}</div>
+        <div class="dnd-stat-mod">${stat.mod}</div>
+        <div class="dnd-stat-label">${stat.name}</div>
+      `;
+      statsContainer.appendChild(box);
+    });
+  }
+  renderDndStats();
+
+  // =========================================================================
+  // 3. Perspective Router / View Switcher
   // =========================================================================
   const navSegmentBtns = document.querySelectorAll('.nav-segment-btn');
   const viewPanels = document.querySelectorAll('.view-panel');
 
   function switchView(targetView, selectProjectId = null) {
-    if (!['overview', 'lab', 'dossier'].includes(targetView)) {
-      targetView = 'overview';
+    if (!['sanctum', 'lab', 'chronicle'].includes(targetView)) {
+      targetView = 'sanctum';
     }
     currentView = targetView;
 
-    // Update nav segmented buttons
+    // Update nav buttons
     navSegmentBtns.forEach(btn => {
       if (btn.getAttribute('data-view') === targetView) {
         btn.classList.add('active');
@@ -107,14 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Check initial hash on page load
   const initialHash = window.location.hash.replace('#', '');
-  if (['overview', 'lab', 'dossier'].includes(initialHash)) {
+  if (['sanctum', 'lab', 'chronicle'].includes(initialHash)) {
     switchView(initialHash);
+  } else if (initialHash === 'overview') {
+    switchView('sanctum');
+  } else if (initialHash === 'dossier') {
+    switchView('chronicle');
   }
 
   // =========================================================================
-  // 3. Overview (Bento) Renderer
+  // 4. Sanctum (Tenets & Values) Renderer
   // =========================================================================
-  function renderOverviewValues() {
+  function renderSanctumValues() {
     const valuesContainer = document.getElementById('overview-values-row');
     if (!valuesContainer) return;
     valuesContainer.innerHTML = '';
@@ -132,10 +160,10 @@ document.addEventListener('DOMContentLoaded', () => {
       valuesContainer.appendChild(item);
     });
   }
-  renderOverviewValues();
+  renderSanctumValues();
 
   // =========================================================================
-  // 4. Systems Lab (Split-View Explorer) Controller
+  // 5. Ritual Lab (Concentric Systems & Architecture) Controller
   // =========================================================================
   const labNavList = document.getElementById('lab-project-nav-list');
   const labInspector = document.getElementById('lab-inspector-content');
@@ -149,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ? projectsData
       : projectsData.filter(p => p.category.includes(activeCategoryFilter.toLowerCase()));
 
-    // If active project is not in filtered list, set to first filtered
     if (!filteredProjects.some(p => p.id === activeProjectId) && filteredProjects.length > 0) {
       activeProjectId = filteredProjects[0].id;
     }
@@ -162,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
       el.innerHTML = `
         <div class="nav-item-top">
           <span class="nav-item-title">${proj.shortTitle || proj.title}</span>
-          <span class="card-tag" style="margin: 0; padding: 0.1rem 0.4rem; font-size: 0.65rem;">${proj.architecture.pattern.split('+')[0].trim()}</span>
+          <span class="card-tag" style="margin: 0; padding: 0.1rem 0.4rem; font-size: 0.65rem;">${proj.school || proj.architecture.pattern.split('+')[0].trim()}</span>
         </div>
         <div class="nav-item-pattern">${proj.tags.slice(0, 3).join(' • ')}</div>
       `;
@@ -244,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="inspector-hero">
         <div class="inspector-header-row">
           <div>
-            <div class="card-tag">${proj.architecture.pattern}</div>
+            <div class="card-tag">Школа: ${proj.school || 'Architecture'} • ${proj.architecture.pattern}</div>
             <h1 class="inspector-title">${proj.title}</h1>
             <div class="inspector-subtitle">${proj.subtitle}</div>
           </div>
@@ -266,10 +293,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Interactive Blueprint Canvas -->
+      <!-- Interactive Concentric Architecture Canvas -->
       <div style="margin-bottom: 1.75rem;">
         <div class="blueprint-section-title">
-          <span>Интерактивная архитектурная схема</span>
+          <span>Концентрические ритуальные слои архитектуры</span>
           <span class="blueprint-hint">Кликните на слой для инспекции ➜</span>
         </div>
 
@@ -305,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Key Engineering Highlights -->
       <div>
-        <h3 class="blueprint-section-title" style="margin-bottom: 0.75rem;">Инженерные решения & Детали реализации</h3>
+        <h3 class="blueprint-section-title" style="margin-bottom: 0.75rem;">Инженерные инварианты & Руны кода</h3>
         <div class="arch-details-list">
           ${detailsHtml}
         </div>
@@ -330,9 +357,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderLabInspector();
 
   // =========================================================================
-  // 5. Dossier & CV View Renderer
+  // 6. Chronicle & CV View Renderer
   // =========================================================================
-  function renderDossierContent() {
+  function renderChronicleContent() {
     const timelineContainer = document.getElementById('cv-timeline-container');
     const skillsContainer = document.getElementById('cv-skills-container');
 
@@ -374,10 +401,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
-  renderDossierContent();
+  renderChronicleContent();
 
   // =========================================================================
-  // 6. Quake CLI Dropdown Terminal Engine
+  // 7. The Altar of AsmODan (Quake CLI & D&D Dice Roller Engine)
   // =========================================================================
   const quakeDrawer = document.getElementById('quake-terminal');
   const toggleTerminalBtn = document.getElementById('toggle-terminal-btn');
@@ -419,7 +446,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global Keyboard shortcut: ` (backtick/tilde) and ESC
   window.addEventListener('keydown', (e) => {
     if (e.key === '`' || e.key === '~') {
-      // Don't toggle if user is typing in a form input outside terminal
       if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.id !== 'terminal-input') {
         return;
       }
@@ -448,12 +474,45 @@ document.addEventListener('DOMContentLoaded', () => {
     terminalBody.scrollTop = terminalBody.scrollHeight;
   }
 
-  // Tanks ASCII Mini-Game Logic
+  // D&D Dice Roller Parser: e.g. "d20", "2d6+4", "1d20+5"
+  function parseDiceRoll(diceExpr) {
+    const clean = diceExpr.trim().toLowerCase().replace(/\s+/g, '');
+    const match = clean.match(/^(\d*)d(\d+)([+-]\d+)?$/);
+    if (!match) {
+      // Default to 1d20 if just "d20" or "20"
+      const simple = parseInt(clean, 10);
+      if (!isNaN(simple) && simple > 0) {
+        const roll = Math.floor(Math.random() * simple) + 1;
+        return { count: 1, sides: simple, mod: 0, rolls: [roll], total: roll };
+      }
+      return null;
+    }
+
+    const count = match[1] ? parseInt(match[1], 10) : 1;
+    const sides = parseInt(match[2], 10);
+    const mod = match[3] ? parseInt(match[3], 10) : 0;
+
+    if (count > 50 || sides > 1000) {
+      return { error: "Too many dice or sides! Keep it mortal." };
+    }
+
+    const rolls = [];
+    let sum = 0;
+    for (let i = 0; i < count; i++) {
+      const r = Math.floor(Math.random() * sides) + 1;
+      rolls.push(r);
+      sum += r;
+    }
+    const total = sum + mod;
+    return { count, sides, mod, rolls, total };
+  }
+
+  // Tanks ASCII Demon Mini-Game
   function renderTanksGame() {
     const width = 10;
     const height = 7;
-    let screen = "\n=== TANKS1984 TERMINAL EMULATOR ===\n";
-    screen += "Controls: 'w' (up), 's' (down), 'a' (left), 'd' (right), 'f' (fire), 'q' (quit)\n";
+    let screen = "\n=== TANKS1984 DEMONIC RETRO ENGINE ===\n";
+    screen += "Controls: 'w' (up), 's' (down), 'a' (left), 'd' (right), 'f' (fire shell), 'q' (quit)\n";
     screen += "┌" + "─".repeat(width * 2) + "┐\n";
 
     for (let y = 0; y < height; y++) {
@@ -474,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     screen += "└" + "─".repeat(width * 2) + "┘\n";
     if (!tankEnemy.alive) {
-      screen += "🎯 ENEMY TANK DESTROYED! YOU WIN! Type 'tanks' to restart.\n";
+      screen += "🎯 INFERNAL HIT! Enemy tank banished to the void! Type 'tanks' to restart.\n";
     }
     appendTermLine(screen, 'command');
   }
@@ -486,13 +545,13 @@ document.addEventListener('DOMContentLoaded', () => {
     terminalHistory.push(cmd);
     historyIndex = terminalHistory.length;
 
-    appendTermLine(`asm-o-dan > ${cmd}`, 'command');
+    appendTermLine(`asmodan > ${cmd}`, 'command');
 
     const parts = cmd.split(' ');
     const mainCmd = parts[0].toLowerCase();
-    const arg = parts[1] ? parts.slice(1).join(' ').trim() : '';
+    const arg = parts.slice(1).join(' ').trim();
 
-    // If Tanks mini game is active
+    // Tanks Mini Game Active
     if (tanksGameActive) {
       if (['w', 'a', 's', 'd', 'up', 'down', 'left', 'right'].includes(mainCmd)) {
         if (mainCmd === 'w' && tankPlayer.y > 0) tankPlayer.y--;
@@ -504,15 +563,15 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (mainCmd === 'f' || mainCmd === 'fire') {
         if (tankEnemy.alive && tankPlayer.x === tankEnemy.x) {
           tankEnemy.alive = false;
-          appendTermLine("💥 BOOM! Direct hit! Shell eliminated enemy tank!", "output");
+          appendTermLine("💥 BOOM! Shell pierced demonic armor! Enemy destroyed!", "dice");
         } else {
-          appendTermLine("💨 Missed! Shell hit the perimeter wall.", "output");
+          appendTermLine("💨 Missed! Shell shattered on the obsidian boundary.", "output");
         }
         renderTanksGame();
         return;
       } else if (mainCmd === 'q' || mainCmd === 'quit') {
         tanksGameActive = false;
-        appendTermLine("Exited Tanks1984 game engine.", "system");
+        appendTermLine("Exited Tanks1984 demonic game loop.", "system");
         return;
       }
     }
@@ -520,36 +579,74 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (mainCmd) {
       case 'help':
         appendTermLine(
-          "Available Commands:\n" +
-          "  whoami          — About Daniil Gandapas\n" +
-          "  ls [dir]        — List files in virtual filesystem (/, /projects)\n" +
-          "  cat <file>      — View file content (e.g. cat bio.md, cat stack.json)\n" +
-          "  projects        — List engineering projects and patterns\n" +
-          "  skills          — View tech stack breakdown\n" +
-          "  architecture    — Explain Clean Architecture & CQRS principles\n" +
-          "  tanks           — Launch retro ASCII Tanks1984 mini-game\n" +
-          "  contact         — Show direct contact links\n" +
-          "  cv / resume     — Switch to Dossier & CV view\n" +
-          "  theme [toggle]  — Switch between Dark and Light mode\n" +
-          "  clear           — Clear terminal display",
+          "AsmODan Grimoire Commands:\n" +
+          "  roll <dice>     — D&D dice roller (e.g. 'roll d20', 'roll 1d20+5', 'roll 2d6+4')\n" +
+          "  cast <spell>    — Cast tech-spells: 'cast clean-arch', 'cast vector-search', 'cast banish-bug', 'cast malloc-free'\n" +
+          "  whoami          — AsmODan Character Sheet & Lore\n" +
+          "  ls [dir]        — List files in virtual grimoire (/, /grimoire)\n" +
+          "  cat <file>      — View artifact content (e.g. cat bio.md, cat dnd_stats.json)\n" +
+          "  projects        — List engineering relics and magic schools\n" +
+          "  tanks           — Launch retro ASCII Tanks1984 demon battle\n" +
+          "  contact         — Show direct summoning channels\n" +
+          "  cv / resume     — Switch to Chronicle & CV view\n" +
+          "  theme [toggle]  — Switch between Dark Obsidian and Parchment Light mode\n" +
+          "  clear           — Cleanse the altar display",
           'output'
         );
         break;
 
+      case 'roll':
+      case 'dice':
+      case 'd20':
+        const diceArg = (mainCmd === 'd20') ? 'd20' : (arg || 'd20');
+        const res = parseDiceRoll(diceArg);
+        if (!res || res.error) {
+          appendTermLine(res ? res.error : "Invalid dice notation. Try 'roll d20', 'roll 1d20+5', or 'roll 2d6+3'.", 'error');
+        } else {
+          let rollDesc = `🎲 Rolling ${res.count}d${res.sides}${res.mod !== 0 ? (res.mod > 0 ? '+' + res.mod : res.mod) : ''}... [ ${res.rolls.join(', ')} ]`;
+          if (res.mod !== 0) rollDesc += ` + (${res.mod})`;
+          rollDesc += ` = TOTAL: ${res.total}`;
+
+          if (res.sides === 20 && res.count === 1) {
+            if (res.rolls[0] === 20) {
+              rollDesc += " 🌟 CRITICAL SUCCESS (NAT 20)! The Clean Architecture gods bless your code!";
+            } else if (res.rolls[0] === 1) {
+              rollDesc += " 💀 CRITICAL FAILURE (NAT 1)! A rogue NullReferenceException lurks in the darkness!";
+            }
+          }
+          appendTermLine(rollDesc, 'dice');
+        }
+        break;
+
+      case 'cast':
+        if (!arg) {
+          appendTermLine("Available Spells: clean-arch, vector-search, malloc-free, banish-bug, async-pipeline. Type 'cast <spell>'.", 'system');
+        } else {
+          const spell = (charSheet.spells || []).find(s => s.name.toLowerCase() === arg.toLowerCase());
+          if (spell) {
+            appendTermLine(`✨ [SPELL CAST: ${spell.name.toUpperCase()} (${spell.school} • ${spell.level})]`, 'spell');
+            appendTermLine(`🔮 ${spell.desc}`, 'output');
+          } else {
+            appendTermLine(`Spell '${arg}' not found in grimoire. Try: clean-arch, vector-search, malloc-free, banish-bug.`, 'error');
+          }
+        }
+        break;
+
       case 'whoami':
         appendTermLine(
-          `Name: Даниил Гандапас (@Asm-o-Dan)\n` +
-          `Role: Backend & Systems Software Engineer\n` +
-          `Stack: C# (.NET 8), Python, Clean Architecture, CQRS, Qdrant Vector DB, Pure C\n` +
-          `Education: ТИФТ (Software Engineering)\n` +
-          `Status: Open for Remote / Full-time roles`,
+          `Avatar: ${charSheet.name} (${charSheet.alias})\n` +
+          `Title: ${charSheet.title}\n` +
+          `Alignment: ${charSheet.alignment}\n` +
+          `Spell Ability: ${charSheet.spellcasting.spellAbility} (DC ${charSheet.spellcasting.spellSaveDC} / Attack ${charSheet.spellcasting.spellAttackBonus})\n` +
+          `Specialties: C# (.NET 8), Python AI, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C\n` +
+          `Status: Open for Remote / Full-time Backend roles`,
           'output'
         );
         break;
 
       case 'ls':
-        if (arg === 'projects' || arg === '/projects' || arg === 'projects/') {
-          appendTermLine(virtualFS["/projects"].join("   "), 'accent');
+        if (arg === 'grimoire' || arg === '/grimoire' || arg === 'grimoire/') {
+          appendTermLine(virtualFS["/grimoire"].join("   "), 'accent');
         } else {
           appendTermLine(virtualFS["/"].join("   "), 'accent');
         }
@@ -557,42 +654,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
       case 'cat':
         if (!arg) {
-          appendTermLine("Usage: cat <filename> (e.g., cat bio.md, cat stack.json)", 'error');
+          appendTermLine("Usage: cat <filename> (e.g. cat bio.md, cat dnd_stats.json, cat manifest.txt)", 'error');
         } else {
           const cleanArg = arg.replace(/^\//, '');
           if (virtualFS.files[cleanArg]) {
             appendTermLine(virtualFS.files[cleanArg], 'output');
           } else {
-            appendTermLine(`cat: ${arg}: No such file or directory. Try 'ls' to see available files.`, 'error');
+            appendTermLine(`cat: ${arg}: No such artifact in grimoire. Type 'ls' to view available scrolls.`, 'error');
           }
         }
         break;
 
       case 'projects':
-        let projText = "Engineering Systems & Projects:\n";
+        let projText = "Arcane Engineering Artifacts:\n";
         projectsData.forEach((p, idx) => {
-          projText += ` [${idx + 1}] ${p.title} (${p.tags.slice(0, 3).join(', ')})\n     Pattern: ${p.architecture.pattern}\n     GitHub: ${p.githubUrl}\n`;
+          projText += ` [${idx + 1}] ${p.title} (${p.tags.slice(0, 3).join(', ')})\n     School: ${p.school || 'Architecture'}\n     Pattern: ${p.architecture.pattern}\n     GitHub: ${p.githubUrl}\n`;
         });
         appendTermLine(projText, 'output');
-        break;
-
-      case 'skills':
-        let skillsText = "Core Competencies:\n";
-        skillsData.forEach(cat => {
-          skillsText += ` • ${cat.category}: ${cat.skills.map(s => s.name).join(', ')}\n`;
-        });
-        appendTermLine(skillsText, 'output');
-        break;
-
-      case 'architecture':
-        appendTermLine(
-          "Clean Architecture & Systems Discipline:\n" +
-          " 1. Domain Layer: Pure business logic, aggregates, and value objects (0 dependencies).\n" +
-          " 2. Application Layer: CQRS commands, queries, MediatR handlers, and pipeline behaviors.\n" +
-          " 3. Infrastructure: Database mapping (EF Core / Dapper), network RPC clients.\n" +
-          " 4. Vector AI: Qdrant Vector DB with cosine similarity search on embeddings.",
-          'output'
-        );
         break;
 
       case 'tanks':
@@ -604,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       case 'contact':
         appendTermLine(
-          "Direct Contact Channels:\n" +
+          "Direct Summoning Channels:\n" +
           " • Telegram: https://t.me/SomeSimpleTag (@SomeSimpleTag)\n" +
           " • Email: dgandapas1@gmail.com\n" +
           " • GitHub: https://github.com/Asm-o-Dan",
@@ -614,13 +692,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       case 'cv':
       case 'resume':
-        switchView('dossier');
+        switchView('chronicle');
         closeTerminal();
         break;
 
       case 'theme':
         toggleTheme();
-        appendTermLine(`Theme updated to: ${document.documentElement.getAttribute('data-theme')}`, 'system');
+        appendTermLine(`Altar theme updated to: ${document.documentElement.getAttribute('data-theme')}`, 'system');
         break;
 
       case 'clear':
@@ -630,12 +708,12 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
 
       default:
-        appendTermLine(`Command not found: '${cmd}'. Type 'help' for valid commands.`, 'error');
+        appendTermLine(`Unknown incantation: '${cmd}'. Type 'help' for grimoire commands.`, 'error');
         break;
     }
   }
 
-  // Terminal input enter & history listener
+  // Terminal input listener
   if (terminalInput) {
     terminalInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
@@ -672,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 7. Theme Switcher Controller
+  // 8. Theme Switcher Controller
   // =========================================================================
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeSunIcon = document.getElementById('theme-icon-sun');
@@ -695,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     try {
-      localStorage.setItem('asm_theme', next);
+      localStorage.setItem('asmodan_theme', next);
     } catch (e) {}
     updateThemeIcons(next);
   }
@@ -704,9 +782,8 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggleBtn.addEventListener('click', toggleTheme);
   }
 
-  // Init saved theme
   try {
-    const savedTheme = localStorage.getItem('asm_theme');
+    const savedTheme = localStorage.getItem('asmodan_theme');
     if (savedTheme) {
       document.documentElement.setAttribute('data-theme', savedTheme);
       updateThemeIcons(savedTheme);
@@ -714,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) {}
 
   // =========================================================================
-  // 8. Contact Modal & Toast Notifications
+  // 9. Contact / Summon Modal & Toast Notifications
   // =========================================================================
   const contactModal = document.getElementById('contact-modal');
   const openContactModalBtn = document.getElementById('open-contact-modal-btn');

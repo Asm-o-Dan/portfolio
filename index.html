@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Даниил Гандапас (Asm-o-Dan) — Backend & Systems Software Engineer</title>
-  <meta name="description" content="Инженерное портфолио Даниила Гандапаса (Asm-o-Dan): C#, .NET 8, Python, CQRS, Clean Architecture, Qdrant Vector DB, Telegram & OCR Bots.">
-  <meta name="keywords" content="Даниил Гандапас, Asm-o-Dan, Backend Developer, C#, .NET 8, Python, Clean Architecture, CQRS, Qdrant, Vector Search, Telegram Bot, Low-Level C">
-  <meta name="author" content="Даниил Гандапас">
+  <title>AsmODan (Даниил Гандапас) — Systems Archmage & Backend Sorcerer</title>
+  <meta name="description" content="AsmODan (Даниил Гандапас) — Кибероккультное инженерное портфолио: C#, .NET 8, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C.">
+  <meta name="keywords" content="AsmODan, Asm-o-Dan, Даниил Гандапас, Backend Archmage, C#, .NET 8, Python, Clean Architecture, CQRS, Qdrant, Vector Search, D&D Developer, Pure C">
+  <meta name="author" content="Даниил Гандапас (AsmODan)">
 
   <!-- OpenGraph / Social Meta Tags -->
-  <meta property="og:title" content="Даниил Гандапас (Asm-o-Dan) — Backend & Systems Developer">
-  <meta property="og:description" content="Structure is freedom. Architecture is intention. Инженерное рабочее пространство и интерактивные системы.">
+  <meta property="og:title" content="AsmODan (Даниил Гандапас) — Systems Archmage & Backend Engineer">
+  <meta property="og:description" content="Structure is freedom. Architecture is intention. Кибероккультный гримуар и витрина системных разработок.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE">
 
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <!-- Favicon (Pentagram/Sparkle) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛧</text></svg>">
 
-  <!-- Google Fonts: Space Grotesk (Display) + JetBrains Mono (Tech/Code) + Inter (Body) -->
+  <!-- Google Fonts: Cinzel (Arcane Display) + Space Grotesk (Tech Display) + JetBrains Mono (Runes/Code) + Inter (Readable Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -29,35 +29,39 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Ambient Subtle Glow Background -->
+  <!-- Ambient Eldritch Glow Background -->
   <div class="ambient-glow" aria-hidden="true"></div>
 
-  <!-- Quake Dropdown Terminal Overlay -->
+  <!-- The Altar of AsmODan (Quake Dropdown Terminal & Dice Roller) -->
   <div class="quake-terminal-drawer" id="quake-terminal" aria-hidden="true">
     <div class="terminal-container">
       <div class="terminal-bar">
         <div class="terminal-dots">
-          <span class="terminal-dot red" id="close-terminal-dot" title="Закрыть терминал"></span>
+          <span class="terminal-dot red" id="close-terminal-dot" title="Закрыть алтарь"></span>
           <span class="terminal-dot yellow"></span>
           <span class="terminal-dot green"></span>
         </div>
-        <div class="terminal-title">dan@asm-o-dan: ~ (bash / kernel v3.0)</div>
+        <div class="terminal-title">
+          <span class="rune-symbol">⛧</span> asmodan@grimoire: ~ (Kernel v6.6.6 | Demon of Low-Level Memory & Order)
+        </div>
         <div class="terminal-hotkey-hint">Press <kbd class="kbd-badge">`</kbd> or <kbd class="kbd-badge">ESC</kbd> to toggle</div>
       </div>
 
       <div class="terminal-body" id="terminal-body">
-        <div class="term-line system">Antigravity Engineering Kernel v3.0 initialized.</div>
-        <div class="term-line system">Type <span class="term-line accent">help</span> for commands, or explore virtual filesystem: <span class="term-line accent">ls</span>, <span class="term-line accent">cat bio.md</span>, <span class="term-line accent">tanks</span>.</div>
-        <div class="term-line output">Current profile: Даниил Гандапас (@Asm-o-Dan) | Backend & Systems Engineer</div>
+        <div class="term-line system">AsmODan Arcane Kernel v6.6.6 initialized.</div>
+        <div class="term-line system">Type <span class="term-line accent">help</span> for commands, <span class="term-line accent">roll d20</span> for D&D check, or cast spells: <span class="term-line accent">cast clean-arch</span>, <span class="term-line accent">tanks</span>.</div>
+        <div class="term-line output">Current Avatar: Даниил Гандапас (AsmODan) | Level 20 Systems Archmage (Lawful Neutral)</div>
       </div>
 
       <!-- Quick Command Buttons -->
       <div class="terminal-quick-bar">
         <button class="term-chip" data-cmd="help">help</button>
         <button class="term-chip" data-cmd="whoami">whoami</button>
+        <button class="term-chip" data-cmd="roll d20">🎲 roll d20</button>
+        <button class="term-chip" data-cmd="cast clean-arch">✨ cast clean-arch</button>
+        <button class="term-chip" data-cmd="cast vector-search">🔮 cast vector-search</button>
         <button class="term-chip" data-cmd="ls">ls</button>
-        <button class="term-chip" data-cmd="cat stack.json">cat stack.json</button>
-        <button class="term-chip" data-cmd="projects">projects</button>
+        <button class="term-chip" data-cmd="cat dnd_stats.json">cat dnd_stats.json</button>
         <button class="term-chip" data-cmd="tanks">🎮 tanks</button>
         <button class="term-chip" data-cmd="contact">contact</button>
         <button class="term-chip" data-cmd="clear">clear</button>
@@ -65,12 +69,12 @@
 
       <!-- Input Line -->
       <div class="terminal-input-wrap">
-        <span class="terminal-prompt">asm-o-dan &gt;</span>
+        <span class="terminal-prompt">asmodan &gt;</span>
         <input 
           type="text" 
           id="terminal-input" 
           class="terminal-input" 
-          placeholder="Type command (help, ls, cat bio.md, tanks, clear)..." 
+          placeholder="Type command (help, roll d20, cast clean-arch, ls, tanks)..." 
           autocomplete="off" 
           spellcheck="false"
         >
@@ -82,34 +86,35 @@
   <header class="hud-header" id="hud-header">
     <div class="hud-container">
       <!-- Brand / Identity -->
-      <a href="#overview" class="brand-badge-link" id="brand-logo-link">
+      <a href="#sanctum" class="brand-badge-link" id="brand-logo-link">
         <span class="brand-code-tag">ASM</span>
-        <span class="brand-name">Asm’o’Dan</span>
+        <span class="brand-name">AsmODan</span>
+        <span class="brand-arcane-title">/ Archmage</span>
         <span class="brand-status-dot" title="Open for Backend Roles"></span>
       </a>
 
       <!-- Perspective View Switcher (Segmented Control) -->
       <nav class="perspective-nav" aria-label="Perspective Navigation">
-        <button class="nav-segment-btn active" data-view="overview" id="btn-view-overview">
-          <i data-lucide="layout-grid" style="width: 15px; height: 15px;"></i>
-          <span>Overview</span>
+        <button class="nav-segment-btn active" data-view="sanctum" id="btn-view-sanctum">
+          <i data-lucide="sparkles" style="width: 15px; height: 15px;"></i>
+          <span>Sanctum & Sheet</span>
         </button>
         <button class="nav-segment-btn" data-view="lab" id="btn-view-lab">
           <i data-lucide="cpu" style="width: 15px; height: 15px;"></i>
-          <span>Systems Lab</span>
+          <span>Ritual Lab</span>
         </button>
-        <button class="nav-segment-btn" data-view="dossier" id="btn-view-dossier">
-          <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
-          <span>Dossier & CV</span>
+        <button class="nav-segment-btn" data-view="chronicle" id="btn-view-chronicle">
+          <i data-lucide="scroll" style="width: 15px; height: 15px;"></i>
+          <span>Chronicle & CV</span>
         </button>
       </nav>
 
       <!-- Right HUD Action Tools -->
       <div class="hud-actions">
-        <!-- Quake CLI Toggle Button -->
-        <button class="hud-tool-btn terminal-trigger-btn" id="toggle-terminal-btn" title="Открыть CLI терминал (Клавиша `)">
-          <i data-lucide="terminal" style="width: 16px; height: 16px;"></i>
-          <span class="hud-btn-text">CLI</span>
+        <!-- Altar CLI Toggle Button -->
+        <button class="hud-tool-btn terminal-trigger-btn" id="toggle-terminal-btn" title="Открыть алтарь CLI (Клавиша `)">
+          <span class="rune-glyph">⛧</span>
+          <span class="hud-btn-text">Altar CLI</span>
           <kbd class="kbd-tiny">`</kbd>
         </button>
 
@@ -122,7 +127,7 @@
         <!-- Direct Contact Modal Trigger -->
         <button class="hud-cta-btn" id="open-contact-modal-btn">
           <i data-lucide="send" style="width: 14px; height: 14px;"></i>
-          <span>Связаться</span>
+          <span>Призвать</span>
         </button>
       </div>
     </div>
@@ -131,25 +136,25 @@
   <!-- Main Application Stage -->
   <main class="workbench-stage" id="workbench-app">
 
-    <!-- ========================================== -->
-    <!-- VIEW 1: OVERVIEW / HR FAST-TRACK (BENTO)  -->
-    <!-- ========================================== -->
-    <section class="view-panel active" id="view-overview" aria-label="Executive Overview">
+    <!-- ======================================================== -->
+    <!-- VIEW 1: SANCTUM / D&D CHARACTER SHEET & HR FAST-TRACK    -->
+    <!-- ======================================================== -->
+    <section class="view-panel active" id="view-sanctum" aria-label="Sanctum and Character Sheet">
       <div class="container-workbench">
 
         <!-- Bento Grid System -->
         <div class="bento-grid">
 
-          <!-- Bento Card 1: Profile & Identity Card (Span 8 cols on desktop) -->
+          <!-- Bento Card 1: Profile & Arcane Identity Card (Span 8 cols) -->
           <div class="bento-card profile-hero-card">
             <div class="profile-hero-top">
               <div class="hero-avatar-wrap">
                 <img 
                   src="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE" 
-                  alt="Даниил Гандапас" 
+                  alt="Даниил Гандапас (AsmODan)" 
                   class="hero-avatar-img"
                 >
-                <div class="hero-avatar-shield" title="Verified Backend Engineer">
+                <div class="hero-avatar-shield" title="Verified Systems Archmage">
                   <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i>
                 </div>
               </div>
@@ -159,33 +164,35 @@
                   <span class="pulse-dot"></span>
                   <span>AVAILABLE FOR FULL-TIME / REMOTE</span>
                 </div>
-                <h1 class="hero-name">Даниил Гандапас</h1>
-                <div class="hero-role-text">Backend & Systems Software Engineer <span class="mono text-cyan">@Asm-o-Dan</span></div>
+                <h1 class="hero-name">Даниил Гандапас <span class="hero-alias-badge">AsmODan</span></h1>
+                <div class="hero-role-text">
+                  <span class="text-cyan">Level 20 Systems Archmage</span> • Lawful Neutral Backend Sorcerer
+                </div>
               </div>
             </div>
 
             <blockquote class="hero-quote">
-              “Structure is freedom. Architecture is intention. I don’t just write code — I structure possibility.”
+              “Низкоуровневый код — это древние руны прямого управления материей. Архитектура домена — это защитный ритуальный круг, не пропускающий скверну внешних библиотек. А векторный поиск — высшая школа прорицания в многомерном астрале эмбеддингов.”
             </blockquote>
 
             <div class="hero-quick-chips">
               <span class="tech-chip-tag highlight">C# .NET 8</span>
               <span class="tech-chip-tag highlight">Clean Architecture</span>
-              <span class="tech-chip-tag highlight">CQRS</span>
+              <span class="tech-chip-tag highlight">CQRS & DDD</span>
               <span class="tech-chip-tag highlight">Qdrant Vector DB</span>
+              <span class="tech-chip-tag">Pure ANSI C (Zero Leaks)</span>
               <span class="tech-chip-tag">Python (AsyncIO / RPC)</span>
-              <span class="tech-chip-tag">Pure C Game Engine</span>
               <span class="tech-chip-tag">Tesseract OCR</span>
             </div>
 
             <div class="hero-bottom-actions">
               <button class="btn-action-primary switch-view-trigger" data-target="lab">
                 <i data-lucide="cpu" style="width: 16px; height: 16px;"></i>
-                <span>Интерактивные проекты & Схемы</span>
+                <span>Ритуальные схемы & Проекты</span>
               </button>
-              <button class="btn-action-secondary switch-view-trigger" data-target="dossier">
-                <i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
-                <span>Резюме / CV</span>
+              <button class="btn-action-secondary switch-view-trigger" data-target="chronicle">
+                <i data-lucide="scroll" style="width: 16px; height: 16px;"></i>
+                <span>Свиток резюме / CV</span>
               </button>
               <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-action-secondary">
                 <i data-lucide="send" style="width: 16px; height: 16px;"></i>
@@ -197,13 +204,13 @@
             </div>
           </div>
 
-          <!-- Bento Card 2: HR Screening & Factsheet (Span 4 cols) -->
+          <!-- Bento Card 2: HR Screening & Fast-Track (Span 4 cols) -->
           <div class="bento-card factsheet-card">
             <div class="card-header-row">
               <div class="card-tag">HR Fast-Track</div>
               <i data-lucide="zap" class="text-cyan" style="width: 18px; height: 18px;"></i>
             </div>
-            <h2 class="bento-title">Скрининг-инфо</h2>
+            <h2 class="bento-title">Скрининг-свиток</h2>
 
             <div class="fact-list">
               <div class="fact-row">
@@ -215,7 +222,7 @@
                 <span class="fact-val">Тирасполь / Remote</span>
               </div>
               <div class="fact-row">
-                <span class="fact-lbl"><i data-lucide="graduation-cap" class="fact-icon"></i> Вуз:</span>
+                <span class="fact-lbl"><i data-lucide="graduation-cap" class="fact-icon"></i> Академия:</span>
                 <span class="fact-val">ТИФТ (Software Eng.)</span>
               </div>
               <div class="fact-row">
@@ -232,15 +239,32 @@
             </div>
           </div>
 
-          <!-- Bento Card 3: 3 Flagship Systems Spotlight (Span 12 cols) -->
+          <!-- Bento Card 3: D&D 5e Stat Block (Span 12 cols) -->
+          <div class="bento-card dnd-stat-block-card">
+            <div class="dnd-block-header">
+              <div>
+                <div class="card-tag">D&D 5e Character Attributes</div>
+                <h2 class="bento-title" style="margin-top: 0.25rem;">Атрибуты & Инженерные характеристики AsmODan</h2>
+              </div>
+              <div class="spell-dc-pill">
+                <span>Spell Save DC: <strong>19</strong></span> • <span>Spell Attack: <strong>+11</strong></span>
+              </div>
+            </div>
+
+            <div class="dnd-stats-grid" id="dnd-stats-grid">
+              <!-- Rendered dynamically from characterSheet.stats via JS -->
+            </div>
+          </div>
+
+          <!-- Bento Card 4: 3 Flagship Relics & Systems (Span 12 cols) -->
           <div class="bento-card spotlight-card">
             <div class="spotlight-header">
               <div>
-                <div class="card-tag">Core Systems & Case Studies</div>
-                <h2 class="bento-title" style="margin-top: 0.25rem;">Флагманские инженерные разработки</h2>
+                <div class="card-tag">Artifacts & Arcane Grimoire</div>
+                <h2 class="bento-title" style="margin-top: 0.25rem;">Флагманские системы и реликвии</h2>
               </div>
               <button class="btn-link-more switch-view-trigger" data-target="lab">
-                <span>Открыть Systems Lab</span>
+                <span>Открыть Ritual Lab</span>
                 <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
               </button>
             </div>
@@ -248,27 +272,27 @@
             <div class="spotlight-grid">
               <!-- System 1: DrugsEngine -->
               <div class="spotlight-item" data-project-id="drugs-engine">
-                <div class="spotlight-badge cyan">Clean Arch + CQRS</div>
-                <h3 class="spotlight-name">DrugsEngine & Vector Search</h3>
-                <p class="spotlight-desc">Многослойный бэкенд на C# с микросервисной интеграцией Python и семантическим поиском в Qdrant.</p>
+                <div class="spotlight-badge cyan">Abjuration & Divination</div>
+                <h3 class="spotlight-name">DrugsEngine & Qdrant Astral Search</h3>
+                <p class="spotlight-desc">Многослойный бэкенд на C# с Clean Architecture, CQRS и семантическим поиском в 1536-мерном векторном пространстве Qdrant.</p>
                 <div class="spotlight-tags">
                   <span>C# .NET 8</span>
                   <span>Qdrant</span>
                   <span>CQRS</span>
                 </div>
                 <button class="spotlight-explore-btn switch-view-trigger" data-target="lab" data-select-project="drugs-engine">
-                  <span>Схема архитектуры</span>
+                  <span>Ритуальная схема</span>
                   <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
                 </button>
               </div>
 
               <!-- System 2: Tanks1984 -->
               <div class="spotlight-item" data-project-id="tanks-1984">
-                <div class="spotlight-badge emerald">Pure ANSI C</div>
-                <h3 class="spotlight-name">Tanks1984 Game Engine</h3>
-                <p class="spotlight-desc">Ретро-движок на чистом Си. Ручное управление памятью, детерминированный цикл и буферизованный вывод.</p>
+                <div class="spotlight-badge emerald">Transmutation & Memory</div>
+                <h3 class="spotlight-name">Tanks1984 Arcane Engine</h3>
+                <p class="spotlight-desc">Ретро-движок на чистом Си. Ручное выделение памяти (malloc/free), детерминированный временной шаг и нулевой оверхед.</p>
                 <div class="spotlight-tags">
-                  <span>Pure C</span>
+                  <span>Pure ANSI C</span>
                   <span>Zero Leaks</span>
                   <span>Game Loop</span>
                 </div>
@@ -280,25 +304,25 @@
 
               <!-- System 3: Telegram OCR -->
               <div class="spotlight-item" data-project-id="telegram-ocr-bots">
-                <div class="spotlight-badge amber">Worker Pipeline</div>
-                <h3 class="spotlight-name">Telegram Bot Suite & OCR</h3>
-                <p class="spotlight-desc">Асинхронные боты с конвейером предобработки изображений и распознаванием текстов через Tesseract OCR.</p>
+                <div class="spotlight-badge amber">Conjuration & Sight</div>
+                <h3 class="spotlight-name">Telegram Bot Suite & Optical Sight</h3>
+                <p class="spotlight-desc">Асинхронные боты с конвейером предобработки изображений и оптическим распознаванием текстов через Tesseract OCR.</p>
                 <div class="spotlight-tags">
                   <span>C#</span>
                   <span>Tesseract OCR</span>
-                  <span>FSM</span>
+                  <span>Async Swarm</span>
                 </div>
                 <button class="spotlight-explore-btn switch-view-trigger" data-target="lab" data-select-project="telegram-ocr-bots">
-                  <span>Схема пайплайна</span>
+                  <span>Схема конвейера</span>
                   <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- Bento Card 4: Engineering Principles & Values (Span 12 cols) -->
+          <!-- Bento Card 5: Architectural Tenets (Span 12 cols) -->
           <div class="bento-card values-bento-card">
-            <div class="card-tag">Engineering Discipline</div>
+            <div class="card-tag">Architectural Discipline & Alignment</div>
             <div class="values-flex-row" id="overview-values-row">
               <!-- Rendered via JS -->
             </div>
@@ -308,18 +332,18 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 2: SYSTEMS LAB (SPLIT-VIEW EXPLORER) -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="view-lab" aria-label="Systems and Architecture Laboratory">
+    <!-- ======================================================== -->
+    <!-- VIEW 2: RITUAL LAB (CONCENTRIC ARCHITECTURE & SYSTEMS)   -->
+    <!-- ======================================================== -->
+    <section class="view-panel" id="view-lab" aria-label="Ritual Circles and Systems Lab">
       <div class="container-workbench">
 
         <div class="lab-split-wrapper">
-          <!-- Left Column: System Navigator -->
+          <!-- Left Column: Arcane Codex (System Navigator) -->
           <aside class="lab-sidebar">
             <div class="lab-sidebar-header">
-              <div class="card-tag">Explorer</div>
-              <h2 class="lab-sidebar-title">Системы и Проекты</h2>
+              <div class="card-tag">Arcane Codex</div>
+              <h2 class="lab-sidebar-title">Гримуар Систем</h2>
             </div>
 
             <!-- Project Filters -->
@@ -338,7 +362,7 @@
             </div>
           </aside>
 
-          <!-- Right Column: Interactive Blueprint Canvas & Inspector -->
+          <!-- Right Column: Concentric Ritual Canvas & Inspector -->
           <div class="lab-main-inspector" id="lab-inspector-content">
             <!-- Populated dynamically via JS when a project is selected -->
           </div>
@@ -347,17 +371,17 @@
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 3: DOSSIER & CV (CLEAN & PRINTABLE)   -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="view-dossier" aria-label="Professional Dossier and CV">
+    <!-- ======================================================== -->
+    <!-- VIEW 3: CHRONICLE & CV (PARCHMENT PRINTABLE DOSSIER)     -->
+    <!-- ======================================================== -->
+    <section class="view-panel" id="view-chronicle" aria-label="Professional Chronicle and CV">
       <div class="container-workbench">
 
         <div class="dossier-wrapper">
           <!-- Top Action Bar -->
           <div class="dossier-actions-bar">
             <div>
-              <div class="card-tag">Engineering Dossier</div>
+              <div class="card-tag">Arcane Chronicle</div>
               <h2 style="font-size: 1.4rem; font-weight: 700; margin-top: 0.2rem;">Резюме & Профессиональный путь</h2>
             </div>
             <div class="dossier-btn-group">
@@ -377,8 +401,8 @@
             <!-- CV Header -->
             <div class="cv-sheet-header">
               <div>
-                <h1 class="cv-sheet-name">Даниил Гандапас</h1>
-                <div class="cv-sheet-role">Backend & Systems Software Engineer</div>
+                <h1 class="cv-sheet-name">Даниил Гандапас <span class="cv-alias-text">(@AsmODan)</span></h1>
+                <div class="cv-sheet-role">Backend & Systems Software Engineer • Clean Architecture • CQRS</div>
                 <div class="cv-sheet-contacts">
                   <span>Тирасполь / Remote</span> • 
                   <span><a href="mailto:dgandapas1@gmail.com">dgandapas1@gmail.com</a></span> • 
@@ -427,10 +451,10 @@
 
             <!-- Key Systems on GitHub -->
             <div class="cv-sheet-section">
-              <h3 class="cv-section-heading">Ключевые проекты (GitHub: Asm-o-Dan)</h3>
+              <h3 class="cv-section-heading">Ключевые проекты (GitHub: github.com/Asm-o-Dan)</h3>
               <div class="cv-project-items">
                 <div class="cv-proj-item">
-                  <strong>DrugsEngine & Vector Search Service</strong> (C# .NET 8, Python, Qdrant, CQRS) — Enterprise Clean Architecture бэкенд с семантическим поиском по векторным эмбеддингам.
+                  <strong>DrugsEngine & Qdrant Vector Search</strong> (C# .NET 8, Python, Qdrant, CQRS) — Enterprise Clean Architecture бэкенд с семантическим поиском по векторным эмбеддингам.
                 </div>
                 <div class="cv-proj-item">
                   <strong>Tanks1984 Game Engine</strong> (Pure ANSI C) — Детерминированный ретро-игровой движок с ручным управлением памятью и нулевыми утечками.
@@ -448,7 +472,7 @@
 
   </main>
 
-  <!-- Contact Modal -->
+  <!-- Summon / Contact Modal -->
   <div class="modal-overlay" id="contact-modal" aria-hidden="true">
     <div class="modal-card" role="dialog" aria-labelledby="contact-modal-title">
       <button class="modal-close-x" id="contact-modal-close" aria-label="Закрыть">
@@ -456,9 +480,9 @@
       </button>
 
       <div class="modal-header-box">
-        <div class="card-tag">Direct Channels</div>
-        <h3 class="modal-title" id="contact-modal-title">Связаться с Даниилом</h3>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">Открыт к предложениям о работе (Remote / Full-time) и сложным инженерным задачам.</p>
+        <div class="card-tag">Summon Conduits</div>
+        <h3 class="modal-title" id="contact-modal-title">Связаться с AsmODan</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Открыт к предложениям о работе (Remote / Full-time) и сложным инженерным вызовам.</p>
       </div>
 
       <div class="contact-methods-list">
@@ -530,13 +554,13 @@
   <footer class="hud-footer">
     <div class="hud-container footer-flex">
       <div class="footer-copy">
-        <span class="mono">asm-o-dan / portfolio v3.0</span> • Engineered with Clean Architecture principles.
+        <span class="mono text-cyan">AsmODan // Grimoire v6.6.6</span> • Engineered with Clean Architecture & Occult Order.
       </div>
       <div class="footer-links">
-        <button class="footer-btn switch-view-trigger" data-target="overview">Overview</button>
-        <button class="footer-btn switch-view-trigger" data-target="lab">Systems Lab</button>
-        <button class="footer-btn switch-view-trigger" data-target="dossier">Dossier</button>
-        <button class="footer-btn" id="footer-cli-btn">CLI [ ` ]</button>
+        <button class="footer-btn switch-view-trigger" data-target="sanctum">Sanctum</button>
+        <button class="footer-btn switch-view-trigger" data-target="lab">Ritual Lab</button>
+        <button class="footer-btn switch-view-trigger" data-target="chronicle">Chronicle</button>
+        <button class="footer-btn" id="footer-cli-btn">⛧ Altar CLI [ ` ]</button>
       </div>
     </div>
   </footer>
