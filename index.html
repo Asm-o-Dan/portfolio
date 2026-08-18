@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>AsmODan (Даниил Гандапас) — The Radial Ritual Circle & Systems Archmage</title>
   <meta name="description" content="AsmODan (Даниил Гандапас) — Радиальный ритуальный круг и 3 концентрические печати: C# .NET 8, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C.">
   <meta name="keywords" content="AsmODan, Asm-o-Dan, Даниил Гандапас, Systems Archmage, C#, .NET 8, Python, Clean Architecture, CQRS, Qdrant, Vector Search, D&D Portfolio, Pure C">
@@ -96,11 +96,11 @@
       <div class="perspective-nav">
         <button class="nav-segment-btn active" id="btn-view-radial" data-view="radial">
           <i data-lucide="circle-dot" style="width: 15px; height: 15px;"></i>
-          <span>Радиальный Ритуал</span>
+          <span>Ритуал</span>
         </button>
         <button class="nav-segment-btn" id="btn-view-flat" data-view="flat">
           <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
-          <span>Свиток для HR / CV</span>
+          <span>Свиток HR</span>
         </button>
       </div>
 
@@ -143,7 +143,7 @@
     <!-- VIEW A: RADIAL RITUAL ENGINE (DEFAULT) -->
     <section class="radial-ritual-viewport active" id="view-radial-stage" aria-label="Radial Ritual Engine">
       
-      <!-- Seal Rings Guide HUD (Left Top) -->
+      <!-- Seal Rings Guide HUD (Left Top on Desktop) -->
       <div class="rings-legend-hud">
         <div class="legend-title">Печати Ритуала:</div>
         <div class="legend-item ring-3-leg" data-ring="3">
@@ -161,10 +161,26 @@
         <div class="legend-hint">Кликните любой узел для раскрытия манускрипта</div>
       </div>
 
+      <!-- Mobile Ring Switcher Tabs (Visible on Mobile/Tablet) -->
+      <div class="mobile-rings-tabs" id="mobile-rings-tabs">
+        <button class="mobile-ring-tab-btn active" data-ring="3">
+          <span class="legend-dot dot-cyan"></span>
+          <span>III. Проекты</span>
+        </button>
+        <button class="mobile-ring-tab-btn" data-ring="2">
+          <span class="legend-dot dot-gold"></span>
+          <span>II. Навыки</span>
+        </button>
+        <button class="mobile-ring-tab-btn" data-ring="1">
+          <span class="legend-dot dot-emerald"></span>
+          <span>I. Опыт / Вуз</span>
+        </button>
+      </div>
+
       <!-- The Radial Canvas Container -->
       <div class="radial-circle-system" id="radial-circle-system">
 
-        <!-- SVG Concentric Orbital Paths & Visual Runes -->
+        <!-- SVG Concentric Orbital Paths & Visual Runes (Desktop/Tablet) -->
         <svg class="radial-orbit-svg" id="radial-orbit-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
             <radialGradient id="coreGlowGrad" cx="50%" cy="50%" r="50%">
@@ -260,8 +276,9 @@
 
       </div>
 
-      <!-- Slide-Out Radial Side Inspector Drawer -->
+      <!-- Slide-Out Radial Side Inspector Drawer (Desktop Side-Sheet / Mobile Bottom-Sheet) -->
       <aside class="radial-side-drawer" id="radial-side-drawer" aria-label="Инспектор выбранной печати">
+        <div class="drawer-drag-handle" id="drawer-drag-handle" aria-hidden="true"></div>
         <div class="drawer-inner">
           <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Закрыть инспектор">
             <i data-lucide="x" style="width: 18px; height: 18px;"></i>

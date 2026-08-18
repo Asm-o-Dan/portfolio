@@ -1,6 +1,6 @@
 /**
  * AsmODan — The Radial Ritual Circle & 3 Concentric Arcane Seals Engine
- * Radial Trigonometry, Orbital Rotation, Energy Beams, Web Audio FX, and Altar CLI
+ * Radial Trigonometry, Orbital Rotation, Energy Beams, Web Audio FX, Mobile Touch & Altar CLI
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeNodeData = null;
   let soundEnabled = true;
   let isOrbitHovered = false;
+  let activeMobileRing = '3';
 
   // Terminal & Game state
   let terminalHistory = [];
@@ -271,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Energy Beam Connector
   function highlightEnergyBeam(nodeEl) {
-    if (!energyBeam) return;
+    if (!energyBeam || window.innerWidth <= 768) return;
     const xPct = parseFloat(nodeEl.style.left) || 50;
     const yPct = parseFloat(nodeEl.style.top) || 50;
     energyBeam.setAttribute('x1', '500');
@@ -287,11 +288,57 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 5. Radial Side Inspector Drawer Manager
+  // 5. Mobile Rings Switcher (Tabs)
+  // =========================================================================
+  const mobileRingTabs = document.querySelectorAll('.mobile-ring-tab-btn');
+
+  function setMobileActiveRing(ringNum) {
+    activeMobileRing = ringNum.toString();
+    mobileRingTabs.forEach(btn => {
+      if (btn.getAttribute('data-ring') === activeMobileRing) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    [ring1Container, ring2Container, ring3Container].forEach(c => {
+      if (c) {
+        if (c.getAttribute('data-ring') === activeMobileRing) {
+          c.classList.add('mobile-active');
+        } else {
+          c.classList.remove('mobile-active');
+        }
+      }
+    });
+  }
+
+  mobileRingTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ring = btn.getAttribute('data-ring');
+      playSound('click');
+      setMobileActiveRing(ring);
+    });
+  });
+
+  // Set default mobile ring to 3 (Projects)
+  setMobileActiveRing('3');
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    updateNodePositions();
+    if (window.innerWidth <= 768) {
+      setMobileActiveRing(activeMobileRing);
+    }
+  });
+
+  // =========================================================================
+  // 6. Radial Side Inspector Drawer Manager (Bottom Sheet on Mobile)
   // =========================================================================
   const sideDrawer = document.getElementById('radial-side-drawer');
   const drawerScrollContent = document.getElementById('drawer-scroll-content');
   const drawerCloseBtn = document.getElementById('drawer-close-btn');
+  let touchStartY = 0;
 
   function selectNode(item, ringNum, nodeEl) {
     activeNodeData = item;
@@ -319,6 +366,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (drawerCloseBtn) {
     drawerCloseBtn.addEventListener('click', closeDrawer);
+  }
+
+  // Mobile Touch Swipe Down to Dismiss Drawer
+  if (sideDrawer) {
+    sideDrawer.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    sideDrawer.addEventListener('touchend', (e) => {
+      const touchEndY = e.changedTouches[0].clientY;
+      if (touchEndY - touchStartY > 70 && window.innerWidth <= 768) {
+        closeDrawer();
+      }
+    }, { passive: true });
   }
 
   function renderDrawerContent(item, ringNum) {
@@ -453,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 6. View Switcher (Radial Ritual vs Flat HR Dossier)
+  // 7. View Switcher (Radial Ritual vs Flat HR Dossier)
   // =========================================================================
   const btnViewRadial = document.getElementById('btn-view-radial');
   const btnViewFlat = document.getElementById('btn-view-flat');
@@ -492,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (flatPrintBtn) flatPrintBtn.addEventListener('click', () => window.print());
 
   // =========================================================================
-  // 7. D&D 3D Dice Roller Engine (Physical Floating Dice)
+  // 8. D&D 3D Dice Roller Engine (Physical Floating Dice)
   // =========================================================================
   const diceStageOverlay = document.getElementById('dice-stage-overlay');
   const d20Visual = document.getElementById('d20-visual');
@@ -540,7 +601,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 8. The Altar of AsmODan (Quake CLI Engine)
+  // 9. The Altar of AsmODan (Quake CLI Engine)
   // =========================================================================
   const quakeDrawer = document.getElementById('quake-terminal');
   const toggleTerminalBtn = document.getElementById('toggle-terminal-btn');
@@ -774,7 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 9. Theme Switcher Controller
+  // 10. Theme Switcher Controller
   // =========================================================================
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeSunIcon = document.getElementById('theme-icon-sun');
@@ -816,7 +877,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) {}
 
   // =========================================================================
-  // 10. Summon / Contact Modal & Toast Notifications
+  // 11. Summon / Contact Modal & Toast Notifications
   // =========================================================================
   const contactModal = document.getElementById('contact-modal');
   const openContactModalBtn = document.getElementById('open-contact-modal-btn');
