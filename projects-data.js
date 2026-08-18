@@ -1,91 +1,106 @@
 /**
- * Daniil Gandapas (Asm-o-Dan) - Portfolio & HR Data
+ * Daniil Gandapas (Asm-o-Dan) - Portfolio & Engineering Systems Data
+ * Clean Architecture, Systems & AI Vector Search
  */
+
 const hrQuickFacts = {
   name: "Даниил Гандапас",
+  alias: "Asm-o-Dan",
   role: "Backend & Systems Software Engineer",
-  status: "Открыт к предложениям (Full-time / Remote)",
-  location: "Тирасполь / Remote",
+  status: "Open for Roles (Remote / Full-time)",
+  location: "Тирасполь / Remote (UTC+2 / UTC+3)",
   languages: [
     { name: "Русский", level: "Родной (Native)" },
     { name: "English", level: "B1 / B2 (Technical / Working)" }
   ],
   education: {
     institution: "Тираспольский институт физики и техники (ТИФТ)",
+    faculty: "Физико-технический факультет",
     degree: "Инженерия программного обеспечения (Software Engineering)",
-    status: "Студент / Выпускник профильного направления"
+    status: "Специалист / Инженер ПО"
   },
   workPreferences: [
     "Удаленная работа (Remote) / Полная занятость",
-    "Гибридный формат или релокация (обсуждаемо)",
-    "Сложные бэкенд-системы, CQRS, микросервисы, AI-поиск"
+    "Сложные бэкенд-системы, CQRS, микросервисы, AI-поиск",
+    "Продуктовые команды с высокой инженерной культурой"
   ]
 };
 
 const timelineData = [
   {
-    period: "2024 — Настоящее время",
+    year: "2024 — Наст. время",
     title: "Архитектура систем & Векторный поиск (AI/NLP)",
     subtitle: "R&D и разработка высоконагруженных сервисов",
     description: "Разработка многослойного движка DrugsEngine на C# с Clean Architecture и CQRS, создание микросервисов интеграции с векторной базой данных Qdrant и семантического анализа интентов.",
-    badge: "Key Milestone"
+    badge: "Enterprise & AI",
+    tags: ["C# .NET 8", "Clean Arch", "CQRS", "Qdrant Vector DB", "Python RPC"]
   },
   {
-    period: "2023 — 2024",
+    year: "2023 — 2024",
     title: "Telegram Bot Pipelines & OCR Automation",
     subtitle: "Асинхронные обработчики и распознавание текста",
     description: "Создание отказоустойчивых Telegram-ботов с интеграцией Tesseract OCR, очередей сообщений, машины состояний контекстных диалогов и парсеров данных.",
-    badge: "Automation"
+    badge: "Automation & OCR",
+    tags: ["C#", "Tesseract OCR", "Async Pipeline", "State Machine", "PostgreSQL"]
   },
   {
-    period: "2022 — 2023",
+    year: "2022 — 2023",
     title: "Низкоуровневое программирование & Game Loop",
     subtitle: "Системный фундамент на Си",
     description: "Разработка игрового движка Tanks1984 на чистом Си. Глубокое погружение в ручное управление памятью, работу с указателями, структурами данных и детерминированными циклами.",
-    badge: "Foundations"
+    badge: "System Core",
+    tags: ["Pure C", "Memory Management", "Game Loop", "Data Structures"]
   },
   {
-    period: "Обучение",
-    title: "Тираспольский институт физики и техники",
+    year: "Академия",
+    title: "Тираспольский институт физики и техники (ТИФТ)",
     subtitle: "Программная инженерия (Software Engineering)",
     description: "Фундаментальная подготовка: алгоритмы и структуры данных, высшая математика, теория баз данных, операционные системы и проектирование ПО.",
-    badge: "Education"
+    badge: "Education",
+    tags: ["Algorithms", "Math", "OS Kernels", "RDBMS Theory"]
   }
 ];
 
 const teamValues = [
   {
-    icon: "code",
-    title: "Чистота и читаемость кода",
-    desc: "Пишу код, который легко понимать, тестировать и масштабировать другим разработчикам в команде. Соблюдаю SOLID, DRY и соглашения команды."
+    icon: "shield-check",
+    title: "100% изоляция и надежность",
+    desc: "Покрываю критическую доменную логику тестами (Domain.Tests). Доменная модель чиста от БД и UI."
   },
   {
-    icon: "shield-check",
-    title: "100% предсказуемость & Тесты",
-    desc: "Покрываю критическую доменную логику тестами (Domain.Tests). Считаю, что надежный бэкенд не должен падать на граничных значениях."
+    icon: "layers",
+    title: "Архитектурная дисциплина",
+    desc: "Строгое разделение Clean Architecture и CQRS. Команды модифицируют состояние, запросы читают без оверхеда."
   },
   {
     icon: "git-pull-request",
     title: "Прозрачный процесс и Git",
-    desc: "Атомарные коммиты, понятные Pull Request с описанием контекста, четкая декомпозиция задач и регулярный статус-апдейт."
+    desc: "Атомарные коммиты, понятные Pull Requests с контекстом и четкая декомпозиция задач."
   },
   {
-    icon: "sparkles",
-    title: "Фокус на бизнес-результате",
-    desc: "Не изобретаю избыточных абстракций ради абстракций. Выбираю стек и архитектурный паттерн под конкретную задачу продукта."
+    icon: "cpu",
+    title: "Системный подход к памяти",
+    desc: "Понимание работы рантайма, сборщика мусора и железа благодаря корням в чистом Си."
   }
 ];
 
 const projectsData = [
   {
     id: "drugs-engine",
-    title: "DrugsEngine & Python Service",
+    title: "DrugsEngine & Vector Search Service",
+    shortTitle: "DrugsEngine",
     subtitle: "Enterprise Clean Architecture & Semantic Vector Search",
     category: ["c#", "python", "architecture"],
     stars: 1,
     featured: true,
+    accentColor: "cyan",
+    metrics: [
+      { label: "Архитектура", val: "Clean Arch + CQRS" },
+      { label: "Поиск", val: "Qdrant Vector DB" },
+      { label: "Тесты", val: "100% Domain Logic" }
+    ],
     caseStudy: {
-      problem: "Необходимость в высоконадежном бэкенде с гибкой бизнес-логикой и быстрым семантическим поиском по неструктурированным данным.",
+      problem: "Необходимость в отказоустойчивом медицинском бэкенде с семантическим поиском препаратов по симптомам и сложной валидацией рецептурных правил.",
       solution: "Разделение на изолированные слои Domain, Application и Infrastructure с CQRS, вынос NLP-моделей в отдельный Python микросервис и векторное хранилище Qdrant.",
       impact: "100% изоляция доменной модели от БД и фреймворков, мгновенный семантический поиск с фильтрацией по метаданным."
     },
@@ -95,54 +110,84 @@ const projectsData = [
     pythonServiceUrl: "https://github.com/Asm-o-Dan/DrugsEnginePythonService",
     architecture: {
       pattern: "Clean Architecture + CQRS + Microservice RPC",
-      layers: [
-        { name: "Domain Layer", description: "Сущности, Value Objects, инварианты бизнес-правил, доменные события без внешних зависимостей." },
-        { name: "Application Layer", description: "Use Cases, команды модификации и запросы выборки (CQRS), DTO и пайплайн валидации." },
-        { name: "Infrastructure & Vector DB", description: "Интеграция с PostgreSQL, Qdrant Vector DB и Python сервисом векторного поиска." }
+      diagram: [
+        { id: "domain", name: "01. Domain Layer", tech: "Pure C# (No dependencies)", role: "Сущности, Value Objects, инварианты бизнес-правил, доменные события." },
+        { id: "app", name: "02. Application Layer", tech: "CQRS / MediatR / UseCases", role: "Команды модификации, запросы чтения, валидаторы FluentValidation, DTO." },
+        { id: "infra", name: "03. Infrastructure", tech: "EF Core / PostgreSQL / RPC", role: "Репозитории, маппинг БД, сетевой клиент к Python AI микросервису." },
+        { id: "vector", name: "04. Vector Engine", tech: "Qdrant Vector DB + Python", role: "Генерация векторных эмбеддингов, семантический поиск по симптомам." }
       ],
-      highlights: [
-        "Полная изоляция доменной модели с 100% покрытием Domain.Tests",
-        "Семантический поиск по векторным эмбеддингам через Qdrant",
-        "Асинхронное взаимодействие микросервисов C# <-> Python"
+      details: [
+        {
+          title: "Domain Invariants & Tests",
+          content: "Вся бизнес-логика валидации дозировок, совместимости и сущностей инкапсулирована внутри агрегатов и проверяется юнит-тестами без поднятия БД."
+        },
+        {
+          title: "CQRS Read/Write Separation",
+          content: "Команды (Create/Update/Delete) идут через транзакционную модель, а запросы поиска и каталога обрабатываются оптимизированными быстрыми пайплайнами."
+        },
+        {
+          title: "Vector Embeddings & Qdrant",
+          content: "Микросервис на Python преобразует текстовые описания в многомерные векторы и индексирует их в Qdrant для семантического поиска с фильтрами."
+        }
       ]
     }
   },
   {
     id: "tanks-1984",
-    title: "Tanks1984",
-    subtitle: "Retro Game Engine in Pure C",
+    title: "Tanks1984 Game Engine",
+    shortTitle: "Tanks1984",
+    subtitle: "Deterministic Retro Engine in Pure C",
     category: ["c"],
     stars: 0,
     featured: true,
+    accentColor: "emerald",
+    metrics: [
+      { label: "Язык", val: "Pure ANSI C" },
+      { label: "Память", val: "Ручной malloc/free" },
+      { label: "FPS", val: "Фиксированный тик" }
+    ],
     caseStudy: {
-      problem: "Создание быстрого и автономного игрового движка с минимальным потреблением памяти и стабильным FPS на любых устройствах.",
-      solution: "Написание чистого Си кода с ручным выделением памяти, детерминированным циклом обновления и буферизированным рендерером.",
-      impact: "Нулевой оверхед по памяти, бинарник размером в десятки килобайт, плавная игровая физика."
+      problem: "Создание быстрого, автономного ретро-игрового движка с минимальным потреблением ресурсов, детерминированной физикой и отсутствием утечек памяти.",
+      solution: "Написание чистого Си кода с ручным выделением памяти, детерминированным циклом обновления и прямым буферизированным рендерером.",
+      impact: "Нулевой оверхед рантайма, размер бинарника в десятки килобайт, стабильный тик и плавный отклик управления."
     },
     description: "Низкоуровневая реализация аркадного игрового движка на чистом Си. Ручное управление памятью, кастомный рендерер сетки и детерминированная игровая физика.",
     tags: ["C", "Low-level", "Memory Management", "Game Loop", "Retro"],
     githubUrl: "https://github.com/Asm-o-Dan/Tanks1984",
     architecture: {
       pattern: "State Machine + Fixed-Timestep Game Loop",
-      layers: [
-        { name: "Core Loop", description: "Детерминированный цикл обновления игрового состояния с фиксированным тиком времени." },
-        { name: "Entity Component", description: "Легковесные структуры C для танков, снарядов, препятствий и просчета коллизий." },
-        { name: "Renderer Buffer", description: "Прямой буферизированный вывод игрового поля в терминал/окно без тяжелых зависимостей." }
+      diagram: [
+        { id: "loop", name: "01. Fixed Game Loop", tech: "Time-delta / Tick Manager", role: "Детерминированный цикл обновления игрового состояния с фиксированным тиком." },
+        { id: "entity", name: "02. Entity Component", tech: "Pure C Structs", role: "Структуры для танков, снарядов, карты препятствий и AABB-коллизий." },
+        { id: "ai", name: "03. Tank AI & Pathing", tech: "Grid State Search", role: "Автономное поведение вражеских танков и выбор траектории стрельбы." },
+        { id: "render", name: "04. Frame Buffer", tech: "Direct Double-Buffer", role: "Прямой буферизированный вывод игрового поля без тяжелых внешних библиотек." }
       ],
-      highlights: [
-        "Отсутствие утечек памяти благодаря строгому контролю жизненного цикла структур",
-        "Минималистичный размер бинарника и мгновенный запуск",
-        "Алгоритмы трассировки препятствий и ИИ вражеских танков"
+      details: [
+        {
+          title: "Memory Safety & Zero Leaks",
+          content: "Строгое следование парным вызовам инициализации и очистки ресурсов, валидация границ массивов и указателей."
+        },
+        {
+          title: "Deterministic Physics",
+          content: "Физика снарядов и проверка столкновений происходят с постоянным временным шагом, исключая рассинхронизацию."
+        }
       ]
     }
   },
   {
     id: "telegram-ocr-bots",
-    title: "Telegram Bot Suite (OCR & Context)",
+    title: "Telegram Bot Suite & OCR Pipeline",
+    shortTitle: "Telegram OCR",
     subtitle: "Context-Aware Automation & Tesseract OCR Pipeline",
     category: ["c#", "python", "bot"],
     stars: 0,
     featured: true,
+    accentColor: "amber",
+    metrics: [
+      { label: "Пайплайн", val: "Tesseract OCR" },
+      { label: "Архитектура", val: "Event-Driven Worker" },
+      { label: "Отказоустойчивость", val: "Auto-Reconnect" }
+    ],
     caseStudy: {
       problem: "Необходимость автоматической обработки входящих сканов документов и контекстной маршрутизации диалогов пользователей в Telegram.",
       solution: "Асинхронный воркер-пайплайн с предварительной обработкой изображений и оптическим распознаванием через Tesseract OCR.",
@@ -154,25 +199,37 @@ const projectsData = [
     extraRepoUrl: "https://github.com/Asm-o-Dan/endWorTGBot",
     architecture: {
       pattern: "Event-Driven Message Pipeline + Worker Pool",
-      layers: [
-        { name: "Ingestion Layer", description: "Асинхронный прием вебхуков / Long Polling с троттлингом и очередью сообщений." },
-        { name: "OCR & NLP Filter", description: "Предобработка изображений, нормализация контраста, распознавание через Tesseract." },
-        { name: "Dialog Manager", description: "Машина состояний контекстных диалогов пользователей." }
+      diagram: [
+        { id: "ingest", name: "01. Ingestion Layer", tech: "Telegram.Bot API / Webhooks", role: "Прием сообщений, троттлинг запросов, буферизация очереди." },
+        { id: "ocr", name: "02. OCR & Preprocessing", tech: "Tesseract OCR / SkiaSharp", role: "Контрастирование, очистка шумов, извлечение текста из изображений." },
+        { id: "state", name: "03. Dialog State Machine", tech: "FSM Context Manager", role: "Маршрутизация пошаговых сценариев диалога пользователя." }
       ],
-      highlights: [
-        "Надежная обработка сбоев соединения и автоматический реконнект",
-        "Высокая скорость распознавания текста на лету с фильтрацией шумов",
-        "Модульная структура для легкого добавления новых сценариев"
+      details: [
+        {
+          title: "Resilient Network Layer",
+          content: "Автоматическое переподключение с экспоненциальной задержкой при сбоях сетевого шлюза Telegram."
+        },
+        {
+          title: "Image Normalization",
+          content: "Предобработка перед подачей в OCR-движок повышает точность распознавания сканов низкого качества."
+        }
       ]
     }
   },
   {
     id: "first-api-cqrs",
     title: "Layered REST API & CQRS Core",
+    shortTitle: "FirstApi CQRS",
     subtitle: "Clean ASP.NET Core REST API & Database Access",
     category: ["c#", "architecture"],
     stars: 0,
     featured: false,
+    accentColor: "cyan",
+    metrics: [
+      { label: "Стек", val: "ASP.NET Core / EF / Dapper" },
+      { label: "БД", val: "PostgreSQL" },
+      { label: "Паттерн", val: "CQRS Read/Write" }
+    ],
     caseStudy: {
       problem: "Создание масштабируемой базы для корпоративного бэкенда с быстрым чтением и безопасной записью.",
       solution: "Разделение логики по CQRS: EF Core для транзакций модификации, Dapper для высокопроизводительных выборок.",
@@ -184,25 +241,33 @@ const projectsData = [
     extraRepoUrl: "https://github.com/Asm-o-Dan/EduProject",
     architecture: {
       pattern: "Layered Architecture + CQRS Read/Write Separation",
-      layers: [
-        { name: "Controllers / Endpoints", description: "REST API маршруты с автоматической документацией Swagger и валидацией." },
-        { name: "Services & Handlers", description: "Разделение логики на обработчики команд модификации и быстрых запросов чтения." },
-        { name: "Persistence (EF + Dapper)", description: "EF Core для комплексных бизнес-транзакций, Dapper для оптимизированных SQL-запросов." }
+      diagram: [
+        { id: "endpoints", name: "01. API Endpoints", tech: "ASP.NET Core Controllers", role: "Маршрутизация, Swagger документация, фильтрация запросов." },
+        { id: "handlers", name: "02. CQRS Handlers", tech: "Command / Query Split", role: "Изолированные обработчики бизнес-сценариев." },
+        { id: "persistence", name: "03. Persistence Layer", tech: "EF Core + Dapper", role: "Транзакции через EF Core, высокоскоростные выборки через Dapper." }
       ],
-      highlights: [
-        "Разделение ответственности Read/Write моделей",
-        "Транзакционная целостность и безопасные миграции БД",
-        "Глобальный middleware обработки исключений"
+      details: [
+        {
+          title: "Dual-ORM Approach",
+          content: "EF Core обеспечивает удобство миграций и транзакционную надежность, а Dapper исключает оверхед трекинга сущностей при аналитических запросах."
+        }
       ]
     }
   },
   {
     id: "automation-scrapers",
     title: "Automation & Data Sync Engines",
+    shortTitle: "Automation",
     subtitle: "Python Automation Scripts & Scrapers",
     category: ["python"],
     stars: 0,
     featured: false,
+    accentColor: "emerald",
+    metrics: [
+      { label: "Стек", val: "Python AsyncIO" },
+      { label: "Очереди", val: "Worker Pool" },
+      { label: "Экспорт", val: "SQLite / JSON / CSV" }
+    ],
     caseStudy: {
       problem: "Необходимость регулярного сбора и синхронизации данных из внешних источников без блокировок и потерь пакетов.",
       solution: "Пул асинхронных воркеров на AsyncIO с ротацией сессий и экспортом в реляционные и файловые хранилища.",
@@ -214,15 +279,16 @@ const projectsData = [
     extraRepoUrl: "https://github.com/Asm-o-Dan/DiscordLiker",
     architecture: {
       pattern: "Job Queue + Async Worker Pattern",
-      layers: [
-        { name: "Driver / Client", description: "Асинхронные HTTP-клиенты с пулом прокси и ротацией User-Agent." },
-        { name: "Parser & Validator", description: "Извлечение структурированных данных и валидация схемы." },
-        { name: "Storage Exporter", description: "Экспорт в SQLite / JSON / CSV с дедупликацией." }
+      diagram: [
+        { id: "driver", name: "01. Async HTTP Client", tech: "Aiohttp / Requests", role: "Пул воркеров с ротацией User-Agent и авто-ретраями." },
+        { id: "parser", name: "02. Parsing & Schema", tech: "BeautifulSoup / Pydantic", role: "Нормализация и валидация входящих структур." },
+        { id: "sink", name: "03. Storage Sink", tech: "SQLite / JSON Engine", role: "Потоковая запись без блокировки основного цикла." }
       ],
-      highlights: [
-        "Устойчивость к сетевым задержкам и блокировкам (exponential backoff)",
-        "Параллельная обработка очередей задач",
-        "Минимальное потребление системных ресурсов"
+      details: [
+        {
+          title: "Fault-Tolerant Retries",
+          content: "Экспоненциальный откат (exponential backoff) при временной недоступности источников данных."
+        }
       ]
     }
   }
@@ -240,39 +306,60 @@ const skillsData = [
     ]
   },
   {
-    category: "Архитектура & Паттерны",
+    category: "Архитектура & Системы",
     icon: "layers",
     skills: [
-      { name: "Clean Architecture", level: 95, detail: "Domain, Application, Infrastructure separation" },
+      { name: "Clean Architecture", level: 95, detail: "Domain, Application, Infrastructure isolation" },
       { name: "CQRS & Event-Driven", level: 90, detail: "Command/Query segregation, MediatR, Event buses" },
       { name: "Domain-Driven Design", level: 85, detail: "Aggregates, Value Objects, Domain Events" },
-      { name: "Microservices & RPC", level: 85, detail: "Multi-service communication, Vector DB integration" }
+      { name: "Microservice RPC", level: 85, detail: "C# ↔ Python inter-service communication" }
     ]
   },
   {
-    category: "Базы данных & Векторные БД",
+    category: "Базы данных & Векторный AI",
     icon: "database",
     skills: [
       { name: "PostgreSQL", level: 90, detail: "Relational modeling, Constraints, JSONB" },
       { name: "Qdrant (Vector DB)", level: 90, detail: "High-dim embeddings, Cosine search, Payload filters" },
-      { name: "SQLite", level: 85, detail: "Embedded storage, In-memory testing, Fast queries" },
-      { name: "EF Core & Dapper", level: 90, detail: "Code-First Migrations, Micro-ORM high-perf queries" }
+      { name: "EF Core & Dapper", level: 90, detail: "Code-First Migrations, Micro-ORM high-perf queries" },
+      { name: "SQLite", level: 85, detail: "Embedded storage, In-memory testing" }
     ]
   },
   {
-    category: "Инструменты & Экосистема",
+    category: "Экосистема & Инструменты",
     icon: "cpu",
     skills: [
       { name: "ASP.NET Core", level: 92, detail: "Dependency Injection, Middleware, JWT, WebSockets" },
-      { name: "Telegram Bot API", level: 95, detail: "Long polling, Webhooks, Inline keyboards, Media" },
+      { name: "Telegram Bot API", level: 95, detail: "Long polling, Webhooks, FSM dialog manager" },
       { name: "Tesseract OCR", level: 85, detail: "Image preprocessing, Text extraction pipelines" },
-      { name: "Git & Docker", level: 88, detail: "Containerization, Multi-stage builds, Branching" }
+      { name: "Docker & Git", level: 88, detail: "Containerization, Multi-stage builds, Clean git history" }
     ]
   }
 ];
 
+// Virtual Filesystem & Command Definition for Quake CLI
+const virtualFS = {
+  "/": ["bio.md", "stack.json", "projects/", "contacts.txt", "manifest.txt"],
+  "/projects": ["drugs-engine.arch", "tanks-1984.c", "telegram-ocr.bot", "first-api.cqrs"],
+  files: {
+    "bio.md": "Даниил Гандапас (Asm-o-Dan)\nBackend & Systems Software Engineer\nСпециализация: C# (.NET 8), Python, Clean Architecture, CQRS, Qdrant Vector DB.\nОбразование: ТИФТ (Программная инженерия).\nЛокация: Тирасполь / Remote.",
+    "stack.json": JSON.stringify({
+      primary: ["C# .NET 8", "Python", "Pure C", "SQL"],
+      architecture: ["Clean Architecture", "CQRS", "DDD", "Microservices"],
+      ai_and_vector: ["Qdrant Vector DB", "NLP Embeddings", "Tesseract OCR"],
+      databases: ["PostgreSQL", "SQLite", "EF Core", "Dapper"]
+    }, null, 2),
+    "contacts.txt": "Telegram: https://t.me/SomeSimpleTag (@SomeSimpleTag)\nGitHub: https://github.com/Asm-o-Dan\nEmail: dgandapas1@gmail.com",
+    "manifest.txt": "“Structure is freedom. Architecture is intention. I don’t just write code — I structure possibility.”",
+    "projects/drugs-engine.arch": "Project: DrugsEngine & Python Service\nPattern: Clean Architecture + CQRS + Microservice RPC\nTech: C# .NET 8, Python, Qdrant Vector DB, PostgreSQL\nRepo: https://github.com/Asm-o-Dan/DrugsEngine",
+    "projects/tanks-1984.c": "Project: Tanks1984\nPattern: Deterministic Fixed-Timestep Game Loop\nTech: Pure ANSI C, Custom Buffer Renderer, Zero Memory Leaks\nRepo: https://github.com/Asm-o-Dan/Tanks1984",
+    "projects/telegram-ocr.bot": "Project: Telegram Bot Suite & OCR\nPattern: Event-Driven Message Pipeline + Worker Pool\nTech: C#, Telegram.Bot API, Tesseract OCR, State Machine\nRepo: https://github.com/Asm-o-Dan/TelegramBot",
+    "projects/first-api.cqrs": "Project: Layered REST API & CQRS Core\nPattern: CQRS Read/Write Separation\nTech: ASP.NET Core, EF Core, Dapper, PostgreSQL\nRepo: https://github.com/Asm-o-Dan/FirstApi"
+  }
+};
+
 if (typeof window !== 'undefined') {
-  window.ASM_PORTFOLIO = { hrQuickFacts, timelineData, teamValues, projectsData, skillsData };
+  window.ASM_PORTFOLIO = { hrQuickFacts, timelineData, teamValues, projectsData, skillsData, virtualFS };
 }
 if (typeof exports !== 'undefined') {
   exports.hrQuickFacts = hrQuickFacts;
@@ -280,4 +367,5 @@ if (typeof exports !== 'undefined') {
   exports.teamValues = teamValues;
   exports.projectsData = projectsData;
   exports.skillsData = skillsData;
+  exports.virtualFS = virtualFS;
 }
