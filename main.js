@@ -1,6 +1,6 @@
 /**
  * AsmODan — The Radial Ritual Circle & 3 Concentric Arcane Seals Engine
- * Radial Trigonometry, Orbital Rotation, Energy Beams, Web Audio FX, Mobile Touch & Altar CLI
+ * Radial Trigonometry, Orbital Rotation, Energy Beams, Web Audio FX, Mobile Thumb Dock & Altar CLI
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nodeEl.innerHTML = `
         <div class="node-card">
           <div class="node-icon-wrap">
-            <i data-lucide="${icon}" style="width: 14px; height: 14px;"></i>
+            <i data-lucide="${icon}" style="width: 15px; height: 15px;"></i>
           </div>
           <div class="node-title-box">
             <span class="node-name">${title}</span>
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sideDrawer.addEventListener('touchend', (e) => {
       const touchEndY = e.changedTouches[0].clientY;
-      if (touchEndY - touchStartY > 70 && window.innerWidth <= 768) {
+      if (touchEndY - touchStartY > 65 && window.innerWidth <= 768) {
         closeDrawer();
       }
     }, { passive: true });
@@ -518,6 +518,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   const btnViewRadial = document.getElementById('btn-view-radial');
   const btnViewFlat = document.getElementById('btn-view-flat');
+  const dockBtnRadial = document.getElementById('dock-btn-radial');
+  const dockBtnCv = document.getElementById('dock-btn-cv');
+  const dockBtnDice = document.getElementById('dock-btn-dice');
+  const dockBtnAltar = document.getElementById('dock-btn-altar');
+  const dockBtnSummon = document.getElementById('dock-btn-summon');
   const viewRadialStage = document.getElementById('view-radial-stage');
   const viewFlatStage = document.getElementById('view-flat-stage');
   const flatProjectsSummary = document.getElementById('flat-projects-summary');
@@ -538,11 +543,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (viewName === 'radial') {
       if (btnViewRadial) btnViewRadial.classList.add('active');
       if (btnViewFlat) btnViewFlat.classList.remove('active');
+      if (dockBtnRadial) dockBtnRadial.classList.add('active');
+      if (dockBtnCv) dockBtnCv.classList.remove('active');
       if (viewRadialStage) viewRadialStage.classList.add('active');
       if (viewFlatStage) viewFlatStage.classList.remove('active');
     } else {
       if (btnViewRadial) btnViewRadial.classList.remove('active');
       if (btnViewFlat) btnViewFlat.classList.add('active');
+      if (dockBtnRadial) dockBtnRadial.classList.remove('active');
+      if (dockBtnCv) dockBtnCv.classList.add('active');
       if (viewRadialStage) viewRadialStage.classList.remove('active');
       if (viewFlatStage) viewFlatStage.classList.add('active');
     }
@@ -550,6 +559,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnViewRadial) btnViewRadial.addEventListener('click', () => switchView('radial'));
   if (btnViewFlat) btnViewFlat.addEventListener('click', () => switchView('flat'));
+  if (dockBtnRadial) dockBtnRadial.addEventListener('click', () => switchView('radial'));
+  if (dockBtnCv) dockBtnCv.addEventListener('click', () => switchView('flat'));
   if (flatPrintBtn) flatPrintBtn.addEventListener('click', () => window.print());
 
   // =========================================================================
@@ -589,9 +600,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 600);
   }
 
-  if (coreDiceBtn) {
-    coreDiceBtn.addEventListener('click', triggerD20Roll);
-  }
+  if (coreDiceBtn) coreDiceBtn.addEventListener('click', triggerD20Roll);
+  if (dockBtnDice) dockBtnDice.addEventListener('click', triggerD20Roll);
 
   if (diceStageOverlay) {
     diceStageOverlay.addEventListener('click', () => {
@@ -640,6 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (toggleTerminalBtn) toggleTerminalBtn.addEventListener('click', toggleTerminal);
   if (closeTerminalDot) closeTerminalDot.addEventListener('click', closeTerminal);
   if (footerCliBtn) footerCliBtn.addEventListener('click', toggleTerminal);
+  if (dockBtnAltar) dockBtnAltar.addEventListener('click', toggleTerminal);
 
   // Global Keyboard listener for ` (backtick/tilde) and ESC
   window.addEventListener('keydown', (e) => {
@@ -898,13 +909,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2400);
   }
 
-  if (openContactModalBtn && contactModal) {
-    openContactModalBtn.addEventListener('click', () => {
-      playSound('click');
+  function openContactModal() {
+    playSound('click');
+    if (contactModal) {
       contactModal.classList.add('open');
       contactModal.setAttribute('aria-hidden', 'false');
-    });
+    }
   }
+
+  if (openContactModalBtn) openContactModalBtn.addEventListener('click', openContactModal);
+  if (dockBtnSummon) dockBtnSummon.addEventListener('click', openContactModal);
 
   if (contactModalClose && contactModal) {
     contactModalClose.addEventListener('click', () => {

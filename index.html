@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>AsmODan (Даниил Гандапас) — The Radial Ritual Circle & Systems Archmage</title>
   <meta name="description" content="AsmODan (Даниил Гандапас) — Радиальный ритуальный круг и 3 концентрические печати: C# .NET 8, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C.">
   <meta name="keywords" content="AsmODan, Asm-o-Dan, Даниил Гандапас, Systems Archmage, C#, .NET 8, Python, Clean Architecture, CQRS, Qdrant, Vector Search, D&D Portfolio, Pure C">
@@ -42,13 +42,13 @@
           <span class="terminal-dot green"></span>
         </div>
         <div class="terminal-title">
-          <span class="rune-symbol">⛧</span> asmodan@grimoire: ~ (Radial Arcane Engine v8.0 | Lawful Neutral)
+          <span class="rune-symbol">⛧</span> asmodan@grimoire: ~ (Radial Arcane Engine v9.0 | Lawful Neutral)
         </div>
         <div class="terminal-hotkey-hint">Press <kbd class="kbd-badge">`</kbd> or <kbd class="kbd-badge">ESC</kbd> to toggle</div>
       </div>
 
       <div class="terminal-body" id="terminal-body">
-        <div class="term-line system">AsmODan Radial Ritual Engine v8.0 online.</div>
+        <div class="term-line system">AsmODan Radial Ritual Engine v9.0 online.</div>
         <div class="term-line system">3 Concentric Seals active: [Ring 1: Chronicle], [Ring 2: Skills], [Ring 3: Projects].</div>
         <div class="term-line output">Current Avatar: Даниил Гандапас (AsmODan) | Level 20 Systems Archmage</div>
       </div>
@@ -92,15 +92,15 @@
         <span class="brand-status-dot" title="Open for Backend Roles"></span>
       </a>
 
-      <!-- View Switcher: Radial Ritual vs Flat Dossier -->
-      <div class="perspective-nav">
+      <!-- View Switcher (Desktop) -->
+      <div class="perspective-nav desktop-only">
         <button class="nav-segment-btn active" id="btn-view-radial" data-view="radial">
           <i data-lucide="circle-dot" style="width: 15px; height: 15px;"></i>
-          <span>Ритуал</span>
+          <span>Радиальный Ритуал</span>
         </button>
         <button class="nav-segment-btn" id="btn-view-flat" data-view="flat">
           <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
-          <span>Свиток HR</span>
+          <span>Свиток HR / CV</span>
         </button>
       </div>
 
@@ -113,8 +113,8 @@
           <span class="hud-btn-text">FX</span>
         </button>
 
-        <!-- Altar CLI Toggle Button -->
-        <button class="hud-tool-btn terminal-trigger-btn" id="toggle-terminal-btn" title="Открыть алтарь CLI (Клавиша `)">
+        <!-- Altar CLI Toggle Button (Desktop) -->
+        <button class="hud-tool-btn terminal-trigger-btn desktop-only" id="toggle-terminal-btn" title="Открыть алтарь CLI (Клавиша `)">
           <span class="rune-glyph">⛧</span>
           <span class="hud-btn-text">Altar CLI</span>
           <kbd class="kbd-tiny">`</kbd>
@@ -126,8 +126,8 @@
           <i data-lucide="moon" id="theme-icon-moon" style="width: 16px; height: 16px; display: none;"></i>
         </button>
 
-        <!-- Direct Summon Button -->
-        <button class="hud-cta-btn" id="open-contact-modal-btn">
+        <!-- Direct Summon Button (Desktop) -->
+        <button class="hud-cta-btn desktop-only" id="open-contact-modal-btn">
           <i data-lucide="send" style="width: 14px; height: 14px;"></i>
           <span>Призвать</span>
         </button>
@@ -144,7 +144,7 @@
     <section class="radial-ritual-viewport active" id="view-radial-stage" aria-label="Radial Ritual Engine">
       
       <!-- Seal Rings Guide HUD (Left Top on Desktop) -->
-      <div class="rings-legend-hud">
+      <div class="rings-legend-hud desktop-only">
         <div class="legend-title">Печати Ритуала:</div>
         <div class="legend-item ring-3-leg" data-ring="3">
           <span class="legend-dot dot-cyan"></span>
@@ -161,7 +161,7 @@
         <div class="legend-hint">Кликните любой узел для раскрытия манускрипта</div>
       </div>
 
-      <!-- Mobile Ring Switcher Tabs (Visible on Mobile/Tablet) -->
+      <!-- Mobile Ring Selector Tabs (Visible on Mobile/Tablet) -->
       <div class="mobile-rings-tabs" id="mobile-rings-tabs">
         <button class="mobile-ring-tab-btn active" data-ring="3">
           <span class="legend-dot dot-cyan"></span>
@@ -352,6 +352,32 @@
 
   </main>
 
+  <!-- ========================================================================= -->
+  <!-- MOBILE PERSISTENT HUD ACTION DOCK (THUMB ZONE OPTIMIZED)                  -->
+  <!-- ========================================================================= -->
+  <nav class="mobile-hud-dock" id="mobile-hud-dock" aria-label="Mobile Navigation Dock">
+    <button class="mobile-dock-btn active" id="dock-btn-radial" data-action="view-radial" title="Радиальный Ритуал">
+      <i data-lucide="circle-dot" class="dock-icon"></i>
+      <span class="dock-label">Ритуал</span>
+    </button>
+    <button class="mobile-dock-btn" id="dock-btn-cv" data-action="view-flat" title="Свиток Резюме">
+      <i data-lucide="file-text" class="dock-icon"></i>
+      <span class="dock-label">Резюме</span>
+    </button>
+    <button class="mobile-dock-btn dock-btn-highlight" id="dock-btn-dice" data-action="roll-dice" title="Бросить d20">
+      <span class="dock-dice-badge">🎲</span>
+      <span class="dock-label">d20</span>
+    </button>
+    <button class="mobile-dock-btn" id="dock-btn-altar" data-action="open-altar" title="Алтарь CLI">
+      <span class="dock-rune-symbol">⛧</span>
+      <span class="dock-label">Алтарь</span>
+    </button>
+    <button class="mobile-dock-btn" id="dock-btn-summon" data-action="open-summon" title="Призвать">
+      <i data-lucide="send" class="dock-icon"></i>
+      <span class="dock-label">Призвать</span>
+    </button>
+  </nav>
+
   <!-- 3D Physics Dice Roller Floating Overlay -->
   <div class="dice-stage-overlay" id="dice-stage-overlay" aria-hidden="true">
     <div class="dice-box">
@@ -442,7 +468,7 @@
   <footer class="hud-footer">
     <div class="hud-container footer-flex">
       <div class="footer-copy">
-        <span class="mono text-cyan">AsmODan // The Radial Ritual Circle v8.0</span> • 3 Concentric Seals & Clean Architecture.
+        <span class="mono text-cyan">AsmODan // The Radial Ritual Circle v9.0</span> • 3 Concentric Seals & Clean Architecture.
       </div>
       <div class="footer-links">
         <button class="footer-btn" id="footer-cli-btn">⛧ Altar CLI [ ` ]</button>
