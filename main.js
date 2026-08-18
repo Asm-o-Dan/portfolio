@@ -1,23 +1,22 @@
 /**
  * AsmODan — Cyber-Occult Grimoire & Arcane Systems Engine
- * D&D 5e Mechanics, Concentric Architecture Inspector, and Altar CLI
+ * Open Grimoire Book Router, RPG Equipment Inventory, D&D 5e Dice Engine, and Web Audio Synthesizer
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const data = window.ASM_PORTFOLIO || {};
   const charSheet = data.characterSheet || {};
-  const hrData = data.hrQuickFacts || {};
   const projectsData = data.projectsData || [];
   const skillsData = data.skillsData || [];
   const timelineData = data.timelineData || [];
-  const teamValues = data.teamValues || [];
   const virtualFS = data.virtualFS || { "/": [], "/grimoire": [], files: {} };
 
   // Active state
-  let currentView = 'sanctum';
-  let activeProjectId = projectsData[0] ? projectsData[0].id : 'drugs-engine';
+  let currentTab = 'inspector';
+  let activeProjectId = 'drugs-engine';
   let activeLayerIndex = 0;
-  let activeCategoryFilter = 'all';
+  let activeEquipSlot = 'mainhand';
+  let soundEnabled = true;
 
   // Terminal & Game state
   let terminalHistory = [];
@@ -27,7 +26,98 @@ document.addEventListener('DOMContentLoaded', () => {
   let tankEnemy = { x: 4, y: 1, alive: true };
 
   // =========================================================================
-  // 1. Icon Initializer
+  // 1. Web Audio Synthesizer (Zero-dependency tactile sound FX)
+  // =========================================================================
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+  }
+
+  function playSound(type) {
+    if (!soundEnabled) return;
+    try {
+      initAudio();
+      if (!audioCtx) return;
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'click') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(120, now + 0.05);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } else if (type === 'equip') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(320, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } else if (type === 'dice') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.linearRampToValueAtTime(360, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(90, now + 0.25);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'crit') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(523.25, now); // C5
+        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+        osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+        osc.frequency.setValueAtTime(1046.50, now + 0.24); // C6
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      }
+    } catch (e) {}
+  }
+
+  // Audio Toggle UI
+  const audioToggleBtn = document.getElementById('audio-toggle-btn');
+  const audioIconOn = document.getElementById('audio-icon-on');
+  const audioIconOff = document.getElementById('audio-icon-off');
+
+  function updateAudioUI() {
+    if (audioIconOn && audioIconOff) {
+      if (soundEnabled) {
+        audioIconOn.style.display = 'block';
+        audioIconOff.style.display = 'none';
+      } else {
+        audioIconOn.style.display = 'none';
+        audioIconOff.style.display = 'block';
+      }
+    }
+  }
+
+  if (audioToggleBtn) {
+    audioToggleBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      updateAudioUI();
+      if (soundEnabled) playSound('click');
+    });
+  }
+
+  // =========================================================================
+  // 2. Icon Initializer
   // =========================================================================
   function refreshIcons() {
     if (window.lucide) {
@@ -37,187 +127,157 @@ document.addEventListener('DOMContentLoaded', () => {
   refreshIcons();
 
   // =========================================================================
-  // 2. D&D 5e Stat Block Renderer
+  // 3. D&D 5e Stat Block Renderer
   // =========================================================================
   function renderDndStats() {
-    const statsContainer = document.getElementById('dnd-stats-grid');
+    const statsContainer = document.getElementById('dnd-stats-row');
     if (!statsContainer || !charSheet.stats) return;
     statsContainer.innerHTML = '';
 
     charSheet.stats.forEach(stat => {
-      const box = document.createElement('div');
-      box.className = 'dnd-stat-box';
-      box.title = stat.desc;
-      box.innerHTML = `
-        <div class="dnd-stat-code">${stat.code}</div>
-        <div class="dnd-stat-score">${stat.score}</div>
-        <div class="dnd-stat-mod">${stat.mod}</div>
-        <div class="dnd-stat-label">${stat.name}</div>
+      const node = document.createElement('div');
+      node.className = 'dnd-stat-node';
+      node.title = stat.desc;
+      node.innerHTML = `
+        <div class="dnd-node-code">${stat.code}</div>
+        <div class="dnd-node-score">${stat.score}</div>
+        <div class="dnd-node-mod">${stat.mod}</div>
       `;
-      statsContainer.appendChild(box);
+      statsContainer.appendChild(node);
     });
   }
   renderDndStats();
 
   // =========================================================================
-  // 3. Perspective Router / View Switcher
+  // 4. RPG Equipped Artifacts Inventory Renderer
   // =========================================================================
-  const navSegmentBtns = document.querySelectorAll('.nav-segment-btn');
-  const viewPanels = document.querySelectorAll('.view-panel');
+  const equipmentGrid = document.getElementById('equipment-slots-grid');
 
-  function switchView(targetView, selectProjectId = null) {
-    if (!['sanctum', 'lab', 'chronicle'].includes(targetView)) {
-      targetView = 'sanctum';
+  function renderEquipmentSlots() {
+    if (!equipmentGrid || !charSheet.equippedItems) return;
+    equipmentGrid.innerHTML = '';
+
+    charSheet.equippedItems.forEach(item => {
+      const slotEl = document.createElement('div');
+      slotEl.className = `equip-slot-item ${item.slot === activeEquipSlot ? 'active' : ''}`;
+      slotEl.setAttribute('data-slot', item.slot);
+      slotEl.setAttribute('data-project', item.projectId || '');
+
+      slotEl.innerHTML = `
+        <div class="slot-top">
+          <span class="slot-badge">${item.slotName}</span>
+          <i data-lucide="${item.icon}" class="slot-icon"></i>
+        </div>
+        <div class="slot-item-name">${item.itemName}</div>
+        <div class="slot-bonus">${item.bonus}</div>
+      `;
+
+      slotEl.addEventListener('click', () => {
+        playSound('equip');
+        activeEquipSlot = item.slot;
+        if (item.projectId) {
+          activeProjectId = item.projectId;
+          activeLayerIndex = 0;
+          switchRightTab('inspector');
+          renderArtifactInspector();
+        } else if (item.action === 'download-cv') {
+          const downloadBtn = document.getElementById('wax-seal-download-btn');
+          if (downloadBtn) downloadBtn.click();
+        }
+        renderEquipmentSlots();
+      });
+
+      equipmentGrid.appendChild(slotEl);
+    });
+
+    refreshIcons();
+  }
+  renderEquipmentSlots();
+
+  // =========================================================================
+  // 5. Right Page Codex Tabs Manager
+  // =========================================================================
+  const chapterNavBtns = document.querySelectorAll('.chapter-nav-btn');
+  const edgeTabBtns = document.querySelectorAll('.tome-tab-btn');
+  const tabPanes = document.querySelectorAll('.codex-tab-pane');
+  const footerShortcuts = document.querySelectorAll('.tab-nav-shortcut');
+
+  function switchRightTab(targetTab) {
+    if (!['inspector', 'spellbook', 'chronicle', 'print-cv'].includes(targetTab)) {
+      targetTab = 'inspector';
     }
-    currentView = targetView;
+    currentTab = targetTab;
+    playSound('click');
 
-    // Update nav buttons
-    navSegmentBtns.forEach(btn => {
-      if (btn.getAttribute('data-view') === targetView) {
+    // Update chapter nav buttons
+    chapterNavBtns.forEach(btn => {
+      if (btn.getAttribute('data-tab') === targetTab) {
         btn.classList.add('active');
       } else {
         btn.classList.remove('active');
       }
     });
 
-    // Update view panels
-    viewPanels.forEach(panel => {
-      if (panel.id === `view-${targetView}`) {
-        panel.classList.add('active');
+    // Update edge tabs
+    edgeTabBtns.forEach(btn => {
+      if (btn.getAttribute('data-tab') === targetTab) {
+        btn.classList.add('active');
       } else {
-        panel.classList.remove('active');
+        btn.classList.remove('active');
       }
     });
 
-    // If switching to lab with a specific project selected
-    if (targetView === 'lab') {
-      if (selectProjectId) {
-        activeProjectId = selectProjectId;
+    // Update tab panes
+    tabPanes.forEach(pane => {
+      if (pane.id === `pane-${targetTab}`) {
+        pane.classList.add('active');
+      } else {
+        pane.classList.remove('active');
       }
-      activeLayerIndex = 0;
-      renderLabSidebar();
-      renderLabInspector();
+    });
+
+    if (targetTab === 'inspector') {
+      renderArtifactInspector();
+    } else if (targetTab === 'spellbook') {
+      renderSkillsSpellbook();
+    } else if (targetTab === 'chronicle') {
+      renderChronicle();
     }
 
-    // Update URL hash without jumping
-    if (history.pushState) {
-      history.pushState(null, null, `#${targetView}`);
-    } else {
-      location.hash = `#${targetView}`;
-    }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     refreshIcons();
   }
 
-  // Bind segmented nav buttons
-  navSegmentBtns.forEach(btn => {
+  // Bind chapter nav buttons
+  chapterNavBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const view = btn.getAttribute('data-view');
-      switchView(view);
+      const tab = btn.getAttribute('data-tab');
+      switchRightTab(tab);
     });
   });
 
-  // Bind all triggers with .switch-view-trigger
-  document.addEventListener('click', (e) => {
-    const trigger = e.target.closest('.switch-view-trigger');
-    if (trigger) {
-      e.preventDefault();
-      const target = trigger.getAttribute('data-target');
-      const selectProject = trigger.getAttribute('data-select-project');
-      switchView(target, selectProject);
-    }
-  });
-
-  // Check initial hash on page load
-  const initialHash = window.location.hash.replace('#', '');
-  if (['sanctum', 'lab', 'chronicle'].includes(initialHash)) {
-    switchView(initialHash);
-  } else if (initialHash === 'overview') {
-    switchView('sanctum');
-  } else if (initialHash === 'dossier') {
-    switchView('chronicle');
-  }
-
-  // =========================================================================
-  // 4. Sanctum (Tenets & Values) Renderer
-  // =========================================================================
-  function renderSanctumValues() {
-    const valuesContainer = document.getElementById('overview-values-row');
-    if (!valuesContainer) return;
-    valuesContainer.innerHTML = '';
-
-    teamValues.forEach(val => {
-      const item = document.createElement('div');
-      item.className = 'value-pill-box';
-      item.innerHTML = `
-        <div class="val-box-header">
-          <i data-lucide="${val.icon}" class="text-cyan" style="width: 18px; height: 18px;"></i>
-          <h3 class="val-box-title">${val.title}</h3>
-        </div>
-        <p class="val-box-desc">${val.desc}</p>
-      `;
-      valuesContainer.appendChild(item);
-    });
-  }
-  renderSanctumValues();
-
-  // =========================================================================
-  // 5. Ritual Lab (Concentric Systems & Architecture) Controller
-  // =========================================================================
-  const labNavList = document.getElementById('lab-project-nav-list');
-  const labInspector = document.getElementById('lab-inspector-content');
-  const labFilters = document.querySelectorAll('.lab-filter-pill');
-
-  function renderLabSidebar() {
-    if (!labNavList) return;
-    labNavList.innerHTML = '';
-
-    const filteredProjects = activeCategoryFilter === 'all'
-      ? projectsData
-      : projectsData.filter(p => p.category.includes(activeCategoryFilter.toLowerCase()));
-
-    if (!filteredProjects.some(p => p.id === activeProjectId) && filteredProjects.length > 0) {
-      activeProjectId = filteredProjects[0].id;
-    }
-
-    filteredProjects.forEach(proj => {
-      const el = document.createElement('div');
-      el.className = `lab-nav-item ${proj.id === activeProjectId ? 'active' : ''}`;
-      el.setAttribute('data-id', proj.id);
-
-      el.innerHTML = `
-        <div class="nav-item-top">
-          <span class="nav-item-title">${proj.shortTitle || proj.title}</span>
-          <span class="card-tag" style="margin: 0; padding: 0.1rem 0.4rem; font-size: 0.65rem;">${proj.school || proj.architecture.pattern.split('+')[0].trim()}</span>
-        </div>
-        <div class="nav-item-pattern">${proj.tags.slice(0, 3).join(' • ')}</div>
-      `;
-
-      el.addEventListener('click', () => {
-        activeProjectId = proj.id;
-        activeLayerIndex = 0;
-        renderLabSidebar();
-        renderLabInspector();
-      });
-
-      labNavList.appendChild(el);
-    });
-  }
-
-  // Filter pills click
-  labFilters.forEach(pill => {
-    pill.addEventListener('click', () => {
-      labFilters.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      activeCategoryFilter = pill.getAttribute('data-filter');
-      renderLabSidebar();
-      renderLabInspector();
+  // Bind edge bookmark tabs
+  edgeTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.getAttribute('data-tab');
+      switchRightTab(tab);
     });
   });
 
-  function renderLabInspector() {
-    if (!labInspector) return;
+  // Bind footer shortcuts
+  footerShortcuts.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.getAttribute('data-tab');
+      switchRightTab(tab);
+    });
+  });
+
+  // =========================================================================
+  // 6. Artifact Inspector Renderer (Concentric Architecture Canvas)
+  // =========================================================================
+  const inspectorContainer = document.getElementById('artifact-inspector-container');
+
+  function renderArtifactInspector() {
+    if (!inspectorContainer) return;
     const proj = projectsData.find(p => p.id === activeProjectId) || projectsData[0];
     if (!proj) return;
 
@@ -226,25 +286,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Build metrics HTML
     const metricsHtml = (proj.metrics || []).map(m => `
-      <div class="metric-col">
-        <span class="metric-label">${m.label}</span>
-        <span class="metric-val text-cyan">${m.val}</span>
+      <div class="metric-node">
+        <span class="metric-lbl">${m.label}</span>
+        <span class="metric-v">${m.val}</span>
       </div>
     `).join('');
 
-    // Build interactive layers nodes HTML
+    // Build concentric layer nodes HTML
     const layersNodesHtml = layers.map((layer, idx) => `
-      <div class="arch-layer-card ${idx === activeLayerIndex ? 'active' : ''}" data-layer-idx="${idx}">
-        <div class="layer-name">${layer.name}</div>
-        <div class="layer-tech">${layer.tech}</div>
-      </div>
-    `).join('');
-
-    // Build architecture details HTML
-    const detailsHtml = (proj.architecture.details || []).map(d => `
-      <div class="detail-item">
-        <div class="detail-title">${d.title}</div>
-        <div class="detail-desc">${d.content}</div>
+      <div class="concentric-layer-box ${idx === activeLayerIndex ? 'active' : ''}" data-layer-idx="${idx}">
+        <div class="layer-box-name">${layer.name}</div>
+        <div class="layer-box-tech">${layer.tech}</div>
       </div>
     `).join('');
 
@@ -252,159 +304,200 @@ document.addEventListener('DOMContentLoaded', () => {
     let extraLinksHtml = '';
     if (proj.pythonServiceUrl) {
       extraLinksHtml += `
-        <a href="${proj.pythonServiceUrl}" target="_blank" rel="noopener noreferrer" class="inspector-link-btn" title="Python Service Repo">
-          <i data-lucide="git-branch" style="width: 14px; height: 14px;"></i>
+        <a href="${proj.pythonServiceUrl}" target="_blank" rel="noopener noreferrer" class="artifact-link-pill" title="Python Service Repo">
+          <i data-lucide="git-branch" style="width: 13px; height: 13px;"></i>
           <span>Python Service</span>
         </a>
       `;
     }
     if (proj.extraRepoUrl) {
       extraLinksHtml += `
-        <a href="${proj.extraRepoUrl}" target="_blank" rel="noopener noreferrer" class="inspector-link-btn" title="Secondary Repo">
-          <i data-lucide="git-branch" style="width: 14px; height: 14px;"></i>
+        <a href="${proj.extraRepoUrl}" target="_blank" rel="noopener noreferrer" class="artifact-link-pill" title="Secondary Repo">
+          <i data-lucide="git-branch" style="width: 13px; height: 13px;"></i>
           <span>Bot Repo</span>
         </a>
       `;
     }
 
-    labInspector.innerHTML = `
-      <div class="inspector-hero">
-        <div class="inspector-header-row">
+    inspectorContainer.innerHTML = `
+      <div class="artifact-hero">
+        <div class="artifact-header-flex">
           <div>
-            <div class="card-tag">Школа: ${proj.school || 'Architecture'} • ${proj.architecture.pattern}</div>
-            <h1 class="inspector-title">${proj.title}</h1>
-            <div class="inspector-subtitle">${proj.subtitle}</div>
+            <span class="block-title-tag">${proj.school || 'Architecture'} • ${proj.architecture.pattern}</span>
+            <h2 class="artifact-title">${proj.title}</h2>
+            <div class="artifact-school">${proj.subtitle}</div>
           </div>
-          <div class="inspector-links-row">
-            <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="inspector-link-btn" title="Source Code on GitHub">
-              <i data-lucide="github" style="width: 14px; height: 14px;"></i>
+          <div class="artifact-links">
+            <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="artifact-link-pill" title="GitHub Repository">
+              <i data-lucide="github" style="width: 13px; height: 13px;"></i>
               <span>GitHub</span>
             </a>
             ${extraLinksHtml}
           </div>
         </div>
 
-        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.45; margin-top: 0.5rem;">
           ${proj.description}
         </p>
 
-        <div class="inspector-metrics-bar">
+        <div class="artifact-metrics-bar">
           ${metricsHtml}
         </div>
       </div>
 
-      <!-- Interactive Concentric Architecture Canvas -->
-      <div style="margin-bottom: 1.75rem;">
-        <div class="blueprint-section-title">
-          <span>Концентрические ритуальные слои архитектуры</span>
-          <span class="blueprint-hint">Кликните на слой для инспекции ➜</span>
+      <!-- Concentric Architecture Layers -->
+      <div style="margin-bottom: 1rem;">
+        <div class="block-label-row">
+          <span class="block-title-tag">Концентрические ритуальные слои</span>
+          <span class="inventory-hint">Кликните слой для инспекции ➜</span>
         </div>
 
-        <div class="architecture-diagram-nodes" id="arch-nodes-container">
+        <div class="concentric-nodes-grid">
           ${layersNodesHtml}
         </div>
 
-        <!-- Dynamic Layer Deep-Dive Info Box -->
-        <div class="layer-deepdive-box" id="layer-deepdive-box">
-          <div class="layer-deepdive-title">Слой: ${activeLayer.name} [${activeLayer.tech}]</div>
-          <div class="layer-deepdive-desc">${activeLayer.role}</div>
+        <div class="layer-active-inspect-card">
+          <div class="layer-active-title">Слой: ${activeLayer.name} [${activeLayer.tech}]</div>
+          <div class="layer-active-desc">${activeLayer.role}</div>
         </div>
       </div>
 
-      <!-- Case Study Section -->
-      <div class="case-study-box">
-        <div class="card-tag" style="margin-bottom: 0.25rem;">Case Study</div>
-        <div class="case-grid">
-          <div class="case-col">
-            <div class="case-col-title problem">Проблема</div>
-            <div class="case-col-text">${proj.caseStudy.problem}</div>
+      <!-- Case Study -->
+      <div class="case-study-pane">
+        <span class="block-title-tag" style="margin-bottom: 0.2rem;">Case Study</span>
+        <div class="case-study-grid">
+          <div>
+            <div class="case-col-header prob">Проблема</div>
+            <div class="case-col-body">${proj.caseStudy.problem}</div>
           </div>
-          <div class="case-col">
-            <div class="case-col-title solution">Решение</div>
-            <div class="case-col-text">${proj.caseStudy.solution}</div>
+          <div>
+            <div class="case-col-header sol">Решение</div>
+            <div class="case-col-body">${proj.caseStudy.solution}</div>
           </div>
-          <div class="case-col">
-            <div class="case-col-title impact">Результат</div>
-            <div class="case-col-text">${proj.caseStudy.impact}</div>
+          <div>
+            <div class="case-col-header imp">Результат</div>
+            <div class="case-col-body">${proj.caseStudy.impact}</div>
           </div>
-        </div>
-      </div>
-
-      <!-- Key Engineering Highlights -->
-      <div>
-        <h3 class="blueprint-section-title" style="margin-bottom: 0.75rem;">Инженерные инварианты & Руны кода</h3>
-        <div class="arch-details-list">
-          ${detailsHtml}
         </div>
       </div>
     `;
 
-    // Bind layer click events
-    const layerCards = labInspector.querySelectorAll('.arch-layer-card');
-    layerCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const idx = parseInt(card.getAttribute('data-layer-idx'), 10);
+    // Bind concentric layer cards click
+    const layerBoxes = inspectorContainer.querySelectorAll('.concentric-layer-box');
+    layerBoxes.forEach(box => {
+      box.addEventListener('click', () => {
+        playSound('click');
+        const idx = parseInt(box.getAttribute('data-layer-idx'), 10);
         activeLayerIndex = idx;
-        renderLabInspector();
+        renderArtifactInspector();
       });
     });
 
     refreshIcons();
   }
-
-  // Initial render of Lab
-  renderLabSidebar();
-  renderLabInspector();
+  renderArtifactInspector();
 
   // =========================================================================
-  // 6. Chronicle & CV View Renderer
+  // 7. Skills Spellbook Renderer
   // =========================================================================
-  function renderChronicleContent() {
-    const timelineContainer = document.getElementById('cv-timeline-container');
-    const skillsContainer = document.getElementById('cv-skills-container');
+  function renderSkillsSpellbook() {
+    const container = document.getElementById('skills-spellbook-container');
+    if (!container) return;
+    container.innerHTML = '';
 
-    if (timelineContainer) {
-      timelineContainer.innerHTML = '';
-      timelineData.forEach(item => {
-        const el = document.createElement('div');
-        el.className = 'cv-timeline-item';
-        el.innerHTML = `
-          <div class="cv-tl-header">
-            <span class="cv-tl-title">${item.title}</span>
-            <span class="cv-tl-year">${item.year}</span>
-          </div>
-          <div class="cv-tl-subtitle">${item.subtitle} • <span class="text-cyan">${item.badge}</span></div>
-          <p class="cv-tl-desc">${item.description}</p>
-        `;
-        timelineContainer.appendChild(el);
-      });
-    }
-
-    if (skillsContainer) {
-      skillsContainer.innerHTML = '';
-      skillsData.forEach(cat => {
-        const el = document.createElement('div');
-        el.className = 'cv-skill-cat';
-        const tags = cat.skills.map(s => `<span class="cv-skill-tag">${s.name}</span>`).join('');
-        el.innerHTML = `
-          <div class="cv-cat-title">${cat.category}</div>
-          <div class="cv-cat-pills">${tags}</div>
-        `;
-        skillsContainer.appendChild(el);
-      });
-    }
-
-    const printBtn = document.getElementById('dossier-print-btn');
-    if (printBtn) {
-      printBtn.addEventListener('click', () => {
-        window.print();
-      });
-    }
+    skillsData.forEach(cat => {
+      const card = document.createElement('div');
+      card.className = 'spellbook-cat-card';
+      const tags = cat.skills.map(s => `<span class="spell-tag-item">${s.name}</span>`).join('');
+      card.innerHTML = `
+        <h3 class="spellbook-cat-title">${cat.category}</h3>
+        <div class="spellbook-tags">${tags}</div>
+      `;
+      container.appendChild(card);
+    });
   }
-  renderChronicleContent();
 
   // =========================================================================
-  // 7. The Altar of AsmODan (Quake CLI & D&D Dice Roller Engine)
+  // 8. Quest Chronicle Renderer
+  // =========================================================================
+  function renderChronicle() {
+    const container = document.getElementById('quest-timeline-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    timelineData.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'quest-item';
+      el.innerHTML = `
+        <div class="quest-header-row">
+          <span class="quest-title">${item.title}</span>
+          <span class="quest-year">${item.year}</span>
+        </div>
+        <div class="quest-subtitle">${item.subtitle} • <span class="text-cyan">${item.badge}</span></div>
+        <p class="quest-desc">${item.description}</p>
+      `;
+      container.appendChild(el);
+    });
+  }
+
+  // Print button handler
+  const printTriggerBtn = document.getElementById('trigger-browser-print-btn');
+  if (printTriggerBtn) {
+    printTriggerBtn.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
+  // =========================================================================
+  // 9. D&D 3D Dice Roller Engine (Physical Floating Dice)
+  // =========================================================================
+  const diceStageOverlay = document.getElementById('dice-stage-overlay');
+  const d20Visual = document.getElementById('d20-visual');
+  const diceResultBanner = document.getElementById('dice-result-banner');
+  const diceRollBtn = document.getElementById('dice-roll-btn');
+
+  function triggerD20Roll() {
+    if (!diceStageOverlay || !d20Visual) return;
+    playSound('dice');
+
+    diceStageOverlay.classList.add('open');
+    diceStageOverlay.setAttribute('aria-hidden', 'false');
+
+    d20Visual.classList.add('rolling');
+    d20Visual.textContent = '...';
+    if (diceResultBanner) diceResultBanner.textContent = 'Rolling d20...';
+
+    setTimeout(() => {
+      d20Visual.classList.remove('rolling');
+      const roll = Math.floor(Math.random() * 20) + 1;
+      d20Visual.textContent = roll;
+
+      let msg = `🎲 Rolled a ${roll}!`;
+      if (roll === 20) {
+        playSound('crit');
+        msg = `🌟 NATURAL 20! CRITICAL HIT! The Clean Architecture Gods Smile Upon You!`;
+      } else if (roll === 1) {
+        msg = `💀 NATURAL 1! CRITICAL FAIL! A wild NullReferenceException lurks!`;
+      } else if (roll >= 15) {
+        msg = `✨ Great roll (${roll})! Spell cast with high precision.`;
+      }
+      if (diceResultBanner) diceResultBanner.textContent = msg;
+    }, 600);
+  }
+
+  if (diceRollBtn) {
+    diceRollBtn.addEventListener('click', triggerD20Roll);
+  }
+
+  if (diceStageOverlay) {
+    diceStageOverlay.addEventListener('click', () => {
+      diceStageOverlay.classList.remove('open');
+      diceStageOverlay.setAttribute('aria-hidden', 'true');
+    });
+  }
+
+  // =========================================================================
+  // 10. The Altar of AsmODan (Quake CLI Engine)
   // =========================================================================
   const quakeDrawer = document.getElementById('quake-terminal');
   const toggleTerminalBtn = document.getElementById('toggle-terminal-btn');
@@ -416,6 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openTerminal() {
     if (quakeDrawer) {
+      playSound('click');
       quakeDrawer.classList.add('open');
       quakeDrawer.setAttribute('aria-hidden', 'false');
       if (terminalInput) {
@@ -443,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeTerminalDot) closeTerminalDot.addEventListener('click', closeTerminal);
   if (footerCliBtn) footerCliBtn.addEventListener('click', toggleTerminal);
 
-  // Global Keyboard shortcut: ` (backtick/tilde) and ESC
+  // Global Keyboard listener for ` (backtick/tilde) and ESC
   window.addEventListener('keydown', (e) => {
     if (e.key === '`' || e.key === '~') {
       if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.id !== 'terminal-input') {
@@ -455,6 +549,9 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       toggleTerminal();
     } else if (e.key === 'Escape') {
+      if (diceStageOverlay && diceStageOverlay.classList.contains('open')) {
+        diceStageOverlay.classList.remove('open');
+      }
       if (quakeDrawer && quakeDrawer.classList.contains('open')) {
         closeTerminal();
       }
@@ -474,70 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
     terminalBody.scrollTop = terminalBody.scrollHeight;
   }
 
-  // D&D Dice Roller Parser: e.g. "d20", "2d6+4", "1d20+5"
-  function parseDiceRoll(diceExpr) {
-    const clean = diceExpr.trim().toLowerCase().replace(/\s+/g, '');
-    const match = clean.match(/^(\d*)d(\d+)([+-]\d+)?$/);
-    if (!match) {
-      // Default to 1d20 if just "d20" or "20"
-      const simple = parseInt(clean, 10);
-      if (!isNaN(simple) && simple > 0) {
-        const roll = Math.floor(Math.random() * simple) + 1;
-        return { count: 1, sides: simple, mod: 0, rolls: [roll], total: roll };
-      }
-      return null;
-    }
-
-    const count = match[1] ? parseInt(match[1], 10) : 1;
-    const sides = parseInt(match[2], 10);
-    const mod = match[3] ? parseInt(match[3], 10) : 0;
-
-    if (count > 50 || sides > 1000) {
-      return { error: "Too many dice or sides! Keep it mortal." };
-    }
-
-    const rolls = [];
-    let sum = 0;
-    for (let i = 0; i < count; i++) {
-      const r = Math.floor(Math.random() * sides) + 1;
-      rolls.push(r);
-      sum += r;
-    }
-    const total = sum + mod;
-    return { count, sides, mod, rolls, total };
-  }
-
-  // Tanks ASCII Demon Mini-Game
-  function renderTanksGame() {
-    const width = 10;
-    const height = 7;
-    let screen = "\n=== TANKS1984 DEMONIC RETRO ENGINE ===\n";
-    screen += "Controls: 'w' (up), 's' (down), 'a' (left), 'd' (right), 'f' (fire shell), 'q' (quit)\n";
-    screen += "┌" + "─".repeat(width * 2) + "┐\n";
-
-    for (let y = 0; y < height; y++) {
-      let row = "│";
-      for (let x = 0; x < width; x++) {
-        if (tankEnemy.alive && tankEnemy.x === x && tankEnemy.y === y) {
-          row += "▼ ";
-        } else if (tankPlayer.x === x && tankPlayer.y === y) {
-          row += "▲ ";
-        } else if ((x === 2 && y === 3) || (x === 7 && y === 3)) {
-          row += "▓▓";
-        } else {
-          row += " .";
-        }
-      }
-      row += "│\n";
-      screen += row;
-    }
-    screen += "└" + "─".repeat(width * 2) + "┘\n";
-    if (!tankEnemy.alive) {
-      screen += "🎯 INFERNAL HIT! Enemy tank banished to the void! Type 'tanks' to restart.\n";
-    }
-    appendTermLine(screen, 'command');
-  }
-
   function handleCommand(rawCmd) {
     const cmd = rawCmd.trim();
     if (!cmd) return;
@@ -551,31 +584,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainCmd = parts[0].toLowerCase();
     const arg = parts.slice(1).join(' ').trim();
 
-    // Tanks Mini Game Active
-    if (tanksGameActive) {
-      if (['w', 'a', 's', 'd', 'up', 'down', 'left', 'right'].includes(mainCmd)) {
-        if (mainCmd === 'w' && tankPlayer.y > 0) tankPlayer.y--;
-        if (mainCmd === 's' && tankPlayer.y < 6) tankPlayer.y++;
-        if (mainCmd === 'a' && tankPlayer.x > 0) tankPlayer.x--;
-        if (mainCmd === 'd' && tankPlayer.x < 9) tankPlayer.x++;
-        renderTanksGame();
-        return;
-      } else if (mainCmd === 'f' || mainCmd === 'fire') {
-        if (tankEnemy.alive && tankPlayer.x === tankEnemy.x) {
-          tankEnemy.alive = false;
-          appendTermLine("💥 BOOM! Shell pierced demonic armor! Enemy destroyed!", "dice");
-        } else {
-          appendTermLine("💨 Missed! Shell shattered on the obsidian boundary.", "output");
-        }
-        renderTanksGame();
-        return;
-      } else if (mainCmd === 'q' || mainCmd === 'quit') {
-        tanksGameActive = false;
-        appendTermLine("Exited Tanks1984 demonic game loop.", "system");
-        return;
-      }
-    }
-
     switch (mainCmd) {
       case 'help':
         appendTermLine(
@@ -588,7 +596,7 @@ document.addEventListener('DOMContentLoaded', () => {
           "  projects        — List engineering relics and magic schools\n" +
           "  tanks           — Launch retro ASCII Tanks1984 demon battle\n" +
           "  contact         — Show direct summoning channels\n" +
-          "  cv / resume     — Switch to Chronicle & CV view\n" +
+          "  cv / resume     — Switch to Printable CV view\n" +
           "  theme [toggle]  — Switch between Dark Obsidian and Parchment Light mode\n" +
           "  clear           — Cleanse the altar display",
           'output'
@@ -598,24 +606,8 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'roll':
       case 'dice':
       case 'd20':
-        const diceArg = (mainCmd === 'd20') ? 'd20' : (arg || 'd20');
-        const res = parseDiceRoll(diceArg);
-        if (!res || res.error) {
-          appendTermLine(res ? res.error : "Invalid dice notation. Try 'roll d20', 'roll 1d20+5', or 'roll 2d6+3'.", 'error');
-        } else {
-          let rollDesc = `🎲 Rolling ${res.count}d${res.sides}${res.mod !== 0 ? (res.mod > 0 ? '+' + res.mod : res.mod) : ''}... [ ${res.rolls.join(', ')} ]`;
-          if (res.mod !== 0) rollDesc += ` + (${res.mod})`;
-          rollDesc += ` = TOTAL: ${res.total}`;
-
-          if (res.sides === 20 && res.count === 1) {
-            if (res.rolls[0] === 20) {
-              rollDesc += " 🌟 CRITICAL SUCCESS (NAT 20)! The Clean Architecture gods bless your code!";
-            } else if (res.rolls[0] === 1) {
-              rollDesc += " 💀 CRITICAL FAILURE (NAT 1)! A rogue NullReferenceException lurks in the darkness!";
-            }
-          }
-          appendTermLine(rollDesc, 'dice');
-        }
+        triggerD20Roll();
+        appendTermLine("🎲 Physical d20 rolled on the altar!", "dice");
         break;
 
       case 'cast':
@@ -624,6 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           const spell = (charSheet.spells || []).find(s => s.name.toLowerCase() === arg.toLowerCase());
           if (spell) {
+            playSound('crit');
             appendTermLine(`✨ [SPELL CAST: ${spell.name.toUpperCase()} (${spell.school} • ${spell.level})]`, 'spell');
             appendTermLine(`🔮 ${spell.desc}`, 'output');
           } else {
@@ -673,13 +666,6 @@ document.addEventListener('DOMContentLoaded', () => {
         appendTermLine(projText, 'output');
         break;
 
-      case 'tanks':
-        tanksGameActive = true;
-        tankPlayer = { x: 4, y: 5 };
-        tankEnemy = { x: 4, y: 1, alive: true };
-        renderTanksGame();
-        break;
-
       case 'contact':
         appendTermLine(
           "Direct Summoning Channels:\n" +
@@ -692,7 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       case 'cv':
       case 'resume':
-        switchView('chronicle');
+        switchRightTab('print-cv');
         closeTerminal();
         break;
 
@@ -750,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 8. Theme Switcher Controller
+  // 11. Theme Switcher Controller
   // =========================================================================
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeSunIcon = document.getElementById('theme-icon-sun');
@@ -769,6 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function toggleTheme() {
+    playSound('click');
     const current = document.documentElement.getAttribute('data-theme') || 'dark';
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
@@ -791,7 +778,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) {}
 
   // =========================================================================
-  // 9. Contact / Summon Modal & Toast Notifications
+  // 12. Summon / Contact Modal & Toast Notifications
   // =========================================================================
   const contactModal = document.getElementById('contact-modal');
   const openContactModalBtn = document.getElementById('open-contact-modal-btn');
@@ -814,6 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (openContactModalBtn && contactModal) {
     openContactModalBtn.addEventListener('click', () => {
+      playSound('click');
       contactModal.classList.add('open');
       contactModal.setAttribute('aria-hidden', 'false');
     });

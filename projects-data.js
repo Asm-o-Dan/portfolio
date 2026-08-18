@@ -7,8 +7,8 @@ const characterSheet = {
   name: "Даниил Гандапас",
   alias: "AsmODan (Asm-o-Dan)",
   title: "Level 20 Systems Archmage & Backend Sorcerer",
-  subtitle: "C# / .NET 8 • Python AI • Clean Architecture • Qdrant Vector DB • Pure ANSI C",
-  alignment: "Lawful Neutral (Strict Invariants, Clean Domain, Zero Memory Leaks)",
+  subtitle: "C# / .NET 8 • Clean Architecture • CQRS • Qdrant Vector DB • Pure ANSI C",
+  alignment: "Lawful Neutral (Strict Invariants, Isolated Domain, Zero Memory Leaks)",
   manifesto: "“Низкоуровневый код — это древние руны прямого управления материей. Архитектура домена — это защитный ритуальный круг, не пропускающий скверну внешних библиотек. А векторный поиск — высшая школа прорицания в многомерном астрале эмбеддингов.”",
   spellcasting: {
     class: "Systems Wizard / Backend Sorcerer",
@@ -17,12 +17,74 @@ const characterSheet = {
     spellAttackBonus: "+11"
   },
   stats: [
-    { code: "STR", name: "Strength", score: 18, mod: "+4", desc: "Low-Level C, Pointers, Manual Memory & Hardware Mastery" },
-    { code: "DEX", name: "Dexterity", score: 18, mod: "+4", desc: "High-Throughput Pipelines, AsyncIO & Fast Response Ticks" },
+    { code: "STR", name: "Strength", score: 18, mod: "+4", desc: "Low-Level C, Pointers, Manual Memory Allocation & Hardware Mastery" },
+    { code: "DEX", name: "Dexterity", score: 18, mod: "+4", desc: "High-Throughput AsyncIO Pipelines, Event Loops & Fast Response Ticks" },
     { code: "CON", name: "Constitution", score: 20, mod: "+5", desc: "100% Domain Test Coverage, Fault-Tolerance & Zero Downtime" },
-    { code: "INT", name: "Intelligence", score: 20, mod: "+5", desc: "Clean Architecture, CQRS, DDD & Layered System Design" },
+    { code: "INT", name: "Intelligence", score: 20, mod: "+5", desc: "Clean Architecture, CQRS, DDD & Layered System Decomposition" },
     { code: "WIS", name: "Wisdom", score: 19, mod: "+4", desc: "High-Dim Vector Embeddings, Qdrant Scrying & NLP Intention" },
     { code: "CHA", name: "Charisma", score: 17, mod: "+3", desc: "Transparent Git Workflow, Clear PRs & Engineering Culture" }
+  ],
+  equippedItems: [
+    {
+      slot: "mainhand",
+      slotName: "Main Hand",
+      icon: "sword",
+      itemName: "Blade of Clean Architecture",
+      itemType: "Legendary Artifact",
+      projectId: "drugs-engine",
+      bonus: "+5 to Domain Isolation",
+      desc: "Многослойный бэкенд DrugsEngine с полной изоляцией домена от БД и фреймворков."
+    },
+    {
+      slot: "offhand",
+      slotName: "Off Hand",
+      icon: "book-open",
+      itemName: "Tome of CQRS & MediatR",
+      itemType: "Arcane Grimoire",
+      projectId: "first-api-cqrs",
+      bonus: "+4 to Read/Write Segregation",
+      desc: "Паттерн CQRS: EF Core для безопасных транзакций, Dapper для высокоскоростных выборок."
+    },
+    {
+      slot: "head",
+      slotName: "Helm",
+      icon: "eye",
+      itemName: "The Astral Eye of Qdrant",
+      itemType: "Divination Relic",
+      projectId: "drugs-engine",
+      bonus: "+5 to 1536-dim Semantic Vision",
+      desc: "Семантическое сканирование векторного пространства по косинусному расстоянию."
+    },
+    {
+      slot: "armor",
+      slotName: "Armor",
+      icon: "shield",
+      itemName: "Carapace of Pure ANSI C",
+      itemType: "Ancient Armor",
+      projectId: "tanks-1984",
+      bonus: "Immunity to Memory Leaks & GC Overhead",
+      desc: "Движок Tanks1984 на чистом Си с ручным управлением памятью и детерминированным тиком."
+    },
+    {
+      slot: "ring",
+      slotName: "Ring",
+      icon: "camera",
+      itemName: "Signet of Optical Sight",
+      itemType: "Conjuration Ring",
+      projectId: "telegram-ocr-bots",
+      bonus: "+4 to Document Text Extraction",
+      desc: "Асинхронные воркеры с конвейером предобработки и оптическим распознаванием Tesseract OCR."
+    },
+    {
+      slot: "belt",
+      slotName: "Belt Scroll",
+      icon: "scroll",
+      itemName: "Scroll of Infinite Knowledge (CV)",
+      itemType: "HR Fast-Track Scroll",
+      action: "download-cv",
+      bonus: "Instant 3-sec Screening & PDF Export",
+      desc: "Официальное резюме Даниила Гандапаса со всеми контактами и опытом."
+    }
   ],
   spells: [
     { name: "clean-arch", level: "Cantrip", school: "Abjuration", desc: "Воздвигает непроницаемый ритуальный круг вокруг доменной модели, блокируя проникновение внешних зависимостей и БД." },
