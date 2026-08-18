@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AsmODan (Даниил Гандапас) — Cyber-Occult Grimoire & Systems Archmage</title>
-  <meta name="description" content="AsmODan (Даниил Гандапас) — Интерактивный кибероккультный гримуар и витрина системного инженера: C#, .NET 8, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C.">
+  <title>AsmODan (Даниил Гандапас) — The Radial Ritual Circle & Systems Archmage</title>
+  <meta name="description" content="AsmODan (Даниил Гандапас) — Радиальный ритуальный круг и 3 концентрические печати: C# .NET 8, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C.">
   <meta name="keywords" content="AsmODan, Asm-o-Dan, Даниил Гандапас, Systems Archmage, C#, .NET 8, Python, Clean Architecture, CQRS, Qdrant, Vector Search, D&D Portfolio, Pure C">
   <meta name="author" content="Даниил Гандапас (AsmODan)">
 
   <!-- OpenGraph / Social Meta Tags -->
-  <meta property="og:title" content="AsmODan (Даниил Гандапас) — Systems Archmage & Backend Sorcerer">
-  <meta property="og:description" content="Structure is freedom. Architecture is intention. Интерактивный кибероккультный гримуар системных разработок.">
+  <meta property="og:title" content="AsmODan (Даниил Гандапас) — The Radial Ritual Circle">
+  <meta property="og:description" content="Structure is freedom. Architecture is intention. Радиальный интерфейс системного инженера.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE">
 
-  <!-- Favicon (Pentagram/Rune) -->
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛧</text></svg>">
 
-  <!-- Google Fonts: Cinzel (Arcane Titles) + Space Grotesk (Tech Headings) + JetBrains Mono (Runes/Code) + Inter (Crisp Body) -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -42,15 +42,15 @@
           <span class="terminal-dot green"></span>
         </div>
         <div class="terminal-title">
-          <span class="rune-symbol">⛧</span> asmodan@grimoire: ~ (Kernel v6.6.6 | Demon of Low-Level Memory & Order)
+          <span class="rune-symbol">⛧</span> asmodan@grimoire: ~ (Radial Arcane Engine v8.0 | Lawful Neutral)
         </div>
         <div class="terminal-hotkey-hint">Press <kbd class="kbd-badge">`</kbd> or <kbd class="kbd-badge">ESC</kbd> to toggle</div>
       </div>
 
       <div class="terminal-body" id="terminal-body">
-        <div class="term-line system">AsmODan Arcane Kernel v6.6.6 initialized.</div>
-        <div class="term-line system">Type <span class="term-line accent">help</span> for commands, <span class="term-line accent">roll d20</span> for D&D check, or cast spells: <span class="term-line accent">cast clean-arch</span>, <span class="term-line accent">tanks</span>.</div>
-        <div class="term-line output">Current Avatar: Даниил Гандапас (AsmODan) | Level 20 Systems Archmage (Lawful Neutral)</div>
+        <div class="term-line system">AsmODan Radial Ritual Engine v8.0 online.</div>
+        <div class="term-line system">3 Concentric Seals active: [Ring 1: Chronicle], [Ring 2: Skills], [Ring 3: Projects].</div>
+        <div class="term-line output">Current Avatar: Даниил Гандапас (AsmODan) | Level 20 Systems Archmage</div>
       </div>
 
       <!-- Quick Command Buttons -->
@@ -62,7 +62,6 @@
         <button class="term-chip" data-cmd="cast vector-search">🔮 cast vector-search</button>
         <button class="term-chip" data-cmd="ls">ls</button>
         <button class="term-chip" data-cmd="cat dnd_stats.json">cat dnd_stats.json</button>
-        <button class="term-chip" data-cmd="tanks">🎮 tanks</button>
         <button class="term-chip" data-cmd="contact">contact</button>
         <button class="term-chip" data-cmd="clear">clear</button>
       </div>
@@ -74,7 +73,7 @@
           type="text" 
           id="terminal-input" 
           class="terminal-input" 
-          placeholder="Type command (help, roll d20, cast clean-arch, ls, tanks)..." 
+          placeholder="Type command (help, roll d20, cast clean-arch, ls)..." 
           autocomplete="off" 
           spellcheck="false"
         >
@@ -86,36 +85,28 @@
   <header class="hud-header" id="hud-header">
     <div class="hud-container">
       <!-- Brand / Identity -->
-      <a href="#grimoire" class="brand-badge-link" id="brand-logo-link">
+      <a href="#radial-sanctum" class="brand-badge-link" id="brand-logo-link">
         <span class="brand-code-tag">ASM</span>
         <span class="brand-name">AsmODan</span>
         <span class="brand-arcane-title">/ Level 20 Archmage</span>
         <span class="brand-status-dot" title="Open for Backend Roles"></span>
       </a>
 
-      <!-- Quick Chapter Navigator -->
-      <div class="tome-chapter-nav">
-        <button class="chapter-nav-btn active" data-tab="inspector" id="tab-btn-inspector">
-          <i data-lucide="shield" style="width: 14px; height: 14px;"></i>
-          <span>I. Артефакты & Схемы</span>
+      <!-- View Switcher: Radial Ritual vs Flat Dossier -->
+      <div class="perspective-nav">
+        <button class="nav-segment-btn active" id="btn-view-radial" data-view="radial">
+          <i data-lucide="circle-dot" style="width: 15px; height: 15px;"></i>
+          <span>Радиальный Ритуал</span>
         </button>
-        <button class="chapter-nav-btn" data-tab="spellbook" id="tab-btn-spellbook">
-          <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
-          <span>II. Гримуар Навыков</span>
-        </button>
-        <button class="chapter-nav-btn" data-tab="chronicle" id="tab-btn-chronicle">
-          <i data-lucide="scroll" style="width: 14px; height: 14px;"></i>
-          <span>III. Хроника & Вуз</span>
-        </button>
-        <button class="chapter-nav-btn" data-tab="print-cv" id="tab-btn-print-cv">
-          <i data-lucide="printer" style="width: 14px; height: 14px;"></i>
-          <span>IV. Резюме / Печать</span>
+        <button class="nav-segment-btn" id="btn-view-flat" data-view="flat">
+          <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
+          <span>Свиток для HR / CV</span>
         </button>
       </div>
 
       <!-- Right HUD Action Tools -->
       <div class="hud-actions">
-        <!-- Audio Synthesizer Toggle -->
+        <!-- Audio FX Toggle -->
         <button class="hud-tool-btn audio-toggle-btn" id="audio-toggle-btn" title="Включить / выключить звуки алтаря">
           <i data-lucide="volume-2" id="audio-icon-on" style="width: 16px; height: 16px;"></i>
           <i data-lucide="volume-x" id="audio-icon-off" style="width: 16px; height: 16px; display: none;"></i>
@@ -135,7 +126,7 @@
           <i data-lucide="moon" id="theme-icon-moon" style="width: 16px; height: 16px; display: none;"></i>
         </button>
 
-        <!-- Direct Summon / Contact Modal Trigger -->
+        <!-- Direct Summon Button -->
         <button class="hud-cta-btn" id="open-contact-modal-btn">
           <i data-lucide="send" style="width: 14px; height: 14px;"></i>
           <span>Призвать</span>
@@ -145,230 +136,203 @@
   </header>
 
   <!-- ========================================================================= -->
-  <!-- MAIN WORKBENCH: THE OPEN CYBER-OCCULT GRIMOIRE (DOUBLE-PAGE TOME)         -->
+  <!-- MAIN STAGE: THE RADIAL RITUAL CIRCLE (3 CONCENTRIC SEALS)                 -->
   <!-- ========================================================================= -->
-  <main class="grimoire-stage" id="grimoire-app">
-    <div class="container-workbench">
-
-      <!-- The Open Grimoire Book Container -->
-      <div class="grimoire-tome" id="grimoire-tome">
-        <div class="tome-spine" aria-hidden="true"></div>
-
-        <!-- ======================================================= -->
-        <!-- LEFT PAGE: THE CHARACTER FOLIO & EQUIPMENT SANCTUM     -->
-        <!-- ======================================================= -->
-        <section class="tome-page left-page" id="folio-page" aria-label="Character Folio">
-          <div class="page-content">
-
-            <!-- Page Header / Character Identity -->
-            <div class="folio-header">
-              <div class="avatar-portal-wrap">
-                <img 
-                  src="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE" 
-                  alt="Даниил Гандапас (AsmODan)" 
-                  class="avatar-portal-img"
-                >
-                <div class="avatar-portal-ring"></div>
-                <div class="avatar-seal" title="Verified Systems Archmage">
-                  <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
-                </div>
-              </div>
-
-              <div class="folio-titles">
-                <div class="folio-level-badge">
-                  <span class="pulse-dot"></span>
-                  <span>LVL 20 ARCHMAGE • LAWFUL NEUTRAL</span>
-                </div>
-                <h1 class="folio-name">Даниил Гандапас</h1>
-                <div class="folio-alias"><span class="rune-tag">⛧ AsmODan</span> <span class="folio-subrole">Backend & Systems Sorcerer</span></div>
-              </div>
-            </div>
-
-            <!-- Incantation Manifesto Quote -->
-            <blockquote class="folio-incantation">
-              “Низкоуровневый код — это древние руны прямого управления материей. Архитектура домена — это защитный ритуальный круг, не пропускающий скверну внешних библиотек.”
-            </blockquote>
-
-            <!-- D&D 5e Stat Block (Interactive 6 Attributes) -->
-            <div class="stat-block-container">
-              <div class="block-label-row">
-                <span class="block-title-tag">D&D 5e Attributes</span>
-                <span class="spell-dc-text">DC <strong>19</strong> • Attack <strong>+11</strong></span>
-              </div>
-              <div class="dnd-stats-row" id="dnd-stats-row">
-                <!-- Rendered dynamically via JS from characterSheet.stats -->
-              </div>
-            </div>
-
-            <!-- RPG Equipped Artifacts Inventory (Clickable items!) -->
-            <div class="inventory-section">
-              <div class="block-label-row">
-                <span class="block-title-tag">Экипированные Артефакты (Инвентарь)</span>
-                <span class="inventory-hint">Кликните предмет для инспекции ➜</span>
-              </div>
-              <div class="equipment-slots-grid" id="equipment-slots-grid">
-                <!-- Rendered dynamically via JS from characterSheet.equippedItems -->
-              </div>
-            </div>
-
-            <!-- HR Fast-Track Screening & Wax Seal Download -->
-            <div class="hr-scroll-box">
-              <div class="hr-scroll-grid">
-                <div class="hr-item">
-                  <span class="hr-lbl"><i data-lucide="briefcase" style="width: 13px; height: 13px;"></i> Формат:</span>
-                  <span class="hr-val text-emerald">Remote / Full-time</span>
-                </div>
-                <div class="hr-item">
-                  <span class="hr-lbl"><i data-lucide="map-pin" style="width: 13px; height: 13px;"></i> Локация:</span>
-                  <span class="hr-val">Тирасполь / Remote</span>
-                </div>
-                <div class="hr-item">
-                  <span class="hr-lbl"><i data-lucide="graduation-cap" style="width: 13px; height: 13px;"></i> Вуз:</span>
-                  <span class="hr-val">ТИФТ (Software Eng.)</span>
-                </div>
-                <div class="hr-item">
-                  <span class="hr-lbl"><i data-lucide="languages" style="width: 13px; height: 13px;"></i> Языки:</span>
-                  <span class="hr-val">Русский (Native), EN (B1/B2)</span>
-                </div>
-              </div>
-
-              <!-- Wax Seal PDF Download Button -->
-              <div class="wax-seal-action-row">
-                <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-wax-seal" id="wax-seal-download-btn">
-                  <span class="wax-seal-icon">📜</span>
-                  <span>Скачать свиток резюме (resume.pdf)</span>
-                </a>
-                <button class="btn-dice-trigger" id="dice-roll-btn" title="Бросить D&D кубик d20!">
-                  <span class="dice-icon">🎲</span>
-                  <span>d20</span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- ======================================================= -->
-        <!-- RIGHT PAGE: THE CODEX OF SPELLS & SYSTEMS INSPECTOR     -->
-        <!-- ======================================================= -->
-        <section class="tome-page right-page" id="codex-page" aria-label="Codex of Spells and Artifact Inspector">
-          
-          <!-- Outer Tome Edge Bookmarks -->
-          <aside class="tome-page-tabs" aria-label="Page Tabs">
-            <button class="tome-tab-btn active" data-tab="inspector" title="Инспектор артефакта">
-              <span class="tab-symbol">🔮</span>
-              <span class="tab-label">Артефакт</span>
-            </button>
-            <button class="tome-tab-btn" data-tab="spellbook" title="Гримуар навыков">
-              <span class="tab-symbol">✨</span>
-              <span class="tab-label">Навыки</span>
-            </button>
-            <button class="tome-tab-btn" data-tab="chronicle" title="Хроника походов">
-              <span class="tab-symbol">📜</span>
-              <span class="tab-label">Хроника</span>
-            </button>
-            <button class="tome-tab-btn" data-tab="print-cv" title="Печать резюме">
-              <span class="tab-symbol">🖨️</span>
-              <span class="tab-label">CV / Печать</span>
-            </button>
-          </aside>
-
-          <!-- Tab Content 1: Active Artifact Inspector -->
-          <div class="codex-tab-pane active" id="pane-inspector">
-            <div class="page-content" id="artifact-inspector-container">
-              <!-- Populated dynamically via JS when an artifact/project is selected -->
-            </div>
-          </div>
-
-          <!-- Tab Content 2: Skills Spellbook -->
-          <div class="codex-tab-pane" id="pane-spellbook">
-            <div class="page-content">
-              <div class="pane-header">
-                <span class="block-title-tag">Arcane Competencies</span>
-                <h2 class="pane-heading">Гримуар Навыков & Заклинаний</h2>
-              </div>
-              <div class="skills-spellbook-grid" id="skills-spellbook-container">
-                <!-- Rendered dynamically via JS -->
-              </div>
-            </div>
-          </div>
-
-          <!-- Tab Content 3: Quest Chronicle & Timeline -->
-          <div class="codex-tab-pane" id="pane-chronicle">
-            <div class="page-content">
-              <div class="pane-header">
-                <span class="block-title-tag">Quest Logs & Milestones</span>
-                <h2 class="pane-heading">Хроника Походов & Опыт</h2>
-              </div>
-              <div class="quest-timeline-list" id="quest-timeline-container">
-                <!-- Rendered dynamically via JS -->
-              </div>
-            </div>
-          </div>
-
-          <!-- Tab Content 4: Printable CV Parchment -->
-          <div class="codex-tab-pane" id="pane-print-cv">
-            <div class="page-content">
-              <div class="pane-header cv-print-header">
-                <div>
-                  <span class="block-title-tag">Official Dossier</span>
-                  <h2 class="pane-heading">Печатная версия резюме</h2>
-                </div>
-                <div class="cv-print-actions">
-                  <button class="btn-action-primary" id="trigger-browser-print-btn">
-                    <i data-lucide="printer" style="width: 15px; height: 15px;"></i>
-                    <span>Печать / Экспорт PDF</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Printable CV Sheet Wrapper -->
-              <article class="cv-parchment-sheet" id="printable-parchment-sheet">
-                <div class="cv-sheet-top">
-                  <h1 class="cv-sheet-name">Даниил Гандапас <span class="cv-alias-badge">@AsmODan</span></h1>
-                  <div class="cv-sheet-subtitle">Backend & Systems Software Engineer • C# .NET 8 • Clean Architecture • CQRS</div>
-                  <div class="cv-contacts-line">
-                    <span>Тирасполь / Remote</span> • 
-                    <span><a href="mailto:dgandapas1@gmail.com">dgandapas1@gmail.com</a></span> • 
-                    <span>Telegram: <a href="https://t.me/SomeSimpleTag">@SomeSimpleTag</a></span> • 
-                    <span>GitHub: <a href="https://github.com/Asm-o-Dan">github.com/Asm-o-Dan</a></span>
-                  </div>
-                </div>
-
-                <div class="cv-block">
-                  <div class="cv-block-title">Профиль / Summary</div>
-                  <p class="cv-block-text">
-                    Backend-инженер со специализацией в <strong>C# (.NET 8/9)</strong>, <strong>Python</strong>, многослойной архитектуре (<strong>Clean Architecture, CQRS, DDD</strong>) и векторных базах данных (<strong>Qdrant</strong>). Имею фундаментальную системную базу на низкоуровневом <strong>Си</strong> (ручное управление памятью, детерминированные циклы). Проектирую отказоустойчивые микросервисы, асинхронные воркеры с Tesseract OCR и чистые API с разделением команд и запросов.
-                  </p>
-                </div>
-
-                <div class="cv-block">
-                  <div class="cv-block-title">Образование</div>
-                  <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.95rem;">
-                    <span>Тираспольский институт физики и техники (ТИФТ)</span>
-                    <span class="mono text-cyan">Программная инженерия</span>
-                  </div>
-                  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
-                    Фундаментальные структуры данных и алгоритмы, высшая математика, теория баз данных, системное программирование и архитектура ПО.
-                  </p>
-                </div>
-
-                <div class="cv-block">
-                  <div class="cv-block-title">Ключевые системы на GitHub</div>
-                  <div class="cv-systems-summary">
-                    <div><strong>DrugsEngine & Qdrant Vector Search</strong> (C# .NET 8, Python, Qdrant, CQRS) — Enterprise Clean Architecture бэкенд с семантическим поиском.</div>
-                    <div><strong>Tanks1984 Game Engine</strong> (Pure ANSI C) — Детерминированный ретро-движок с ручным управлением памятью и нулевыми утечками.</div>
-                    <div><strong>Telegram Bot Suite & OCR</strong> (C#, Tesseract OCR) — Отказоустойчивые боты с конвейером оптического распознавания документов.</div>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-
-        </section>
+  <main class="radial-stage" id="main-stage">
+    
+    <!-- VIEW A: RADIAL RITUAL ENGINE (DEFAULT) -->
+    <section class="radial-ritual-viewport active" id="view-radial-stage" aria-label="Radial Ritual Engine">
+      
+      <!-- Seal Rings Guide HUD (Left Top) -->
+      <div class="rings-legend-hud">
+        <div class="legend-title">Печати Ритуала:</div>
+        <div class="legend-item ring-3-leg" data-ring="3">
+          <span class="legend-dot dot-cyan"></span>
+          <span class="legend-name">Круг 3: Проекты-Реликвии (5)</span>
+        </div>
+        <div class="legend-item ring-2-leg" data-ring="2">
+          <span class="legend-dot dot-gold"></span>
+          <span class="legend-name">Круг 2: Навыки & Заклинания (6)</span>
+        </div>
+        <div class="legend-item ring-1-leg" data-ring="1">
+          <span class="legend-dot dot-emerald"></span>
+          <span class="legend-name">Круг 1: Опыт & ТИФТ (4)</span>
+        </div>
+        <div class="legend-hint">Кликните любой узел для раскрытия манускрипта</div>
       </div>
 
-    </div>
+      <!-- The Radial Canvas Container -->
+      <div class="radial-circle-system" id="radial-circle-system">
+
+        <!-- SVG Concentric Orbital Paths & Visual Runes -->
+        <svg class="radial-orbit-svg" id="radial-orbit-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <radialGradient id="coreGlowGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(0, 240, 255, 0.25)" />
+              <stop offset="70%" stop-color="rgba(244, 63, 94, 0.12)" />
+              <stop offset="100%" stop-color="transparent" />
+            </radialGradient>
+            <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Core Ambient Radial Glow -->
+          <circle cx="500" cy="500" r="220" fill="url(#coreGlowGrad)" />
+
+          <!-- Ring 1 Track (Chronicle: r=240) -->
+          <circle cx="500" cy="500" r="240" class="orbit-path ring-1-path" />
+          
+          <!-- Ring 2 Track (Skills: r=340) -->
+          <circle cx="500" cy="500" r="340" class="orbit-path ring-2-path" />
+
+          <!-- Ring 3 Track (Projects: r=440) -->
+          <circle cx="500" cy="500" r="440" class="orbit-path ring-3-path" />
+
+          <!-- Dynamic Energy Beam from Core to Active Node -->
+          <line x1="500" y1="500" x2="500" y2="500" class="active-energy-beam" id="active-energy-beam" filter="url(#glowFilter)" />
+        </svg>
+
+        <!-- ========================================================= -->
+        <!-- ⛧ CENTRAL CORE: AsmODan Sanctum                           -->
+        <!-- ========================================================= -->
+        <div class="ritual-core-card" id="ritual-core" aria-label="Центральное Ядро AsmODan">
+          <div class="core-inner-wrap">
+            <div class="core-avatar-portal">
+              <img 
+                src="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE" 
+                alt="Даниил Гандапас" 
+                class="core-avatar-img"
+              >
+              <div class="core-avatar-halo" aria-hidden="true"></div>
+            </div>
+
+            <div class="core-level-pill">
+              <span class="pulse-dot"></span>
+              <span>LVL 20 ARCHMAGE</span>
+            </div>
+
+            <h1 class="core-name">Даниил Гандапас</h1>
+            <div class="core-alias"><span class="text-crimson font-bold">⛧ AsmODan</span> <span class="core-role">Backend Sorcerer</span></div>
+
+            <!-- Interactive D&D 5e Stat Block (6 Attributes) -->
+            <div class="core-dnd-stats" id="core-dnd-stats">
+              <!-- Rendered dynamically via JS -->
+            </div>
+
+            <!-- Quick Action Row in Core -->
+            <div class="core-actions-row">
+              <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="core-btn-cv" id="core-cv-download-btn" title="Скачать резюме в PDF">
+                <i data-lucide="file-down" style="width: 14px; height: 14px;"></i>
+                <span>Резюме</span>
+              </a>
+              <button class="core-btn-dice" id="core-dice-btn" title="Бросить кубик d20!">
+                <span>🎲 d20</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- ⭕ RING 1: Inner Seal (Chronicle & Roots — 4 Nodes)       -->
+        <!-- ========================================================= -->
+        <div class="orbital-ring ring-1-nodes" id="ring-1-container" data-ring="1">
+          <!-- Rendered dynamically via JS from ring1Chronicle -->
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- ⭕ RING 2: Middle Seal (Skills & Spellbook — 6 Nodes)     -->
+        <!-- ========================================================= -->
+        <div class="orbital-ring ring-2-nodes" id="ring-2-container" data-ring="2">
+          <!-- Rendered dynamically via JS from ring2Skills -->
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- ⭕ RING 3: Outer Seal (Projects & Relics — 5 Nodes)       -->
+        <!-- ========================================================= -->
+        <div class="orbital-ring ring-3-nodes" id="ring-3-container" data-ring="3">
+          <!-- Rendered dynamically via JS from ring3Projects -->
+        </div>
+
+      </div>
+
+      <!-- Slide-Out Radial Side Inspector Drawer -->
+      <aside class="radial-side-drawer" id="radial-side-drawer" aria-label="Инспектор выбранной печати">
+        <div class="drawer-inner">
+          <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Закрыть инспектор">
+            <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+          </button>
+          <div class="drawer-scroll-content" id="drawer-scroll-content">
+            <!-- Populated dynamically when any node is clicked -->
+          </div>
+        </div>
+      </aside>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW B: FLAT HR DOSSIER & PRINTABLE SCROLL (FOR INSTANT SCREENING)       -->
+    <!-- ========================================================================= -->
+    <section class="flat-dossier-viewport" id="view-flat-stage" aria-label="Classic HR Scroll">
+      <div class="container-workbench" style="max-width: 900px;">
+        
+        <div class="dossier-top-bar">
+          <div>
+            <span class="block-title-tag">HR Fast-Track & Screening</span>
+            <h2 class="dossier-heading">Манускрипт Резюме Даниила Гандапаса</h2>
+          </div>
+          <button class="btn-action-primary" id="flat-print-btn">
+            <i data-lucide="printer" style="width: 15px; height: 15px;"></i>
+            <span>Печать / Экспорт в PDF</span>
+          </button>
+        </div>
+
+        <!-- Classic Printable CV Parchment -->
+        <article class="flat-cv-sheet">
+          <div class="cv-sheet-top">
+            <h1 class="cv-sheet-name">Даниил Гандапас <span class="cv-alias-badge">@AsmODan</span></h1>
+            <div class="cv-sheet-subtitle">Backend & Systems Software Engineer • C# .NET 8 • Clean Architecture • CQRS</div>
+            <div class="cv-contacts-line">
+              <span>Тирасполь / Remote</span> • 
+              <span><a href="mailto:dgandapas1@gmail.com">dgandapas1@gmail.com</a></span> • 
+              <span>Telegram: <a href="https://t.me/SomeSimpleTag">@SomeSimpleTag</a></span> • 
+              <span>GitHub: <a href="https://github.com/Asm-o-Dan">github.com/Asm-o-Dan</a></span>
+            </div>
+          </div>
+
+          <div class="cv-block">
+            <div class="cv-block-title">Краткое резюме / Summary</div>
+            <p class="cv-block-text">
+              Backend-инженер со специализацией в <strong>C# (.NET 8/9)</strong>, <strong>Python</strong>, многослойной архитектуре (<strong>Clean Architecture, CQRS, DDD</strong>) и векторных базах данных (<strong>Qdrant</strong>). Имею фундаментальную системную базу на низкоуровневом <strong>Си</strong> (ручное управление памятью, детерминированные циклы). Проектирую отказоустойчивые микросервисы, асинхронные воркеры с Tesseract OCR и чистые API с разделением команд и запросов.
+            </p>
+          </div>
+
+          <div class="cv-block">
+            <div class="cv-block-title">Образование</div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.95rem;">
+              <span>Тираспольский институт физики и техники (ТИФТ)</span>
+              <span class="mono text-cyan">Программная инженерия</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+              Фундаментальные структуры данных и алгоритмы, высшая математика, теория баз данных, системное программирование и архитектура ПО.
+            </p>
+          </div>
+
+          <div class="cv-block">
+            <div class="cv-block-title">Ключевые системы на GitHub</div>
+            <div class="cv-systems-summary" id="flat-projects-summary">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- 3D Physics Dice Roller Floating Overlay -->
@@ -461,12 +425,9 @@
   <footer class="hud-footer">
     <div class="hud-container footer-flex">
       <div class="footer-copy">
-        <span class="mono text-cyan">AsmODan // Cyber-Occult Grimoire v7.0</span> • Engineered with Clean Architecture & Occult Order.
+        <span class="mono text-cyan">AsmODan // The Radial Ritual Circle v8.0</span> • 3 Concentric Seals & Clean Architecture.
       </div>
       <div class="footer-links">
-        <button class="footer-btn tab-nav-shortcut" data-tab="inspector">I. Артефакты</button>
-        <button class="footer-btn tab-nav-shortcut" data-tab="spellbook">II. Навыки</button>
-        <button class="footer-btn tab-nav-shortcut" data-tab="chronicle">III. Хроника</button>
         <button class="footer-btn" id="footer-cli-btn">⛧ Altar CLI [ ` ]</button>
       </div>
     </div>

@@ -1,29 +1,26 @@
 /**
- * AsmODan — Cyber-Occult Grimoire & Arcane Systems Engine
- * Open Grimoire Book Router, RPG Equipment Inventory, D&D 5e Dice Engine, and Web Audio Synthesizer
+ * AsmODan — The Radial Ritual Circle & 3 Concentric Arcane Seals Engine
+ * Radial Trigonometry, Orbital Rotation, Energy Beams, Web Audio FX, and Altar CLI
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const data = window.ASM_PORTFOLIO || {};
   const charSheet = data.characterSheet || {};
-  const projectsData = data.projectsData || [];
-  const skillsData = data.skillsData || [];
-  const timelineData = data.timelineData || [];
+  const hrData = data.hrQuickFacts || {};
+  const ring1Chronicle = data.ring1Chronicle || [];
+  const ring2Skills = data.ring2Skills || [];
+  const ring3Projects = data.ring3Projects || [];
   const virtualFS = data.virtualFS || { "/": [], "/grimoire": [], files: {} };
 
   // Active state
-  let currentTab = 'inspector';
-  let activeProjectId = 'drugs-engine';
-  let activeLayerIndex = 0;
-  let activeEquipSlot = 'mainhand';
+  let currentView = 'radial';
+  let activeNodeData = null;
   let soundEnabled = true;
+  let isOrbitHovered = false;
 
   // Terminal & Game state
   let terminalHistory = [];
   let historyIndex = -1;
-  let tanksGameActive = false;
-  let tankPlayer = { x: 4, y: 5 };
-  let tankEnemy = { x: 4, y: 1, alive: true };
 
   // =========================================================================
   // 1. Web Audio Synthesizer (Zero-dependency tactile sound FX)
@@ -53,25 +50,25 @@ document.addEventListener('DOMContentLoaded', () => {
       gain.connect(audioCtx.destination);
 
       if (type === 'click') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(440, now);
-        osc.frequency.exponentialRampToValueAtTime(120, now + 0.05);
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-        osc.start(now);
-        osc.stop(now + 0.05);
-      } else if (type === 'equip') {
         osc.type = 'sine';
+        osc.frequency.setValueAtTime(580, now);
+        osc.frequency.exponentialRampToValueAtTime(220, now + 0.06);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        osc.start(now);
+        osc.stop(now + 0.06);
+      } else if (type === 'open-drawer') {
+        osc.type = 'triangle';
         osc.frequency.setValueAtTime(320, now);
-        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
-        gain.gain.setValueAtTime(0.18, now);
+        osc.frequency.exponentialRampToValueAtTime(740, now + 0.12);
+        gain.gain.setValueAtTime(0.15, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
         osc.start(now);
         osc.stop(now + 0.12);
       } else if (type === 'dice') {
         osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(180, now);
-        osc.frequency.linearRampToValueAtTime(360, now + 0.08);
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.linearRampToValueAtTime(420, now + 0.08);
         osc.frequency.exponentialRampToValueAtTime(90, now + 0.25);
         gain.gain.setValueAtTime(0.15, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
@@ -79,11 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
         osc.stop(now + 0.25);
       } else if (type === 'crit') {
         osc.type = 'square';
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
-        osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
-        osc.frequency.setValueAtTime(1046.50, now + 0.24); // C6
-        gain.gain.setValueAtTime(0.15, now);
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        osc.frequency.setValueAtTime(783.99, now + 0.16);
+        osc.frequency.setValueAtTime(1046.50, now + 0.24);
+        gain.gain.setValueAtTime(0.14, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
         osc.start(now);
         osc.stop(now + 0.4);
@@ -127,334 +124,380 @@ document.addEventListener('DOMContentLoaded', () => {
   refreshIcons();
 
   // =========================================================================
-  // 3. D&D 5e Stat Block Renderer
+  // 3. Central Core D&D 5e Stat Block Renderer
   // =========================================================================
-  function renderDndStats() {
-    const statsContainer = document.getElementById('dnd-stats-row');
+  function renderCoreStats() {
+    const statsContainer = document.getElementById('core-dnd-stats');
     if (!statsContainer || !charSheet.stats) return;
     statsContainer.innerHTML = '';
 
     charSheet.stats.forEach(stat => {
       const node = document.createElement('div');
-      node.className = 'dnd-stat-node';
-      node.title = stat.desc;
-      node.innerHTML = `
-        <div class="dnd-node-code">${stat.code}</div>
-        <div class="dnd-node-score">${stat.score}</div>
-        <div class="dnd-node-mod">${stat.mod}</div>
-      `;
+      node.className = 'core-stat-node';
+      node.title = `${stat.name}: ${stat.desc}`;
+      node.innerHTML = `<div>${stat.code}</div><div class="mod">${stat.mod}</div>`;
       statsContainer.appendChild(node);
     });
   }
-  renderDndStats();
+  renderCoreStats();
 
   // =========================================================================
-  // 4. RPG Equipped Artifacts Inventory Renderer
+  // 4. Radial Orbital Positioning Engine (Rings 1, 2, 3)
   // =========================================================================
-  const equipmentGrid = document.getElementById('equipment-slots-grid');
+  const ring1Container = document.getElementById('ring-1-container');
+  const ring2Container = document.getElementById('ring-2-container');
+  const ring3Container = document.getElementById('ring-3-container');
+  const energyBeam = document.getElementById('active-energy-beam');
 
-  function renderEquipmentSlots() {
-    if (!equipmentGrid || !charSheet.equippedItems) return;
-    equipmentGrid.innerHTML = '';
+  // Orbital angles in degrees (updated each animation frame for smooth rotation)
+  let angles = {
+    ring1: 0,
+    ring2: 180,
+    ring3: 45
+  };
 
-    charSheet.equippedItems.forEach(item => {
-      const slotEl = document.createElement('div');
-      slotEl.className = `equip-slot-item ${item.slot === activeEquipSlot ? 'active' : ''}`;
-      slotEl.setAttribute('data-slot', item.slot);
-      slotEl.setAttribute('data-project', item.projectId || '');
+  const orbitalRadii = {
+    ring1: 240,
+    ring2: 340,
+    ring3: 440
+  };
 
-      slotEl.innerHTML = `
-        <div class="slot-top">
-          <span class="slot-badge">${item.slotName}</span>
-          <i data-lucide="${item.icon}" class="slot-icon"></i>
+  const ring1NodesElements = [];
+  const ring2NodesElements = [];
+  const ring3NodesElements = [];
+
+  function createRingNodes(items, container, ringNum, elementArray) {
+    if (!container) return;
+    container.innerHTML = '';
+    const count = items.length;
+
+    items.forEach((item, index) => {
+      const nodeEl = document.createElement('div');
+      nodeEl.className = 'orbital-node';
+      nodeEl.setAttribute('data-id', item.id);
+      nodeEl.setAttribute('data-ring', ringNum);
+
+      let icon = item.icon || 'sparkles';
+      let title = item.shortTitle || item.title || item.name;
+      let tag = item.period || item.category || (item.school ? item.school.split(' ')[0] : '');
+
+      nodeEl.innerHTML = `
+        <div class="node-card">
+          <div class="node-icon-wrap">
+            <i data-lucide="${icon}" style="width: 14px; height: 14px;"></i>
+          </div>
+          <div class="node-title-box">
+            <span class="node-name">${title}</span>
+            <span class="node-tag">${tag}</span>
+          </div>
         </div>
-        <div class="slot-item-name">${item.itemName}</div>
-        <div class="slot-bonus">${item.bonus}</div>
       `;
 
-      slotEl.addEventListener('click', () => {
-        playSound('equip');
-        activeEquipSlot = item.slot;
-        if (item.projectId) {
-          activeProjectId = item.projectId;
-          activeLayerIndex = 0;
-          switchRightTab('inspector');
-          renderArtifactInspector();
-        } else if (item.action === 'download-cv') {
-          const downloadBtn = document.getElementById('wax-seal-download-btn');
-          if (downloadBtn) downloadBtn.click();
-        }
-        renderEquipmentSlots();
+      nodeEl.addEventListener('mouseenter', () => {
+        isOrbitHovered = true;
+        highlightEnergyBeam(nodeEl);
       });
 
-      equipmentGrid.appendChild(slotEl);
+      nodeEl.addEventListener('mouseleave', () => {
+        isOrbitHovered = false;
+        if (!activeNodeData) {
+          hideEnergyBeam();
+        }
+      });
+
+      nodeEl.addEventListener('click', () => {
+        playSound('open-drawer');
+        selectNode(item, ringNum, nodeEl);
+      });
+
+      container.appendChild(nodeEl);
+      elementArray.push({
+        el: nodeEl,
+        baseAngle: (index / count) * 360,
+        radius: orbitalRadii[`ring${ringNum}`]
+      });
     });
+  }
+
+  createRingNodes(ring1Chronicle, ring1Container, 1, ring1NodesElements);
+  createRingNodes(ring2Skills, ring2Container, 2, ring2NodesElements);
+  createRingNodes(ring3Projects, ring3Container, 3, ring3NodesElements);
+
+  // Position nodes on circle using trigonometry
+  function updateNodePositions() {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) return; // Responsive mode handles layout in CSS
+
+    // Update Ring 1 (Chronicle)
+    ring1NodesElements.forEach(item => {
+      const totalAngle = (item.baseAngle + angles.ring1) * (Math.PI / 180);
+      const x = 500 + item.radius * Math.cos(totalAngle);
+      const y = 500 + item.radius * Math.sin(totalAngle);
+      item.el.style.left = `${(x / 1000) * 100}%`;
+      item.el.style.top = `${(y / 1000) * 100}%`;
+    });
+
+    // Update Ring 2 (Skills)
+    ring2NodesElements.forEach(item => {
+      const totalAngle = (item.baseAngle + angles.ring2) * (Math.PI / 180);
+      const x = 500 + item.radius * Math.cos(totalAngle);
+      const y = 500 + item.radius * Math.sin(totalAngle);
+      item.el.style.left = `${(x / 1000) * 100}%`;
+      item.el.style.top = `${(y / 1000) * 100}%`;
+    });
+
+    // Update Ring 3 (Projects)
+    ring3NodesElements.forEach(item => {
+      const totalAngle = (item.baseAngle + angles.ring3) * (Math.PI / 180);
+      const x = 500 + item.radius * Math.cos(totalAngle);
+      const y = 500 + item.radius * Math.sin(totalAngle);
+      item.el.style.left = `${(x / 1000) * 100}%`;
+      item.el.style.top = `${(y / 1000) * 100}%`;
+    });
+  }
+
+  // Animation Loop for Orbital Rotation
+  function orbitalLoop() {
+    if (!isOrbitHovered && window.innerWidth > 768) {
+      angles.ring1 = (angles.ring1 + 0.04) % 360;
+      angles.ring2 = (angles.ring2 - 0.025 + 360) % 360;
+      angles.ring3 = (angles.ring3 + 0.015) % 360;
+      updateNodePositions();
+    }
+    requestAnimationFrame(orbitalLoop);
+  }
+  updateNodePositions();
+  orbitalLoop();
+
+  // Energy Beam Connector
+  function highlightEnergyBeam(nodeEl) {
+    if (!energyBeam) return;
+    const xPct = parseFloat(nodeEl.style.left) || 50;
+    const yPct = parseFloat(nodeEl.style.top) || 50;
+    energyBeam.setAttribute('x1', '500');
+    energyBeam.setAttribute('y1', '500');
+    energyBeam.setAttribute('x2', (xPct * 10).toString());
+    energyBeam.setAttribute('y2', (yPct * 10).toString());
+    energyBeam.classList.add('visible');
+  }
+
+  function hideEnergyBeam() {
+    if (!energyBeam) return;
+    energyBeam.classList.remove('visible');
+  }
+
+  // =========================================================================
+  // 5. Radial Side Inspector Drawer Manager
+  // =========================================================================
+  const sideDrawer = document.getElementById('radial-side-drawer');
+  const drawerScrollContent = document.getElementById('drawer-scroll-content');
+  const drawerCloseBtn = document.getElementById('drawer-close-btn');
+
+  function selectNode(item, ringNum, nodeEl) {
+    activeNodeData = item;
+    highlightEnergyBeam(nodeEl);
+
+    // Remove active from all cards
+    document.querySelectorAll('.node-card').forEach(c => c.classList.remove('active'));
+    const card = nodeEl.querySelector('.node-card');
+    if (card) card.classList.add('active');
+
+    renderDrawerContent(item, ringNum);
+    if (sideDrawer) {
+      sideDrawer.classList.add('open');
+    }
+  }
+
+  function closeDrawer() {
+    if (sideDrawer) {
+      sideDrawer.classList.remove('open');
+    }
+    activeNodeData = null;
+    hideEnergyBeam();
+    document.querySelectorAll('.node-card').forEach(c => c.classList.remove('active'));
+  }
+
+  if (drawerCloseBtn) {
+    drawerCloseBtn.addEventListener('click', closeDrawer);
+  }
+
+  function renderDrawerContent(item, ringNum) {
+    if (!drawerScrollContent) return;
+
+    if (ringNum === 3) {
+      // Project Node (Ring 3)
+      const metricsHtml = (item.metrics || []).map(m => `
+        <div class="drawer-metric-col">
+          <span class="metric-lbl">${m.label}</span>
+          <span class="metric-v">${m.val}</span>
+        </div>
+      `).join('');
+
+      const layersHtml = (item.architecture && item.architecture.diagram ? item.architecture.diagram : []).map(l => `
+        <div class="drawer-layer-item">
+          <div class="drawer-layer-name">${l.name}</div>
+          <div class="drawer-layer-tech">${l.tech}</div>
+          <div class="drawer-layer-role">${l.role}</div>
+        </div>
+      `).join('');
+
+      let extraLinks = '';
+      if (item.pythonServiceUrl) {
+        extraLinks += `
+          <a href="${item.pythonServiceUrl}" target="_blank" rel="noopener noreferrer" class="drawer-action-link">
+            <i data-lucide="git-branch" style="width: 14px; height: 14px;"></i>
+            <span>Python Service</span>
+          </a>
+        `;
+      }
+      if (item.extraRepoUrl) {
+        extraLinks += `
+          <a href="${item.extraRepoUrl}" target="_blank" rel="noopener noreferrer" class="drawer-action-link">
+            <i data-lucide="git-branch" style="width: 14px; height: 14px;"></i>
+            <span>Bot Repo</span>
+          </a>
+        `;
+      }
+
+      drawerScrollContent.innerHTML = `
+        <div class="drawer-header">
+          <span class="block-title-tag">Круг 3 • Реликвия • ${item.school || 'Architecture'}</span>
+          <h2 class="drawer-title">${item.title}</h2>
+          <div class="drawer-subtitle">${item.subtitle}</div>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.45;">
+            ${item.description}
+          </p>
+          <div class="drawer-metrics-row">
+            ${metricsHtml}
+          </div>
+        </div>
+
+        <div class="drawer-section-title">Case Study</div>
+        <div class="drawer-case-grid">
+          <div class="drawer-case-card">
+            <div class="drawer-case-title prob">Проблема</div>
+            <div class="drawer-case-text">${item.caseStudy.problem}</div>
+          </div>
+          <div class="drawer-case-card">
+            <div class="drawer-case-title sol">Решение</div>
+            <div class="drawer-case-text">${item.caseStudy.solution}</div>
+          </div>
+          <div class="drawer-case-card">
+            <div class="drawer-case-title imp">Результат</div>
+            <div class="drawer-case-text">${item.caseStudy.impact}</div>
+          </div>
+        </div>
+
+        <div class="drawer-section-title">Концентрические Слои Архитектуры</div>
+        <div class="drawer-layers-list">
+          ${layersHtml}
+        </div>
+
+        <div class="drawer-links-bar">
+          <a href="${item.githubUrl}" target="_blank" rel="noopener noreferrer" class="drawer-action-link">
+            <i data-lucide="github" style="width: 14px; height: 14px;"></i>
+            <span>Открыть на GitHub</span>
+          </a>
+          ${extraLinks}
+        </div>
+      `;
+
+    } else if (ringNum === 2) {
+      // Skill Node (Ring 2)
+      const pointsHtml = (item.points || []).map(p => `<li style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.25rem;">${p}</li>`).join('');
+
+      drawerScrollContent.innerHTML = `
+        <div class="drawer-header">
+          <span class="block-title-tag" style="background: var(--accent-gold-glow); color: var(--accent-gold);">Круг 2 • Школа Навыков • ${item.school}</span>
+          <h2 class="drawer-title">${item.name}</h2>
+          <div class="drawer-subtitle" style="color: var(--accent-gold);">Категория: ${item.category} • Уровень владения: ${item.level}%</div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.5;">
+            ${item.summary}
+          </p>
+        </div>
+
+        <div class="drawer-section-title">Ключевые компетенции и применение</div>
+        <ul style="padding-left: 1.25rem; margin-top: 0.5rem;">
+          ${pointsHtml}
+        </ul>
+      `;
+
+    } else if (ringNum === 1) {
+      // Chronicle / Experience Node (Ring 1)
+      const highlightsHtml = (item.highlights || []).map(h => `<li style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.25rem;">${h}</li>`).join('');
+      const techTags = (item.tech || []).map(t => `<span class="mono text-cyan" style="background: var(--bg-slot); padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem;">${t}</span>`).join(' ');
+
+      drawerScrollContent.innerHTML = `
+        <div class="drawer-header">
+          <span class="block-title-tag" style="background: var(--accent-emerald-glow); color: var(--accent-emerald);">Круг 1 • Хроника & Корни • ${item.badge}</span>
+          <h2 class="drawer-title">${item.title}</h2>
+          <div class="drawer-subtitle" style="color: var(--accent-emerald);">${item.period} • ${item.role}</div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.5;">
+            ${item.summary}
+          </p>
+        </div>
+
+        <div class="drawer-section-title">Ключевые достижения и результаты</div>
+        <ul style="padding-left: 1.25rem; margin-top: 0.5rem; margin-bottom: 1rem;">
+          ${highlightsHtml}
+        </ul>
+
+        <div class="drawer-section-title">Стек этапа</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem;">
+          ${techTags}
+        </div>
+      `;
+    }
 
     refreshIcons();
   }
-  renderEquipmentSlots();
 
   // =========================================================================
-  // 5. Right Page Codex Tabs Manager
+  // 6. View Switcher (Radial Ritual vs Flat HR Dossier)
   // =========================================================================
-  const chapterNavBtns = document.querySelectorAll('.chapter-nav-btn');
-  const edgeTabBtns = document.querySelectorAll('.tome-tab-btn');
-  const tabPanes = document.querySelectorAll('.codex-tab-pane');
-  const footerShortcuts = document.querySelectorAll('.tab-nav-shortcut');
+  const btnViewRadial = document.getElementById('btn-view-radial');
+  const btnViewFlat = document.getElementById('btn-view-flat');
+  const viewRadialStage = document.getElementById('view-radial-stage');
+  const viewFlatStage = document.getElementById('view-flat-stage');
+  const flatProjectsSummary = document.getElementById('flat-projects-summary');
+  const flatPrintBtn = document.getElementById('flat-print-btn');
 
-  function switchRightTab(targetTab) {
-    if (!['inspector', 'spellbook', 'chronicle', 'print-cv'].includes(targetTab)) {
-      targetTab = 'inspector';
-    }
-    currentTab = targetTab;
+  function renderFlatDossier() {
+    if (!flatProjectsSummary) return;
+    flatProjectsSummary.innerHTML = ring3Projects.map(p => `
+      <div><strong>${p.title}</strong> (${p.tags.slice(0, 4).join(', ')}) — ${p.subtitle}.</div>
+    `).join('');
+  }
+  renderFlatDossier();
+
+  function switchView(viewName) {
+    currentView = viewName;
     playSound('click');
 
-    // Update chapter nav buttons
-    chapterNavBtns.forEach(btn => {
-      if (btn.getAttribute('data-tab') === targetTab) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-
-    // Update edge tabs
-    edgeTabBtns.forEach(btn => {
-      if (btn.getAttribute('data-tab') === targetTab) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-
-    // Update tab panes
-    tabPanes.forEach(pane => {
-      if (pane.id === `pane-${targetTab}`) {
-        pane.classList.add('active');
-      } else {
-        pane.classList.remove('active');
-      }
-    });
-
-    if (targetTab === 'inspector') {
-      renderArtifactInspector();
-    } else if (targetTab === 'spellbook') {
-      renderSkillsSpellbook();
-    } else if (targetTab === 'chronicle') {
-      renderChronicle();
+    if (viewName === 'radial') {
+      if (btnViewRadial) btnViewRadial.classList.add('active');
+      if (btnViewFlat) btnViewFlat.classList.remove('active');
+      if (viewRadialStage) viewRadialStage.classList.add('active');
+      if (viewFlatStage) viewFlatStage.classList.remove('active');
+    } else {
+      if (btnViewRadial) btnViewRadial.classList.remove('active');
+      if (btnViewFlat) btnViewFlat.classList.add('active');
+      if (viewRadialStage) viewRadialStage.classList.remove('active');
+      if (viewFlatStage) viewFlatStage.classList.add('active');
     }
-
-    refreshIcons();
   }
 
-  // Bind chapter nav buttons
-  chapterNavBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.getAttribute('data-tab');
-      switchRightTab(tab);
-    });
-  });
-
-  // Bind edge bookmark tabs
-  edgeTabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.getAttribute('data-tab');
-      switchRightTab(tab);
-    });
-  });
-
-  // Bind footer shortcuts
-  footerShortcuts.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.getAttribute('data-tab');
-      switchRightTab(tab);
-    });
-  });
+  if (btnViewRadial) btnViewRadial.addEventListener('click', () => switchView('radial'));
+  if (btnViewFlat) btnViewFlat.addEventListener('click', () => switchView('flat'));
+  if (flatPrintBtn) flatPrintBtn.addEventListener('click', () => window.print());
 
   // =========================================================================
-  // 6. Artifact Inspector Renderer (Concentric Architecture Canvas)
-  // =========================================================================
-  const inspectorContainer = document.getElementById('artifact-inspector-container');
-
-  function renderArtifactInspector() {
-    if (!inspectorContainer) return;
-    const proj = projectsData.find(p => p.id === activeProjectId) || projectsData[0];
-    if (!proj) return;
-
-    const layers = proj.architecture.diagram || [];
-    const activeLayer = layers[activeLayerIndex] || layers[0];
-
-    // Build metrics HTML
-    const metricsHtml = (proj.metrics || []).map(m => `
-      <div class="metric-node">
-        <span class="metric-lbl">${m.label}</span>
-        <span class="metric-v">${m.val}</span>
-      </div>
-    `).join('');
-
-    // Build concentric layer nodes HTML
-    const layersNodesHtml = layers.map((layer, idx) => `
-      <div class="concentric-layer-box ${idx === activeLayerIndex ? 'active' : ''}" data-layer-idx="${idx}">
-        <div class="layer-box-name">${layer.name}</div>
-        <div class="layer-box-tech">${layer.tech}</div>
-      </div>
-    `).join('');
-
-    // Build extra links HTML
-    let extraLinksHtml = '';
-    if (proj.pythonServiceUrl) {
-      extraLinksHtml += `
-        <a href="${proj.pythonServiceUrl}" target="_blank" rel="noopener noreferrer" class="artifact-link-pill" title="Python Service Repo">
-          <i data-lucide="git-branch" style="width: 13px; height: 13px;"></i>
-          <span>Python Service</span>
-        </a>
-      `;
-    }
-    if (proj.extraRepoUrl) {
-      extraLinksHtml += `
-        <a href="${proj.extraRepoUrl}" target="_blank" rel="noopener noreferrer" class="artifact-link-pill" title="Secondary Repo">
-          <i data-lucide="git-branch" style="width: 13px; height: 13px;"></i>
-          <span>Bot Repo</span>
-        </a>
-      `;
-    }
-
-    inspectorContainer.innerHTML = `
-      <div class="artifact-hero">
-        <div class="artifact-header-flex">
-          <div>
-            <span class="block-title-tag">${proj.school || 'Architecture'} • ${proj.architecture.pattern}</span>
-            <h2 class="artifact-title">${proj.title}</h2>
-            <div class="artifact-school">${proj.subtitle}</div>
-          </div>
-          <div class="artifact-links">
-            <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="artifact-link-pill" title="GitHub Repository">
-              <i data-lucide="github" style="width: 13px; height: 13px;"></i>
-              <span>GitHub</span>
-            </a>
-            ${extraLinksHtml}
-          </div>
-        </div>
-
-        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.45; margin-top: 0.5rem;">
-          ${proj.description}
-        </p>
-
-        <div class="artifact-metrics-bar">
-          ${metricsHtml}
-        </div>
-      </div>
-
-      <!-- Concentric Architecture Layers -->
-      <div style="margin-bottom: 1rem;">
-        <div class="block-label-row">
-          <span class="block-title-tag">Концентрические ритуальные слои</span>
-          <span class="inventory-hint">Кликните слой для инспекции ➜</span>
-        </div>
-
-        <div class="concentric-nodes-grid">
-          ${layersNodesHtml}
-        </div>
-
-        <div class="layer-active-inspect-card">
-          <div class="layer-active-title">Слой: ${activeLayer.name} [${activeLayer.tech}]</div>
-          <div class="layer-active-desc">${activeLayer.role}</div>
-        </div>
-      </div>
-
-      <!-- Case Study -->
-      <div class="case-study-pane">
-        <span class="block-title-tag" style="margin-bottom: 0.2rem;">Case Study</span>
-        <div class="case-study-grid">
-          <div>
-            <div class="case-col-header prob">Проблема</div>
-            <div class="case-col-body">${proj.caseStudy.problem}</div>
-          </div>
-          <div>
-            <div class="case-col-header sol">Решение</div>
-            <div class="case-col-body">${proj.caseStudy.solution}</div>
-          </div>
-          <div>
-            <div class="case-col-header imp">Результат</div>
-            <div class="case-col-body">${proj.caseStudy.impact}</div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Bind concentric layer cards click
-    const layerBoxes = inspectorContainer.querySelectorAll('.concentric-layer-box');
-    layerBoxes.forEach(box => {
-      box.addEventListener('click', () => {
-        playSound('click');
-        const idx = parseInt(box.getAttribute('data-layer-idx'), 10);
-        activeLayerIndex = idx;
-        renderArtifactInspector();
-      });
-    });
-
-    refreshIcons();
-  }
-  renderArtifactInspector();
-
-  // =========================================================================
-  // 7. Skills Spellbook Renderer
-  // =========================================================================
-  function renderSkillsSpellbook() {
-    const container = document.getElementById('skills-spellbook-container');
-    if (!container) return;
-    container.innerHTML = '';
-
-    skillsData.forEach(cat => {
-      const card = document.createElement('div');
-      card.className = 'spellbook-cat-card';
-      const tags = cat.skills.map(s => `<span class="spell-tag-item">${s.name}</span>`).join('');
-      card.innerHTML = `
-        <h3 class="spellbook-cat-title">${cat.category}</h3>
-        <div class="spellbook-tags">${tags}</div>
-      `;
-      container.appendChild(card);
-    });
-  }
-
-  // =========================================================================
-  // 8. Quest Chronicle Renderer
-  // =========================================================================
-  function renderChronicle() {
-    const container = document.getElementById('quest-timeline-container');
-    if (!container) return;
-    container.innerHTML = '';
-
-    timelineData.forEach(item => {
-      const el = document.createElement('div');
-      el.className = 'quest-item';
-      el.innerHTML = `
-        <div class="quest-header-row">
-          <span class="quest-title">${item.title}</span>
-          <span class="quest-year">${item.year}</span>
-        </div>
-        <div class="quest-subtitle">${item.subtitle} • <span class="text-cyan">${item.badge}</span></div>
-        <p class="quest-desc">${item.description}</p>
-      `;
-      container.appendChild(el);
-    });
-  }
-
-  // Print button handler
-  const printTriggerBtn = document.getElementById('trigger-browser-print-btn');
-  if (printTriggerBtn) {
-    printTriggerBtn.addEventListener('click', () => {
-      window.print();
-    });
-  }
-
-  // =========================================================================
-  // 9. D&D 3D Dice Roller Engine (Physical Floating Dice)
+  // 7. D&D 3D Dice Roller Engine (Physical Floating Dice)
   // =========================================================================
   const diceStageOverlay = document.getElementById('dice-stage-overlay');
   const d20Visual = document.getElementById('d20-visual');
   const diceResultBanner = document.getElementById('dice-result-banner');
-  const diceRollBtn = document.getElementById('dice-roll-btn');
+  const coreDiceBtn = document.getElementById('core-dice-btn');
 
   function triggerD20Roll() {
     if (!diceStageOverlay || !d20Visual) return;
@@ -475,18 +518,18 @@ document.addEventListener('DOMContentLoaded', () => {
       let msg = `🎲 Rolled a ${roll}!`;
       if (roll === 20) {
         playSound('crit');
-        msg = `🌟 NATURAL 20! CRITICAL HIT! The Clean Architecture Gods Smile Upon You!`;
+        msg = `🌟 NATURAL 20! CRITICAL SUCCESS! The Clean Architecture Gods Smile Upon You!`;
       } else if (roll === 1) {
-        msg = `💀 NATURAL 1! CRITICAL FAIL! A wild NullReferenceException lurks!`;
+        msg = `💀 NATURAL 1! CRITICAL FAIL! A stray NullReferenceException lurks!`;
       } else if (roll >= 15) {
-        msg = `✨ Great roll (${roll})! Spell cast with high precision.`;
+        msg = `✨ Great roll (${roll})! Systems functioning with high performance.`;
       }
       if (diceResultBanner) diceResultBanner.textContent = msg;
     }, 600);
   }
 
-  if (diceRollBtn) {
-    diceRollBtn.addEventListener('click', triggerD20Roll);
+  if (coreDiceBtn) {
+    coreDiceBtn.addEventListener('click', triggerD20Roll);
   }
 
   if (diceStageOverlay) {
@@ -497,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 10. The Altar of AsmODan (Quake CLI Engine)
+  // 8. The Altar of AsmODan (Quake CLI Engine)
   // =========================================================================
   const quakeDrawer = document.getElementById('quake-terminal');
   const toggleTerminalBtn = document.getElementById('toggle-terminal-btn');
@@ -552,6 +595,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (diceStageOverlay && diceStageOverlay.classList.contains('open')) {
         diceStageOverlay.classList.remove('open');
       }
+      if (sideDrawer && sideDrawer.classList.contains('open')) {
+        closeDrawer();
+      }
       if (quakeDrawer && quakeDrawer.classList.contains('open')) {
         closeTerminal();
       }
@@ -587,16 +633,15 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (mainCmd) {
       case 'help':
         appendTermLine(
-          "AsmODan Grimoire Commands:\n" +
-          "  roll <dice>     — D&D dice roller (e.g. 'roll d20', 'roll 1d20+5', 'roll 2d6+4')\n" +
-          "  cast <spell>    — Cast tech-spells: 'cast clean-arch', 'cast vector-search', 'cast banish-bug', 'cast malloc-free'\n" +
+          "AsmODan Radial Ritual Commands:\n" +
+          "  roll <dice>     — D&D dice roller (e.g. 'roll d20', 'roll 1d20+5')\n" +
+          "  cast <spell>    — Cast tech-spells: 'cast clean-arch', 'cast vector-search'\n" +
           "  whoami          — AsmODan Character Sheet & Lore\n" +
           "  ls [dir]        — List files in virtual grimoire (/, /grimoire)\n" +
           "  cat <file>      — View artifact content (e.g. cat bio.md, cat dnd_stats.json)\n" +
-          "  projects        — List engineering relics and magic schools\n" +
-          "  tanks           — Launch retro ASCII Tanks1984 demon battle\n" +
-          "  contact         — Show direct summoning channels\n" +
-          "  cv / resume     — Switch to Printable CV view\n" +
+          "  projects        — List 5 relics from Outer Seal\n" +
+          "  contact         — Direct summoning channels\n" +
+          "  cv / resume     — Switch to Flat HR Dossier view\n" +
           "  theme [toggle]  — Switch between Dark Obsidian and Parchment Light mode\n" +
           "  clear           — Cleanse the altar display",
           'output'
@@ -607,21 +652,15 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'dice':
       case 'd20':
         triggerD20Roll();
-        appendTermLine("🎲 Physical d20 rolled on the altar!", "dice");
+        appendTermLine("🎲 Physical d20 rolled on the central altar!", "dice");
         break;
 
       case 'cast':
         if (!arg) {
-          appendTermLine("Available Spells: clean-arch, vector-search, malloc-free, banish-bug, async-pipeline. Type 'cast <spell>'.", 'system');
+          appendTermLine("Available Spells: clean-arch, vector-search, malloc-free. Type 'cast <spell>'.", 'system');
         } else {
-          const spell = (charSheet.spells || []).find(s => s.name.toLowerCase() === arg.toLowerCase());
-          if (spell) {
-            playSound('crit');
-            appendTermLine(`✨ [SPELL CAST: ${spell.name.toUpperCase()} (${spell.school} • ${spell.level})]`, 'spell');
-            appendTermLine(`🔮 ${spell.desc}`, 'output');
-          } else {
-            appendTermLine(`Spell '${arg}' not found in grimoire. Try: clean-arch, vector-search, malloc-free, banish-bug.`, 'error');
-          }
+          playSound('crit');
+          appendTermLine(`✨ [SPELL CAST: ${arg.toUpperCase()}] Invocation deployed across the radial seals.`, 'spell');
         }
         break;
 
@@ -630,8 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
           `Avatar: ${charSheet.name} (${charSheet.alias})\n` +
           `Title: ${charSheet.title}\n` +
           `Alignment: ${charSheet.alignment}\n` +
-          `Spell Ability: ${charSheet.spellcasting.spellAbility} (DC ${charSheet.spellcasting.spellSaveDC} / Attack ${charSheet.spellcasting.spellAttackBonus})\n` +
-          `Specialties: C# (.NET 8), Python AI, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C\n` +
+          `Specialties: C# (.NET 8/9), Python AI, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C\n` +
           `Status: Open for Remote / Full-time Backend roles`,
           'output'
         );
@@ -659,9 +697,9 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
 
       case 'projects':
-        let projText = "Arcane Engineering Artifacts:\n";
-        projectsData.forEach((p, idx) => {
-          projText += ` [${idx + 1}] ${p.title} (${p.tags.slice(0, 3).join(', ')})\n     School: ${p.school || 'Architecture'}\n     Pattern: ${p.architecture.pattern}\n     GitHub: ${p.githubUrl}\n`;
+        let projText = "Outer Seal Relics:\n";
+        ring3Projects.forEach((p, idx) => {
+          projText += ` [${idx + 1}] ${p.title} (${p.tags.slice(0, 3).join(', ')})\n     Pattern: ${p.architecture.pattern}\n     GitHub: ${p.githubUrl}\n`;
         });
         appendTermLine(projText, 'output');
         break;
@@ -678,7 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       case 'cv':
       case 'resume':
-        switchRightTab('print-cv');
+        switchView('flat');
         closeTerminal();
         break;
 
@@ -736,7 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 11. Theme Switcher Controller
+  // 9. Theme Switcher Controller
   // =========================================================================
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const themeSunIcon = document.getElementById('theme-icon-sun');
@@ -778,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) {}
 
   // =========================================================================
-  // 12. Summon / Contact Modal & Toast Notifications
+  // 10. Summon / Contact Modal & Toast Notifications
   // =========================================================================
   const contactModal = document.getElementById('contact-modal');
   const openContactModalBtn = document.getElementById('open-contact-modal-btn');

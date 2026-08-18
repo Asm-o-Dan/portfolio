@@ -1,34 +1,35 @@
 /* ==========================================================================
-   AsmODan — Cyber-Occult Grimoire & Arcane Systems Workbench
-   High-Contrast Tech-Sorcery, D&D 5e RPG Tome & Clean Architecture Styles
+   AsmODan — The Radial Ritual Circle & 3 Concentric Arcane Seals
+   High-Contrast Tech-Sorcery, Orbital Node Physics & Clean Architecture Styles
    ========================================================================== */
 
 /* --- CSS Variables & Arcane Theme Tokens --- */
 :root {
-  /* Dark Theme Default Tokens (Obsidian Abyss & Runes) */
+  /* Dark Theme Default Tokens (Obsidian Abyss & Cosmic Runes) */
   --bg-root: #04060a;
-  --bg-altar: #080b12;
-  --bg-page: #0c101a;
-  --bg-page-elevated: #131926;
-  --bg-slot: #090d16;
-  --bg-input: #050810;
-  --bg-glass: rgba(8, 12, 20, 0.88);
+  --bg-surface: #090d16;
+  --bg-elevated: #111726;
+  --bg-card: #0c101c;
+  --bg-slot: #060912;
+  --bg-input: #04060c;
+  --bg-glass: rgba(8, 12, 22, 0.9);
+  --bg-drawer: rgba(9, 13, 24, 0.96);
 
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-medium: rgba(255, 255, 255, 0.16);
   --border-accent: rgba(0, 240, 255, 0.4);
   --border-crimson: rgba(244, 63, 94, 0.4);
   --border-gold: rgba(251, 191, 36, 0.4);
-  --border-highlight: #00f0ff;
+  --border-emerald: rgba(16, 185, 129, 0.4);
 
   --accent-cyan: #00f0ff;
-  --accent-cyan-glow: rgba(0, 240, 255, 0.2);
+  --accent-cyan-glow: rgba(0, 240, 255, 0.22);
   --accent-crimson: #f43f5e;
   --accent-crimson-glow: rgba(244, 63, 94, 0.25);
   --accent-gold: #fbbf24;
-  --accent-gold-glow: rgba(251, 191, 36, 0.2);
+  --accent-gold-glow: rgba(251, 191, 36, 0.22);
   --accent-emerald: #10b981;
-  --accent-emerald-glow: rgba(16, 185, 129, 0.2);
+  --accent-emerald-glow: rgba(16, 185, 129, 0.22);
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
@@ -43,11 +44,11 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
-  --radius-xl: 20px;
+  --radius-xl: 22px;
   --radius-full: 9999px;
 
   --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.6);
-  --shadow-tome: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.08);
+  --shadow-radial: 0 0 60px rgba(0, 240, 255, 0.12), 0 20px 50px rgba(0, 0, 0, 0.9);
   --shadow-glow: 0 0 25px rgba(0, 240, 255, 0.25);
   --shadow-crimson: 0 0 25px rgba(244, 63, 94, 0.25);
 
@@ -58,20 +59,21 @@
 
 /* Light Theme Overrides (Parchment Arcane) */
 [data-theme="light"] {
-  --bg-root: #eef0e5;
-  --bg-altar: #dedfd2;
-  --bg-page: #fcfbf7;
-  --bg-page-elevated: #f0eee6;
-  --bg-slot: #ffffff;
+  --bg-root: #f4f3ed;
+  --bg-surface: #ffffff;
+  --bg-elevated: #eae8dd;
+  --bg-card: #ffffff;
+  --bg-slot: #f9f8f3;
   --bg-input: #ffffff;
-  --bg-glass: rgba(252, 251, 247, 0.92);
+  --bg-glass: rgba(255, 255, 255, 0.92);
+  --bg-drawer: rgba(255, 255, 255, 0.97);
 
   --border-subtle: rgba(0, 0, 0, 0.08);
   --border-medium: rgba(0, 0, 0, 0.16);
   --border-accent: rgba(8, 145, 178, 0.5);
   --border-crimson: rgba(225, 29, 72, 0.4);
   --border-gold: rgba(217, 119, 6, 0.4);
-  --border-highlight: #0891b2;
+  --border-emerald: rgba(5, 150, 105, 0.4);
 
   --accent-cyan: #0891b2;
   --accent-cyan-glow: rgba(8, 145, 178, 0.12);
@@ -87,7 +89,7 @@
   --text-muted: #64748b;
   --text-inverse: #ffffff;
 
-  --shadow-tome: 0 20px 60px rgba(0, 0, 0, 0.12), 0 0 30px rgba(8, 145, 178, 0.08);
+  --shadow-radial: 0 0 40px rgba(8, 145, 178, 0.1), 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 /* --- Base & Reset --- */
@@ -114,29 +116,30 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Monospace & Text Utilities */
+/* Monospace & Typography Utilities */
 .mono { font-family: var(--font-mono); }
 .arcane-font { font-family: var(--font-arcane); }
+.font-bold { font-weight: 700; }
 
 .text-cyan { color: var(--accent-cyan) !important; }
 .text-crimson { color: var(--accent-crimson) !important; }
 .text-gold { color: var(--accent-gold) !important; }
 .text-emerald { color: var(--accent-emerald) !important; }
 
-/* Subtle Ambient Glow (Aether Cyan & Blood Crimson Rift) */
+/* Subtle Ambient Glow */
 .ambient-glow {
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 1200px;
-  height: 550px;
+  height: 600px;
   background: radial-gradient(ellipse at top, var(--accent-cyan-glow) 0%, var(--accent-crimson-glow) 40%, transparent 75%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Common Container */
+/* Container */
 .container-workbench {
   width: 100%;
   max-width: 1320px;
@@ -217,22 +220,22 @@ body {
   50% { transform: scale(1.3); opacity: 0.6; }
 }
 
-/* Chapter Navigator */
-.tome-chapter-nav {
+/* Segmented Perspective Switcher */
+.perspective-nav {
   display: flex;
   align-items: center;
-  background: var(--bg-page-elevated);
+  background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-full);
   padding: 0.2rem;
   gap: 0.2rem;
 }
 
-.chapter-nav-btn {
+.nav-segment-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
+  padding: 0.4rem 0.95rem;
   background: transparent;
   border: none;
   color: var(--text-secondary);
@@ -244,12 +247,12 @@ body {
   transition: all var(--transition-fast);
 }
 
-.chapter-nav-btn:hover {
+.nav-segment-btn:hover {
   color: var(--text-primary);
 }
 
-.chapter-nav-btn.active {
-  background: var(--bg-page);
+.nav-segment-btn.active {
+  background: var(--bg-surface);
   color: var(--accent-cyan);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   border: 1px solid var(--border-accent);
@@ -268,7 +271,7 @@ body {
   gap: 0.35rem;
   height: 36px;
   padding: 0 0.7rem;
-  background: var(--bg-page);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   border-radius: var(--radius-md);
@@ -281,7 +284,7 @@ body {
 .hud-tool-btn:hover {
   color: var(--text-primary);
   border-color: var(--border-medium);
-  background: var(--bg-page-elevated);
+  background: var(--bg-elevated);
 }
 
 .audio-toggle-btn {
@@ -338,71 +341,489 @@ body {
 }
 
 /* ==========================================================================
-   THE OPEN CYBER-OCCULT GRIMOIRE (TOME CONTAINER)
+   RADIAL STAGE & THE 3 CONCENTRIC SEALS
    ========================================================================== */
-.grimoire-stage {
-  padding: 2rem 0 4rem;
+.radial-stage {
   position: relative;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.radial-ritual-viewport {
+  display: none;
+  position: relative;
+  width: 100%;
+  min-height: 880px;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 0 3rem;
+}
+
+.radial-ritual-viewport.active {
+  display: flex;
+}
+
+/* Rings Legend Guide HUD */
+.rings-legend-hud {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  z-index: 10;
+}
+
+.legend-title {
+  font-family: var(--font-arcane);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-cyan { background: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
+.dot-gold { background: var(--accent-gold); box-shadow: 0 0 6px var(--accent-gold); }
+.dot-emerald { background: var(--accent-emerald); box-shadow: 0 0 6px var(--accent-emerald); }
+
+.legend-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+/* The Radial Circle Canvas Container */
+.radial-circle-system {
+  position: relative;
+  width: 960px;
+  height: 960px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* SVG Orbital Paths */
+.radial-orbit-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
   z-index: 1;
 }
 
-.grimoire-tome {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: var(--bg-altar);
-  border: 3px solid #1a2233;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-tome);
-  position: relative;
-  min-height: 740px;
-  overflow: visible;
+.orbit-path {
+  fill: none;
+  stroke-dasharray: 4 6;
+  transition: stroke 0.3s ease;
 }
 
-/* Center Spine of Tome */
-.tome-spine {
+.ring-1-path {
+  stroke: var(--border-emerald);
+  stroke-width: 1.5;
+  animation: rotateClockwise 80s linear infinite;
+  transform-origin: 500px 500px;
+}
+
+.ring-2-path {
+  stroke: var(--border-gold);
+  stroke-width: 1.5;
+  animation: rotateCounterClockwise 120s linear infinite;
+  transform-origin: 500px 500px;
+}
+
+.ring-3-path {
+  stroke: var(--border-accent);
+  stroke-width: 1.5;
+  animation: rotateClockwise 160s linear infinite;
+  transform-origin: 500px 500px;
+}
+
+@keyframes rotateClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rotateCounterClockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.active-energy-beam {
+  stroke: var(--accent-cyan);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 4;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.active-energy-beam.visible {
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   ⛧ CENTRAL CORE: AsmODan Sanctum Card
+   ========================================================================== */
+.ritual-core-card {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 14px;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, #070a10 0%, #151e2e 50%, #070a10 100%);
-  border-left: 1px solid var(--border-subtle);
-  border-right: 1px solid var(--border-subtle);
-  z-index: 10;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.9);
+  width: 270px;
+  height: 270px;
+  background: var(--bg-card);
+  border: 2px solid var(--accent-cyan);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-radial);
+  z-index: 20;
+  text-align: center;
+  transition: transform var(--transition-norm), border-color var(--transition-norm);
 }
 
-/* Left & Right Pages */
-.tome-page {
-  background: var(--bg-page);
-  padding: 2rem;
+.ritual-core-card:hover {
+  border-color: #ffffff;
+  box-shadow: 0 0 50px var(--accent-cyan-glow);
+}
+
+.core-inner-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.core-avatar-portal {
   position: relative;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 0.35rem;
+}
+
+.core-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent-crimson);
+}
+
+.core-avatar-halo {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px dashed var(--accent-cyan);
+  animation: spinRing 15s linear infinite;
+}
+
+@keyframes spinRing {
+  100% { transform: rotate(360deg); }
+}
+
+.core-level-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--accent-crimson-glow);
+  color: var(--accent-crimson);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.2rem;
+}
+
+.pulse-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  box-shadow: 0 0 5px var(--accent-emerald);
+}
+
+.core-name {
+  font-family: var(--font-arcane);
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.core-alias {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.core-role {
+  color: var(--text-muted);
+}
+
+/* Mini D&D 5e Stat Block in Core */
+.core-dnd-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.2rem;
+  margin-bottom: 0.45rem;
+}
+
+.core-stat-node {
+  background: var(--bg-slot);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 0.2rem 0.15rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+}
+
+.core-stat-node .mod {
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.core-actions-row {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.core-btn-cv {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: linear-gradient(135deg, var(--accent-crimson), #991b1b);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.core-btn-cv:hover {
+  filter: brightness(1.2);
+}
+
+.core-btn-dice {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-gold);
+  color: var(--accent-gold);
+  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.core-btn-dice:hover {
+  background: var(--accent-gold-glow);
+}
+
+/* ==========================================================================
+   ORBITAL NODES (RINGS 1, 2, 3)
+   ========================================================================== */
+.orbital-ring {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.orbital-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform var(--transition-norm), box-shadow var(--transition-norm), border-color var(--transition-norm);
+}
+
+/* Base Node Card Styling */
+.node-card {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.75rem;
+  box-shadow: var(--shadow-subtle);
+  white-space: nowrap;
+}
+
+.node-card:hover {
+  transform: scale(1.08);
+  z-index: 30;
+}
+
+.node-icon-wrap {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.node-title-box {
   display: flex;
   flex-direction: column;
 }
 
-.left-page {
-  border-top-left-radius: var(--radius-xl);
-  border-bottom-left-radius: var(--radius-xl);
-  border-right: 1px solid rgba(0, 0, 0, 0.4);
-  box-shadow: inset -15px 0 25px rgba(0, 0, 0, 0.4);
+.node-name {
+  font-family: var(--font-arcane);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
-.right-page {
-  border-top-right-radius: var(--radius-xl);
-  border-bottom-right-radius: var(--radius-xl);
-  border-left: 1px solid rgba(0, 0, 0, 0.4);
-  box-shadow: inset 15px 0 25px rgba(0, 0, 0, 0.4);
+.node-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
 }
 
-.page-content {
+/* Ring 1 (Chronicle): Emerald Theme */
+.ring-1-nodes .node-card {
+  border-color: var(--border-emerald);
+}
+.ring-1-nodes .node-card:hover,
+.ring-1-nodes .node-card.active {
+  border-color: var(--accent-emerald);
+  box-shadow: 0 0 20px var(--accent-emerald-glow);
+}
+.ring-1-nodes .node-icon-wrap {
+  background: var(--accent-emerald-glow);
+  color: var(--accent-emerald);
+}
+
+/* Ring 2 (Skills): Gold Theme */
+.ring-2-nodes .node-card {
+  border-color: var(--border-gold);
+}
+.ring-2-nodes .node-card:hover,
+.ring-2-nodes .node-card.active {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 20px var(--accent-gold-glow);
+}
+.ring-2-nodes .node-icon-wrap {
+  background: var(--accent-gold-glow);
+  color: var(--accent-gold);
+}
+
+/* Ring 3 (Projects): Cyan/Crimson Theme */
+.ring-3-nodes .node-card {
+  border-color: var(--border-accent);
+  padding: 0.55rem 0.85rem;
+}
+.ring-3-nodes .node-card:hover,
+.ring-3-nodes .node-card.active {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 25px var(--accent-cyan-glow);
+}
+.ring-3-nodes .node-icon-wrap {
+  background: var(--accent-cyan-glow);
+  color: var(--accent-cyan);
+}
+.ring-3-nodes .node-name {
+  font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   SLIDE-OUT RADIAL SIDE INSPECTOR DRAWER
+   ========================================================================== */
+.radial-side-drawer {
+  position: fixed;
+  top: 64px;
+  right: -520px;
+  width: 480px;
+  height: calc(100vh - 64px);
+  background: var(--bg-drawer);
+  backdrop-filter: blur(20px);
+  border-left: 2px solid var(--accent-cyan);
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.8);
+  z-index: 150;
+  transition: right var(--transition-smooth);
+}
+
+.radial-side-drawer.open {
+  right: 0;
+}
+
+.drawer-inner {
+  position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.drawer-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+}
+
+.drawer-close-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.drawer-scroll-content {
+  padding: 1.75rem 1.5rem;
+  overflow-y: auto;
   height: 100%;
 }
 
-/* Common Block Header Tag */
+/* Drawer Component Styles */
+.drawer-header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
 .block-title-tag {
   display: inline-block;
   font-family: var(--font-mono);
@@ -414,735 +835,237 @@ body {
   padding: 0.2rem 0.55rem;
   border-radius: var(--radius-sm);
   font-weight: 700;
+  margin-bottom: 0.4rem;
 }
 
-.block-label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.6rem;
-}
-
-/* ==========================================================================
-   LEFT PAGE: CHARACTER FOLIO & EQUIPMENT SANCTUM
-   ========================================================================== */
-.folio-header {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.avatar-portal-wrap {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-}
-
-.avatar-portal-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--accent-crimson);
-  position: relative;
-  z-index: 2;
-}
-
-.avatar-portal-ring {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1px dashed var(--accent-cyan);
-  animation: spinRing 20s linear infinite;
-  z-index: 1;
-}
-
-@keyframes spinRing {
-  100% { transform: rotate(360deg); }
-}
-
-.avatar-seal {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  background: var(--bg-page);
-  color: var(--accent-cyan);
-  border: 1px solid var(--border-accent);
-  padding: 2px;
-  border-radius: 50%;
-  display: flex;
-  z-index: 3;
-}
-
-.folio-level-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: var(--accent-crimson-glow);
-  color: var(--accent-crimson);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.15rem 0.55rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 0.25rem;
-}
-
-.folio-name {
-  font-family: var(--font-arcane);
-  font-size: 1.65rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  line-height: 1.15;
-}
-
-.folio-alias {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.15rem;
-}
-
-.rune-tag {
-  font-family: var(--font-mono);
-  color: var(--accent-crimson);
-  font-weight: 700;
-}
-
-.folio-subrole {
-  color: var(--text-muted);
-}
-
-.folio-incantation {
-  font-size: 0.86rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  border-left: 2px solid var(--accent-crimson);
-  padding-left: 0.75rem;
-  margin-bottom: 1rem;
-  line-height: 1.45;
-}
-
-/* D&D 5e Stat Block */
-.stat-block-container {
-  background: var(--bg-slot);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.spell-dc-text {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--accent-gold);
-}
-
-.dnd-stats-row {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.35rem;
-}
-
-.dnd-stat-node {
-  background: var(--bg-page-elevated);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 0.4rem 0.2rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all var(--transition-fast);
-  cursor: default;
-}
-
-.dnd-stat-node:hover {
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 10px var(--accent-cyan-glow);
-}
-
-.dnd-node-code {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  font-weight: 700;
-}
-
-.dnd-node-score {
-  font-family: var(--font-arcane);
-  font-size: 1.15rem;
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.dnd-node-mod {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--accent-cyan);
-  font-weight: 800;
-}
-
-/* Inventory Equipment Section */
-.inventory-section {
-  margin-bottom: 1rem;
-}
-
-.inventory-hint {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
-
-.equipment-slots-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-}
-
-.equip-slot-item {
-  background: var(--bg-slot);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 0.6rem 0.7rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  text-align: left;
-}
-
-.equip-slot-item:hover {
-  border-color: var(--border-accent);
-  background: var(--bg-page-elevated);
-  transform: translateY(-1px);
-}
-
-.equip-slot-item.active {
-  border-color: var(--accent-crimson);
-  background: var(--bg-page-elevated);
-  box-shadow: 0 0 15px var(--accent-crimson-glow);
-}
-
-.slot-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.slot-badge {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.slot-icon {
-  width: 14px;
-  height: 14px;
-  color: var(--accent-gold);
-}
-
-.slot-item-name {
-  font-family: var(--font-arcane);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  line-height: 1.2;
-}
-
-.equip-slot-item.active .slot-item-name {
-  color: var(--accent-cyan);
-}
-
-.slot-bonus {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: var(--accent-emerald);
-}
-
-/* HR Screening Scroll Box */
-.hr-scroll-box {
-  margin-top: auto;
-  background: var(--bg-slot);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 0.75rem;
-}
-
-.hr-scroll-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
-  margin-bottom: 0.75rem;
-}
-
-.hr-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.78rem;
-}
-
-.hr-lbl {
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.hr-val {
-  font-weight: 600;
-}
-
-.wax-seal-action-row {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.btn-wax-seal {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  background: linear-gradient(135deg, var(--accent-crimson), #991b1b);
-  border: 1px solid rgba(244, 63, 94, 0.5);
-  border-radius: var(--radius-sm);
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: 0.82rem;
-  font-weight: 700;
-  text-decoration: none;
-  padding: 0.55rem 0.75rem;
-  cursor: pointer;
-  box-shadow: 0 4px 15px var(--accent-crimson-glow);
-  transition: all var(--transition-fast);
-}
-
-.btn-wax-seal:hover {
-  filter: brightness(1.15);
-  transform: translateY(-1px);
-}
-
-.btn-dice-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  background: var(--bg-page-elevated);
-  border: 1px solid var(--border-gold);
-  color: var(--accent-gold);
-  border-radius: var(--radius-sm);
-  padding: 0.55rem 0.85rem;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.btn-dice-trigger:hover {
-  background: var(--accent-gold-glow);
-  box-shadow: 0 0 15px var(--accent-gold-glow);
-}
-
-/* ==========================================================================
-   RIGHT PAGE: THE CODEX OF SPELLS & SYSTEMS INSPECTOR
-   ========================================================================== */
-.tome-page-tabs {
-  position: absolute;
-  top: 2rem;
-  right: -42px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  z-index: 20;
-}
-
-.tome-tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: var(--bg-altar);
-  border: 1px solid var(--border-subtle);
-  border-left: none;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 0.5rem 0.75rem;
-  color: var(--text-secondary);
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.tome-tab-btn:hover {
-  color: var(--text-primary);
-  background: var(--bg-page-elevated);
-  transform: translateX(4px);
-}
-
-.tome-tab-btn.active {
-  background: var(--bg-page);
-  color: var(--accent-cyan);
-  border-color: var(--border-accent);
-  box-shadow: 0 0 15px var(--accent-cyan-glow);
-  transform: translateX(6px);
-}
-
-.tab-label {
-  display: none;
-}
-
-.tome-tab-btn:hover .tab-label,
-.tome-tab-btn.active .tab-label {
-  display: inline;
-}
-
-/* Tab Panes */
-.codex-tab-pane {
-  display: none;
-  height: 100%;
-  animation: fadeInPage 0.25s ease;
-}
-
-.codex-tab-pane.active {
-  display: block;
-}
-
-@keyframes fadeInPage {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.pane-header {
-  margin-bottom: 1.25rem;
-}
-
-.pane-heading {
-  font-family: var(--font-arcane);
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-top: 0.25rem;
-}
-
-/* Artifact Inspector Layout */
-.artifact-hero {
-  border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.artifact-header-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.75rem;
-}
-
-.artifact-title {
+.drawer-title {
   font-family: var(--font-arcane);
   font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
-.artifact-school {
+.drawer-subtitle {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--accent-cyan);
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
 }
 
-.artifact-links {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.artifact-link-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.65rem;
-  background: var(--bg-slot);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  text-decoration: none;
-  transition: all var(--transition-fast);
-}
-
-.artifact-link-pill:hover {
-  border-color: var(--border-accent);
-  color: var(--accent-cyan);
-}
-
-.artifact-metrics-bar {
+.drawer-metrics-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
   background: var(--bg-slot);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 0.6rem 0.85rem;
+  padding: 0.6rem 0.8rem;
   margin-top: 0.85rem;
 }
 
-.metric-node {
+.drawer-metric-col {
   display: flex;
   flex-direction: column;
 }
 
 .metric-lbl {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
   text-transform: uppercase;
 }
 
 .metric-v {
   font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.drawer-section-title {
+  font-family: var(--font-arcane);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--text-primary);
+}
+
+.drawer-layers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.drawer-layer-item {
+  background: var(--bg-slot);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+}
+
+.drawer-layer-name {
+  font-family: var(--font-display);
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--accent-cyan);
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
 }
 
-/* Concentric Diagram Nodes */
-.concentric-nodes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.concentric-layer-box {
-  background: var(--bg-slot);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 0.75rem;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.concentric-layer-box:hover {
-  border-color: var(--border-accent);
-  transform: translateY(-2px);
-}
-
-.concentric-layer-box.active {
-  border-color: var(--accent-cyan);
-  background: var(--bg-page-elevated);
-  box-shadow: 0 0 15px var(--accent-cyan-glow);
-}
-
-.layer-box-name {
-  font-family: var(--font-arcane);
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.layer-box-tech {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--accent-cyan);
-}
-
-.layer-active-inspect-card {
-  background: var(--bg-slot);
-  border-left: 3px solid var(--accent-cyan);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 0.85rem 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.layer-active-title {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  margin-bottom: 0.25rem;
-}
-
-.layer-active-desc {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.45;
-}
-
-/* Case Study Section */
-.case-study-pane {
-  background: var(--bg-slot);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.case-study-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-}
-
-.case-col-header {
+.drawer-layer-tech {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 0.25rem;
+  color: var(--accent-cyan);
+  margin-bottom: 0.35rem;
 }
 
-.case-col-header.prob { color: #f87171; }
-.case-col-header.sol { color: var(--accent-cyan); }
-.case-col-header.imp { color: var(--accent-emerald); }
-
-.case-col-body {
+.drawer-layer-role {
   font-size: 0.82rem;
   color: var(--text-secondary);
   line-height: 1.4;
 }
 
-/* Skills Spellbook */
-.skills-spellbook-grid {
+.drawer-case-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.85rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
 }
 
-.spellbook-cat-card {
+.drawer-case-card {
   background: var(--bg-slot);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 1rem;
+  padding: 0.75rem 0.9rem;
 }
 
-.spellbook-cat-title {
-  font-family: var(--font-arcane);
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
-}
-
-.spellbook-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.spell-tag-item {
+.drawer-case-title {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  background: var(--bg-page-elevated);
-  color: var(--text-secondary);
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-}
-
-/* Quest Timeline */
-.quest-timeline-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.quest-item {
-  position: relative;
-  padding-left: 1.25rem;
-  border-left: 2px solid var(--border-subtle);
-}
-
-.quest-item::before {
-  content: '⛧';
-  position: absolute;
-  left: -8px;
-  top: -1px;
-  font-size: 0.75rem;
-  color: var(--accent-crimson);
-}
-
-.quest-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.quest-title {
-  font-family: var(--font-arcane);
-  font-size: 0.95rem;
   font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
 }
 
-.quest-year {
+.drawer-case-title.prob { color: #f87171; }
+.drawer-case-title.sol { color: var(--accent-cyan); }
+.drawer-case-title.imp { color: var(--accent-emerald); }
+
+.drawer-case-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.drawer-links-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.drawer-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.drawer-action-link:hover {
+  border-color: var(--border-accent);
   color: var(--accent-cyan);
 }
 
-.quest-subtitle {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin-bottom: 0.25rem;
+/* ==========================================================================
+   VIEW B: FLAT HR DOSSIER & PRINTABLE SCROLL
+   ========================================================================== */
+.flat-dossier-viewport {
+  display: none;
+  padding: 2rem 0 4rem;
 }
 
-.quest-desc {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.45;
+.flat-dossier-viewport.active {
+  display: block;
 }
 
-/* Printable CV Parchment */
-.cv-print-header {
+.dossier-top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
 
-.cv-parchment-sheet {
-  background: var(--bg-slot);
-  border: 1px solid var(--border-subtle);
+.dossier-heading {
+  font-family: var(--font-arcane);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.btn-action-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  background: linear-gradient(135deg, var(--accent-crimson), #9333ea);
+  border: none;
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-action-primary:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 0 15px var(--accent-crimson-glow);
+}
+
+.flat-cv-sheet {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-subtle);
 }
 
 .cv-sheet-top {
   border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .cv-sheet-name {
   font-family: var(--font-arcane);
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 800;
 }
 
 .cv-alias-badge {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--accent-crimson);
 }
 
 .cv-sheet-subtitle {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--accent-cyan);
+  margin-top: 0.2rem;
 }
 
 .cv-contacts-line {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  margin-top: 0.35rem;
+  margin-top: 0.4rem;
 }
 
 .cv-contacts-line a {
@@ -1151,30 +1074,30 @@ body {
 }
 
 .cv-block {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .cv-block-title {
   font-family: var(--font-arcane);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--accent-cyan);
   border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 0.2rem;
-  margin-bottom: 0.4rem;
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .cv-block-text {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .cv-systems-summary {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  font-size: 0.82rem;
+  gap: 0.5rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
 }
 
@@ -1309,7 +1232,7 @@ body {
 }
 
 .kbd-badge {
-  background: var(--bg-slot);
+  background: var(--bg-surface);
   border: 1px solid var(--border-medium);
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
@@ -1345,7 +1268,7 @@ body {
 }
 
 .term-chip {
-  background: var(--bg-slot);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   color: var(--accent-cyan);
   font-family: var(--font-mono);
@@ -1410,7 +1333,7 @@ body {
 }
 
 .modal-card {
-  background: var(--bg-page);
+  background: var(--bg-card);
   border: 1px solid var(--border-crimson);
   border-radius: var(--radius-lg);
   padding: 1.75rem;
@@ -1487,7 +1410,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-page-elevated);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
@@ -1513,7 +1436,7 @@ body {
 }
 
 .toast-message {
-  background: var(--bg-slot);
+  background: var(--bg-surface);
   border: 1px solid var(--accent-cyan);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
   color: var(--text-primary);
@@ -1535,8 +1458,9 @@ body {
 /* Footer */
 .hud-footer {
   border-top: 1px solid var(--border-subtle);
-  padding: 1.5rem 0;
-  background: var(--bg-altar);
+  padding: 1.25rem 0;
+  background: var(--bg-card);
+  margin-top: auto;
 }
 
 .footer-flex {
@@ -1545,11 +1469,6 @@ body {
   justify-content: space-between;
   font-size: 0.85rem;
   color: var(--text-muted);
-}
-
-.footer-links {
-  display: flex;
-  gap: 1rem;
 }
 
 .footer-btn {
@@ -1575,42 +1494,21 @@ body {
     color: #000000 !important;
   }
 
-  .hud-header, .quake-terminal-drawer, .ambient-glow, .hud-footer, .toast-hub, .left-page, .tome-page-tabs, .dice-stage-overlay, .cv-print-actions {
+  .hud-header, .quake-terminal-drawer, .ambient-glow, .hud-footer, .toast-hub, .radial-ritual-viewport, .dice-stage-overlay, .dossier-top-bar {
     display: none !important;
   }
 
-  .grimoire-stage {
+  .radial-stage {
     padding: 0 !important;
-  }
-
-  .grimoire-tome {
-    display: block !important;
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-  }
-
-  .tome-spine {
-    display: none !important;
-  }
-
-  .right-page {
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    background: transparent !important;
-    color: #000000 !important;
-  }
-
-  .codex-tab-pane {
-    display: none !important;
-  }
-
-  #pane-print-cv {
     display: block !important;
   }
 
-  .cv-parchment-sheet {
+  .flat-dossier-viewport {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  .flat-cv-sheet {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
@@ -1631,39 +1529,26 @@ body {
 /* ==========================================================================
    RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
    ========================================================================== */
-@media (max-width: 1100px) {
-  .grimoire-tome {
-    grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+  .radial-circle-system {
+    width: 720px;
+    height: 720px;
   }
 
-  .tome-spine {
-    display: none;
+  .rings-legend-hud {
+    position: static;
+    margin: 1rem auto;
+    max-width: 600px;
   }
 
-  .left-page {
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    box-shadow: none;
+  .radial-ritual-viewport {
+    flex-direction: column;
+    min-height: auto;
   }
 
-  .right-page {
-    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
-    box-shadow: none;
-  }
-
-  .tome-page-tabs {
-    top: -45px;
-    right: 10px;
-    flex-direction: row;
-  }
-
-  .tome-tab-btn {
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    border: 1px solid var(--border-subtle);
-    border-bottom: none;
-  }
-
-  .tome-tab-btn.active {
-    transform: translateY(-4px);
+  .radial-side-drawer {
+    width: 100%;
+    right: -100%;
   }
 }
 
@@ -1672,28 +1557,46 @@ body {
     padding: 0 1rem;
   }
 
-  .tome-chapter-nav {
+  .perspective-nav span {
     display: none;
   }
 
-  .dnd-stats-row {
-    grid-template-columns: repeat(3, 1fr);
+  .radial-circle-system {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
   }
 
-  .equipment-slots-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .radial-orbit-svg {
+    display: none;
   }
 
-  .case-study-grid {
-    grid-template-columns: 1fr;
+  .ritual-core-card {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border-radius: var(--radius-lg);
+    margin: 0 auto;
   }
 
-  .skills-spellbook-grid {
-    grid-template-columns: 1fr;
+  .orbital-ring {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
   }
 
-  .hr-scroll-grid {
-    grid-template-columns: 1fr;
+  .orbital-node {
+    position: static;
+    transform: none !important;
   }
 
   .hud-btn-text {

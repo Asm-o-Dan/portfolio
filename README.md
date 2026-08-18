@@ -1,55 +1,52 @@
-# ⛧ AsmODan (Даниил Гандапас) — Cyber-Occult Grimoire & Arcane Systems Workbench
+# ⛧ AsmODan (Даниил Гандапас) — The Radial Ritual Circle & 3 Arcane Seals
 
 > *"Structure is freedom. Architecture is intention. I am the demon of low-level memory and architectural order."*
 
-Инженерный кибероккультный гримуар и рабочее пространство (**AsmODan Workbench v6.6.6**) **Даниила Гандапаса** (`AsmODan` / `Asm-o-Dan`) — Backend & Systems Software Engineer / Level 20 Systems Archmage (C# / .NET 8, Python AI, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C, Telegram & OCR Bots).
+Инженерный радиальный ритуальный интерфейс (**AsmODan Radial Arcane Engine v8.0**) **Даниила Гандапаса** (`AsmODan` / `Asm-o-Dan`) — Backend & Systems Software Engineer / Level 20 Systems Archmage (C# / .NET 8, Python AI, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C, Telegram & OCR Bots).
 
 ---
 
-## 🔮 Концепция: Кибероккультизм, D&D и Архитектурный Порядок
+## 🔮 Радиальная Концепция: Ядро & 3 Концентрические Печати
 
-- **AsmODan**: `Asm` (Ассемблер / Низкоуровневая материя) + `Dan` (Даниил) = `Azmodan` (Владыка архитектурного порядка и системных глубин).
-- **Синтез технологий и техномагии**:
-  - *Низкоуровневый Си/Ассемблер* — древние руны прямого управления физической памятью.
-  - *Clean Architecture & CQRS* — защитные ритуальные круги, изолирующие доменное ядро от внешней скверны (БД и библиотек).
-  - *Qdrant Vector Search* — высшая школа прорицания (Divination) в 1536-мерном астрале эмбеддингов.
+1. **⛧ Центральное Ядро (The Core / Inner Sanctum)**:
+   - Личность и аватар AsmODan с защитным вращающимся нимбом.
+   - **Интерактивный D&D 5e Stat Block**: `STR 18`, `DEX 18`, `CON 20`, `INT 20`, `WIS 19`, `CHA 17`.
+   - Кнопка броска кубика **🎲 d20** и быстрое скачивание резюме `resume.pdf`.
 
----
+2. **⭕ Круг 1: Внутренняя Печать (Образование и Опыт — Chronicle)**:
+   - 🏛️ **ТИФТ** — Физико-технический факультет (Инженерия ПО, алгоритмы, системное программирование).
+   - 🔮 **DrugsEngine & Qdrant** (2024 — Наст. время, Clean Architecture + CQRS + Python RPC).
+   - 👁️ **Telegram Bot Suite & OCR** (2023 — 2024, Tesseract OCR, асинхронные пайплайны).
+   - 🛡️ **Tanks1984** (2022 — 2023, Pure ANSI C, ручное управление памятью).
 
-## 🚀 Ключевые режимы Гримуара
+3. **⭕ Круг 2: Средняя Печать (Навыки & Заклинания — Spellbook)**:
+   - ⚡ `C# .NET 8/9` (Async/Await, LINQ, Generic Host, Memory<T>)
+   - 🏛️ `Clean Architecture & CQRS` (Domain isolation, MediatR, DDD)
+   - 🐍 `Python & AI / NLP` (FastAPI, AsyncIO, PyTorch, Embeddings)
+   - 🌌 `Qdrant & Vector DB` (1536-dim Cosine search, Payload filtering)
+   - 🗄️ `PostgreSQL & Databases` (Dual-ORM EF Core + Dapper, Indexes)
+   - ⚙️ `Pure ANSI C & Memory` (Pointers, malloc/free, zero leaks)
 
-1. **📜 Sanctum (D&D 5e Character Sheet & HR Fast-Track)**:
-   - Интерактивный **D&D 5e Stat Block** (STR 18, DEX 18, CON 20, INT 20, WIS 19, CHA 17).
-   - Быстрый скрининг-свиток для HR (формат, локация, вуз ТИФТ, языки, скачивание `resume.pdf` в 1 клик).
-   - Витрина флагманских реликвий (`DrugsEngine`, `Tanks1984`, `Telegram OCR`).
-
-2. **🔮 Ritual Lab (Concentric Architecture & Systems Explorer)**:
-   - Интерактивный проводник по системам и школам техномагии (*Abjuration, Divination, Transmutation, Conjuration*).
-   - **Концентрические ритуальные слои архитектуры** (*Inner Sanctum Domain ➔ Circle of Invocation CQRS ➔ Outer Conduit Infrastructure ➔ The Astral Eye Qdrant*).
-   - Инспекция инвариантов и прямые ссылки на GitHub репозитории.
-
-3. **📜 Chronicle & CV (Parchment Printable Dossier)**:
-   - Строгий манускрипт резюме с таймлайном походов и матрицей навыков.
-   - Поддержка печати в чистый PDF через `@media print` (`window.print()`).
-
-4. **⛧ The Altar of AsmODan (Quake CLI & Dice Roller)**:
-   - Выпадает сверху по кнопке или клавише **`` ` ``** (тильда) / **`ESC`**.
-   - **Интерактивный дайс-роллер D&D**: `roll d20`, `roll 1d20+5`, `roll 2d6+4` с детекцией Nat 20 и Nat 1!
-   - **Заклинания**: `cast clean-arch`, `cast vector-search`, `cast malloc-free`, `cast banish-bug`.
-   - **Виртуальный гримуар**: `ls`, `cat bio.md`, `cat dnd_stats.json`, `cat manifest.txt`, `whoami`.
-   - 🎮 **Пасхалка**: `tanks` — ретро-битва танков в ASCII прямо в консоли.
+4. **⭕ Круг 3: Внешняя Печать (Проекты-Реликвии — Artifacts)**:
+   - 🗡️ **DrugsEngine** (Clean Architecture + CQRS + Qdrant Vector Search)
+   - 🛡️ **Tanks1984** (Игровой движок на чистом Си)
+   - 👁️ **Telegram OCR** (Tesseract OCR + Async Worker Pool)
+   - 📜 **FirstApi** (REST API + EF Core + Dapper)
+   - 🐝 **Automation Swarm** (Python AsyncIO воркеры)
 
 ---
 
-## 🛠️ Стек Гримуара
+## ⚡ Интерактивные фичи
 
-- **HTML5 & CSS3**: Модульная Dark-Tech дизайн-система (Obsidian Abyss, Eldritch Cyan, Blood Crimson, Hellfire Gold), Bento Grid, Cinzel & Space Grotesk типографика.
-- **Vanilla JavaScript (ES6+)**: D&D Dice Roller, Quake CLI движок, Concentric Architecture Inspector, SPA-роутер.
-- **Lucide Icons**: Легковесные векторные иконки.
+- **Dynamic Energy Beam**: При наведении или клике на любой узел из центрального ядра прорисовывается светящийся лазерный луч к выбранной печати.
+- **Slide-Out Side Inspector Drawer**: Выдвижная панель справа с полным разбором архитектуры, проблем/решений, слоев и ссылок на GitHub.
+- **Режим "Свиток для HR / CV"**: Мгновенное переключение в классический строгий документ для быстрого скрининга и печати в PDF (`@media print`).
+- **⛧ The Altar of AsmODan (Quake CLI)**: Терминал по клавише **`` ` ``** (тильда).
+- **Web Audio FX**: Тактильный синтез звуков орбит, кликов и броска кубика d20.
 
 ---
 
-## 📫 Призыв и Контакты
+## 📫 Контакты
 
 - **Telegram**: [@SomeSimpleTag](https://t.me/SomeSimpleTag)
 - **GitHub**: [github.com/Asm-o-Dan](https://github.com/Asm-o-Dan)
