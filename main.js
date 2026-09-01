@@ -1,945 +1,545 @@
 /**
- * AsmODan — The Radial Ritual Circle & 3 Concentric Arcane Seals Engine
- * Radial Trigonometry, Orbital Rotation, Energy Beams, Web Audio FX, Mobile Thumb Dock & Altar CLI
+ * Daniil Gandapas (Asm-o-Dan) — Systems & Backend Engineering Engine
+ * Handles interactive topology blueprints, project filtering, telemetry console, and responsive UI.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const data = window.ASM_PORTFOLIO || {};
-  const charSheet = data.characterSheet || {};
-  const hrData = data.hrQuickFacts || {};
-  const ring1Chronicle = data.ring1Chronicle || [];
-  const ring2Skills = data.ring2Skills || [];
-  const ring3Projects = data.ring3Projects || [];
-  const virtualFS = data.virtualFS || { "/": [], "/grimoire": [], files: {} };
+  const engineer = data.engineerProfile || {};
+  const topologies = data.architectureTopologies || {};
+  const projects = data.projectsData || [];
+  const skills = data.skillsData || [];
+  const timeline = data.timelineData || [];
+  const values = data.teamValues || [];
 
-  // Active state
-  let currentView = 'radial';
-  let activeNodeData = null;
-  let soundEnabled = true;
-  let isOrbitHovered = false;
-  let activeMobileRing = '3';
-
-  // Terminal & Game state
-  let terminalHistory = [];
-  let historyIndex = -1;
-
-  // =========================================================================
-  // 1. Web Audio Synthesizer (Zero-dependency tactile sound FX)
-  // =========================================================================
-  let audioCtx = null;
-
-  function initAudio() {
-    if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-  }
-
-  function playSound(type) {
-    if (!soundEnabled) return;
-    try {
-      initAudio();
-      if (!audioCtx) return;
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      const now = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      if (type === 'click') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(580, now);
-        osc.frequency.exponentialRampToValueAtTime(220, now + 0.06);
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-        osc.start(now);
-        osc.stop(now + 0.06);
-      } else if (type === 'open-drawer') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(320, now);
-        osc.frequency.exponentialRampToValueAtTime(740, now + 0.12);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-        osc.start(now);
-        osc.stop(now + 0.12);
-      } else if (type === 'dice') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(200, now);
-        osc.frequency.linearRampToValueAtTime(420, now + 0.08);
-        osc.frequency.exponentialRampToValueAtTime(90, now + 0.25);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-        osc.start(now);
-        osc.stop(now + 0.25);
-      } else if (type === 'crit') {
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(523.25, now);
-        osc.frequency.setValueAtTime(659.25, now + 0.08);
-        osc.frequency.setValueAtTime(783.99, now + 0.16);
-        osc.frequency.setValueAtTime(1046.50, now + 0.24);
-        gain.gain.setValueAtTime(0.14, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-        osc.start(now);
-        osc.stop(now + 0.4);
-      }
-    } catch (e) {}
-  }
-
-  // Audio Toggle UI
-  const audioToggleBtn = document.getElementById('audio-toggle-btn');
-  const audioIconOn = document.getElementById('audio-icon-on');
-  const audioIconOff = document.getElementById('audio-icon-off');
-
-  function updateAudioUI() {
-    if (audioIconOn && audioIconOff) {
-      if (soundEnabled) {
-        audioIconOn.style.display = 'block';
-        audioIconOff.style.display = 'none';
-      } else {
-        audioIconOn.style.display = 'none';
-        audioIconOff.style.display = 'block';
-      }
-    }
-  }
-
-  if (audioToggleBtn) {
-    audioToggleBtn.addEventListener('click', () => {
-      soundEnabled = !soundEnabled;
-      updateAudioUI();
-      if (soundEnabled) playSound('click');
-    });
+  // Initialize Lucide Icons
+  if (window.lucide) {
+    window.lucide.createIcons();
   }
 
   // =========================================================================
-  // 2. Icon Initializer
+  // 1. THE SIGNATURE ELEMENT: Interactive System Topology Inspector
   // =========================================================================
-  function refreshIcons() {
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
-  }
-  refreshIcons();
+  let currentTopologyKey = 'drugs-engine';
+  let currentLayerId = 'domain';
 
-  // =========================================================================
-  // 3. Central Core D&D 5e Stat Block Renderer
-  // =========================================================================
-  function renderCoreStats() {
-    const statsContainer = document.getElementById('core-dnd-stats');
-    if (!statsContainer || !charSheet.stats) return;
-    statsContainer.innerHTML = '';
+  const topoSwitchBtns = document.querySelectorAll('.topo-switch-btn');
+  const layersListContainer = document.getElementById('topology-layers-list');
+  const layerTitleEl = document.getElementById('inspector-layer-title');
+  const layerBadgeEl = document.getElementById('inspector-layer-badge');
+  const layerRuleEl = document.getElementById('inspector-layer-rule');
+  const layerDescEl = document.getElementById('inspector-layer-desc');
+  const layerCodeEl = document.getElementById('inspector-layer-code');
+  const metricsRowEl = document.getElementById('inspector-metrics-row');
 
-    charSheet.stats.forEach(stat => {
-      const node = document.createElement('div');
-      node.className = 'core-stat-node';
-      node.title = `${stat.name}: ${stat.desc}`;
-      node.innerHTML = `<div>${stat.code}</div><div class="mod">${stat.mod}</div>`;
-      statsContainer.appendChild(node);
-    });
-  }
-  renderCoreStats();
+  function renderTopology(topoKey, selectLayerId = null) {
+    const topo = topologies[topoKey];
+    if (!topo) return;
+    currentTopologyKey = topoKey;
 
-  // =========================================================================
-  // 4. Radial Orbital Positioning Engine (Rings 1, 2, 3)
-  // =========================================================================
-  const ring1Container = document.getElementById('ring-1-container');
-  const ring2Container = document.getElementById('ring-2-container');
-  const ring3Container = document.getElementById('ring-3-container');
-  const energyBeam = document.getElementById('active-energy-beam');
-
-  // Orbital angles in degrees (updated each animation frame for smooth rotation)
-  let angles = {
-    ring1: 0,
-    ring2: 180,
-    ring3: 45
-  };
-
-  const orbitalRadii = {
-    ring1: 240,
-    ring2: 340,
-    ring3: 440
-  };
-
-  const ring1NodesElements = [];
-  const ring2NodesElements = [];
-  const ring3NodesElements = [];
-
-  function createRingNodes(items, container, ringNum, elementArray) {
-    if (!container) return;
-    container.innerHTML = '';
-    const count = items.length;
-
-    items.forEach((item, index) => {
-      const nodeEl = document.createElement('div');
-      nodeEl.className = 'orbital-node';
-      nodeEl.setAttribute('data-id', item.id);
-      nodeEl.setAttribute('data-ring', ringNum);
-
-      let icon = item.icon || 'sparkles';
-      let title = item.shortTitle || item.title || item.name;
-      let tag = item.period || item.category || (item.school ? item.school.split(' ')[0] : '');
-
-      nodeEl.innerHTML = `
-        <div class="node-card">
-          <div class="node-icon-wrap">
-            <i data-lucide="${icon}" style="width: 15px; height: 15px;"></i>
-          </div>
-          <div class="node-title-box">
-            <span class="node-name">${title}</span>
-            <span class="node-tag">${tag}</span>
-          </div>
-        </div>
-      `;
-
-      nodeEl.addEventListener('mouseenter', () => {
-        isOrbitHovered = true;
-        highlightEnergyBeam(nodeEl);
-      });
-
-      nodeEl.addEventListener('mouseleave', () => {
-        isOrbitHovered = false;
-        if (!activeNodeData) {
-          hideEnergyBeam();
-        }
-      });
-
-      nodeEl.addEventListener('click', () => {
-        playSound('open-drawer');
-        selectNode(item, ringNum, nodeEl);
-      });
-
-      container.appendChild(nodeEl);
-      elementArray.push({
-        el: nodeEl,
-        baseAngle: (index / count) * 360,
-        radius: orbitalRadii[`ring${ringNum}`]
-      });
-    });
-  }
-
-  createRingNodes(ring1Chronicle, ring1Container, 1, ring1NodesElements);
-  createRingNodes(ring2Skills, ring2Container, 2, ring2NodesElements);
-  createRingNodes(ring3Projects, ring3Container, 3, ring3NodesElements);
-
-  // Position nodes on circle using trigonometry
-  function updateNodePositions() {
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) return; // Responsive mode handles layout in CSS
-
-    // Update Ring 1 (Chronicle)
-    ring1NodesElements.forEach(item => {
-      const totalAngle = (item.baseAngle + angles.ring1) * (Math.PI / 180);
-      const x = 500 + item.radius * Math.cos(totalAngle);
-      const y = 500 + item.radius * Math.sin(totalAngle);
-      item.el.style.left = `${(x / 1000) * 100}%`;
-      item.el.style.top = `${(y / 1000) * 100}%`;
-    });
-
-    // Update Ring 2 (Skills)
-    ring2NodesElements.forEach(item => {
-      const totalAngle = (item.baseAngle + angles.ring2) * (Math.PI / 180);
-      const x = 500 + item.radius * Math.cos(totalAngle);
-      const y = 500 + item.radius * Math.sin(totalAngle);
-      item.el.style.left = `${(x / 1000) * 100}%`;
-      item.el.style.top = `${(y / 1000) * 100}%`;
-    });
-
-    // Update Ring 3 (Projects)
-    ring3NodesElements.forEach(item => {
-      const totalAngle = (item.baseAngle + angles.ring3) * (Math.PI / 180);
-      const x = 500 + item.radius * Math.cos(totalAngle);
-      const y = 500 + item.radius * Math.sin(totalAngle);
-      item.el.style.left = `${(x / 1000) * 100}%`;
-      item.el.style.top = `${(y / 1000) * 100}%`;
-    });
-  }
-
-  // Animation Loop for Orbital Rotation
-  function orbitalLoop() {
-    if (!isOrbitHovered && window.innerWidth > 768) {
-      angles.ring1 = (angles.ring1 + 0.04) % 360;
-      angles.ring2 = (angles.ring2 - 0.025 + 360) % 360;
-      angles.ring3 = (angles.ring3 + 0.015) % 360;
-      updateNodePositions();
-    }
-    requestAnimationFrame(orbitalLoop);
-  }
-  updateNodePositions();
-  orbitalLoop();
-
-  // Energy Beam Connector
-  function highlightEnergyBeam(nodeEl) {
-    if (!energyBeam || window.innerWidth <= 768) return;
-    const xPct = parseFloat(nodeEl.style.left) || 50;
-    const yPct = parseFloat(nodeEl.style.top) || 50;
-    energyBeam.setAttribute('x1', '500');
-    energyBeam.setAttribute('y1', '500');
-    energyBeam.setAttribute('x2', (xPct * 10).toString());
-    energyBeam.setAttribute('y2', (yPct * 10).toString());
-    energyBeam.classList.add('visible');
-  }
-
-  function hideEnergyBeam() {
-    if (!energyBeam) return;
-    energyBeam.classList.remove('visible');
-  }
-
-  // =========================================================================
-  // 5. Mobile Rings Switcher (Tabs)
-  // =========================================================================
-  const mobileRingTabs = document.querySelectorAll('.mobile-ring-tab-btn');
-
-  function setMobileActiveRing(ringNum) {
-    activeMobileRing = ringNum.toString();
-    mobileRingTabs.forEach(btn => {
-      if (btn.getAttribute('data-ring') === activeMobileRing) {
+    // Update switcher buttons state
+    topoSwitchBtns.forEach(btn => {
+      if (btn.getAttribute('data-topo') === topoKey) {
         btn.classList.add('active');
       } else {
         btn.classList.remove('active');
       }
     });
 
-    [ring1Container, ring2Container, ring3Container].forEach(c => {
-      if (c) {
-        if (c.getAttribute('data-ring') === activeMobileRing) {
-          c.classList.add('mobile-active');
-        } else {
-          c.classList.remove('mobile-active');
-        }
-      }
-    });
+    // Render layers in left column
+    if (layersListContainer) {
+      layersListContainer.innerHTML = '';
+
+      topo.layers.forEach((layer, idx) => {
+        const layerBtn = document.createElement('button');
+        layerBtn.className = 'layer-card-btn';
+        layerBtn.setAttribute('data-layer-id', layer.id);
+
+        layerBtn.innerHTML = `
+          <div class="layer-card-title">${layer.name}</div>
+          <div class="layer-card-rule mono">${layer.rule}</div>
+        `;
+
+        layerBtn.addEventListener('click', () => {
+          selectLayer(layer.id);
+        });
+
+        layersListContainer.appendChild(layerBtn);
+      });
+    }
+
+    // Default layer selection
+    const firstLayerId = selectLayerId || topo.layers[0]?.id;
+    if (firstLayerId) {
+      selectLayer(firstLayerId);
+    }
   }
 
-  mobileRingTabs.forEach(btn => {
+  function selectLayer(layerId) {
+    const topo = topologies[currentTopologyKey];
+    if (!topo) return;
+
+    const layer = topo.layers.find(l => l.id === layerId);
+    if (!layer) return;
+    currentLayerId = layerId;
+
+    // Update active class on layer buttons
+    const allLayerBtns = document.querySelectorAll('.layer-card-btn');
+    allLayerBtns.forEach(b => {
+      if (b.getAttribute('data-layer-id') === layerId) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+
+    // Update Inspector details
+    if (layerTitleEl) layerTitleEl.textContent = layer.name;
+    if (layerBadgeEl) layerBadgeEl.textContent = `INSPECTOR // ${layerId.toUpperCase()}`;
+    if (layerRuleEl) layerRuleEl.textContent = layer.rule;
+    if (layerDescEl) layerDescEl.textContent = layer.desc;
+    if (layerCodeEl) layerCodeEl.textContent = layer.codeSnippet || '// No snippet available';
+
+    // Render Metrics
+    if (metricsRowEl) {
+      metricsRowEl.innerHTML = '';
+      topo.metrics.forEach(m => {
+        const pill = document.createElement('div');
+        pill.className = 'metric-pill mono';
+        pill.innerHTML = `
+          <span class="metric-pill-key">${m.key}:</span>
+          <span class="metric-pill-val">${m.val}</span>
+        `;
+        metricsRowEl.appendChild(pill);
+      });
+    }
+  }
+
+  topoSwitchBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const ring = btn.getAttribute('data-ring');
-      playSound('click');
-      setMobileActiveRing(ring);
+      const topoKey = btn.getAttribute('data-topo');
+      renderTopology(topoKey);
     });
   });
 
-  // Set default mobile ring to 3 (Projects)
-  setMobileActiveRing('3');
-
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    updateNodePositions();
-    if (window.innerWidth <= 768) {
-      setMobileActiveRing(activeMobileRing);
-    }
-  });
+  // Initial render of topology
+  renderTopology('drugs-engine');
 
   // =========================================================================
-  // 6. Radial Side Inspector Drawer Manager (Bottom Sheet on Mobile)
+  // 2. Case Studies & Projects Showcase
   // =========================================================================
-  const sideDrawer = document.getElementById('radial-side-drawer');
-  const drawerScrollContent = document.getElementById('drawer-scroll-content');
-  const drawerCloseBtn = document.getElementById('drawer-close-btn');
-  let touchStartY = 0;
+  const projectsGrid = document.getElementById('projects-grid');
+  const filterBtns = document.querySelectorAll('.btn-filter');
+  const projectCountBadge = document.getElementById('project-count-badge');
 
-  function selectNode(item, ringNum, nodeEl) {
-    activeNodeData = item;
-    highlightEnergyBeam(nodeEl);
+  function renderProjects(filter = 'all') {
+    if (!projectsGrid) return;
+    projectsGrid.innerHTML = '';
 
-    // Remove active from all cards
-    document.querySelectorAll('.node-card').forEach(c => c.classList.remove('active'));
-    const card = nodeEl.querySelector('.node-card');
-    if (card) card.classList.add('active');
+    const filtered = filter === 'all'
+      ? projects
+      : projects.filter(p => p.category.includes(filter.toLowerCase()));
 
-    renderDrawerContent(item, ringNum);
-    if (sideDrawer) {
-      sideDrawer.classList.add('open');
+    if (projectCountBadge) {
+      projectCountBadge.textContent = `${filtered.length} из ${projects.length} систем`;
     }
-  }
 
-  function closeDrawer() {
-    if (sideDrawer) {
-      sideDrawer.classList.remove('open');
-    }
-    activeNodeData = null;
-    hideEnergyBeam();
-    document.querySelectorAll('.node-card').forEach(c => c.classList.remove('active'));
-  }
+    filtered.forEach(project => {
+      const card = document.createElement('article');
+      card.className = `project-docket ${project.featured ? 'featured' : ''}`;
+      card.setAttribute('data-id', project.id);
 
-  if (drawerCloseBtn) {
-    drawerCloseBtn.addEventListener('click', closeDrawer);
-  }
+      const stackHtml = project.stack.map(s => `<span class="stack-pill mono">${s}</span>`).join('');
 
-  // Mobile Touch Swipe Down to Dismiss Drawer
-  if (sideDrawer) {
-    sideDrawer.addEventListener('touchstart', (e) => {
-      touchStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    sideDrawer.addEventListener('touchend', (e) => {
-      const touchEndY = e.changedTouches[0].clientY;
-      if (touchEndY - touchStartY > 65 && window.innerWidth <= 768) {
-        closeDrawer();
-      }
-    }, { passive: true });
-  }
-
-  function renderDrawerContent(item, ringNum) {
-    if (!drawerScrollContent) return;
-
-    if (ringNum === 3) {
-      // Project Node (Ring 3)
-      const metricsHtml = (item.metrics || []).map(m => `
-        <div class="drawer-metric-col">
-          <span class="metric-lbl">${m.label}</span>
-          <span class="metric-v">${m.val}</span>
-        </div>
-      `).join('');
-
-      const layersHtml = (item.architecture && item.architecture.diagram ? item.architecture.diagram : []).map(l => `
-        <div class="drawer-layer-item">
-          <div class="drawer-layer-name">${l.name}</div>
-          <div class="drawer-layer-tech">${l.tech}</div>
-          <div class="drawer-layer-role">${l.role}</div>
-        </div>
-      `).join('');
-
-      let extraLinks = '';
-      if (item.pythonServiceUrl) {
-        extraLinks += `
-          <a href="${item.pythonServiceUrl}" target="_blank" rel="noopener noreferrer" class="drawer-action-link">
-            <i data-lucide="git-branch" style="width: 14px; height: 14px;"></i>
-            <span>Python Service</span>
-          </a>
-        `;
-      }
-      if (item.extraRepoUrl) {
-        extraLinks += `
-          <a href="${item.extraRepoUrl}" target="_blank" rel="noopener noreferrer" class="drawer-action-link">
-            <i data-lucide="git-branch" style="width: 14px; height: 14px;"></i>
-            <span>Bot Repo</span>
-          </a>
+      let archActionHtml = '';
+      if (project.topologyId) {
+        archActionHtml = `
+          <button class="btn-inspect-arch mono" data-target-topo="${project.topologyId}">
+            <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
+            <span>Архитектура</span>
+          </button>
         `;
       }
 
-      drawerScrollContent.innerHTML = `
-        <div class="drawer-header">
-          <span class="block-title-tag">Круг 3 • Реликвия • ${item.school || 'Architecture'}</span>
-          <h2 class="drawer-title">${item.title}</h2>
-          <div class="drawer-subtitle">${item.subtitle}</div>
-          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.5rem; line-height: 1.45;">
-            ${item.description}
-          </p>
-          <div class="drawer-metrics-row">
-            ${metricsHtml}
+      card.innerHTML = `
+        <div>
+          <div class="docket-meta-row">
+            <span class="docket-tag mono">${project.subtitle}</span>
+            <div style="display:flex; align-items:center; gap:0.4rem; color:var(--sys-amber); font-size:0.75rem;">
+              <i data-lucide="git-branch" style="width:13px; height:13px;"></i>
+              <span class="mono">production-ready</span>
+            </div>
           </div>
+
+          <h3 class="docket-title">${project.title}</h3>
+
+          <div class="docket-case-block">
+            <div class="case-part"><strong>Вызов:</strong> ${project.problem}</div>
+            <div class="case-part"><strong>Решение:</strong> ${project.solution}</div>
+            <div class="case-part"><strong>Результат:</strong> ${project.impact}</div>
+          </div>
+
+          <div class="docket-stack-row">${stackHtml}</div>
         </div>
 
-        <div class="drawer-section-title">Case Study</div>
-        <div class="drawer-case-grid">
-          <div class="drawer-case-card">
-            <div class="drawer-case-title prob">Проблема</div>
-            <div class="drawer-case-text">${item.caseStudy.problem}</div>
-          </div>
-          <div class="drawer-case-card">
-            <div class="drawer-case-title sol">Решение</div>
-            <div class="drawer-case-text">${item.caseStudy.solution}</div>
-          </div>
-          <div class="drawer-case-card">
-            <div class="drawer-case-title imp">Результат</div>
-            <div class="drawer-case-text">${item.caseStudy.impact}</div>
-          </div>
-        </div>
-
-        <div class="drawer-section-title">Концентрические Слои Архитектуры</div>
-        <div class="drawer-layers-list">
-          ${layersHtml}
-        </div>
-
-        <div class="drawer-links-bar">
-          <a href="${item.githubUrl}" target="_blank" rel="noopener noreferrer" class="drawer-action-link">
+        <div class="docket-actions-row">
+          <div>${archActionHtml}</div>
+          <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn-code-link mono">
             <i data-lucide="github" style="width: 14px; height: 14px;"></i>
-            <span>Открыть на GitHub</span>
+            <span>Исходный код</span>
           </a>
-          ${extraLinks}
         </div>
       `;
 
-    } else if (ringNum === 2) {
-      // Skill Node (Ring 2)
-      const pointsHtml = (item.points || []).map(p => `<li style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.25rem;">${p}</li>`).join('');
-
-      drawerScrollContent.innerHTML = `
-        <div class="drawer-header">
-          <span class="block-title-tag" style="background: var(--accent-gold-glow); color: var(--accent-gold);">Круг 2 • Школа Навыков • ${item.school}</span>
-          <h2 class="drawer-title">${item.name}</h2>
-          <div class="drawer-subtitle" style="color: var(--accent-gold);">Категория: ${item.category} • Уровень владения: ${item.level}%</div>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.5;">
-            ${item.summary}
-          </p>
-        </div>
-
-        <div class="drawer-section-title">Ключевые компетенции и применение</div>
-        <ul style="padding-left: 1.25rem; margin-top: 0.5rem;">
-          ${pointsHtml}
-        </ul>
-      `;
-
-    } else if (ringNum === 1) {
-      // Chronicle / Experience Node (Ring 1)
-      const highlightsHtml = (item.highlights || []).map(h => `<li style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.25rem;">${h}</li>`).join('');
-      const techTags = (item.tech || []).map(t => `<span class="mono text-cyan" style="background: var(--bg-slot); padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.72rem;">${t}</span>`).join(' ');
-
-      drawerScrollContent.innerHTML = `
-        <div class="drawer-header">
-          <span class="block-title-tag" style="background: var(--accent-emerald-glow); color: var(--accent-emerald);">Круг 1 • Хроника & Корни • ${item.badge}</span>
-          <h2 class="drawer-title">${item.title}</h2>
-          <div class="drawer-subtitle" style="color: var(--accent-emerald);">${item.period} • ${item.role}</div>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.5;">
-            ${item.summary}
-          </p>
-        </div>
-
-        <div class="drawer-section-title">Ключевые достижения и результаты</div>
-        <ul style="padding-left: 1.25rem; margin-top: 0.5rem; margin-bottom: 1rem;">
-          ${highlightsHtml}
-        </ul>
-
-        <div class="drawer-section-title">Стек этапа</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem;">
-          ${techTags}
-        </div>
-      `;
-    }
-
-    refreshIcons();
-  }
-
-  // =========================================================================
-  // 7. View Switcher (Radial Ritual vs Flat HR Dossier)
-  // =========================================================================
-  const btnViewRadial = document.getElementById('btn-view-radial');
-  const btnViewFlat = document.getElementById('btn-view-flat');
-  const dockBtnRadial = document.getElementById('dock-btn-radial');
-  const dockBtnCv = document.getElementById('dock-btn-cv');
-  const dockBtnDice = document.getElementById('dock-btn-dice');
-  const dockBtnAltar = document.getElementById('dock-btn-altar');
-  const dockBtnSummon = document.getElementById('dock-btn-summon');
-  const viewRadialStage = document.getElementById('view-radial-stage');
-  const viewFlatStage = document.getElementById('view-flat-stage');
-  const flatProjectsSummary = document.getElementById('flat-projects-summary');
-  const flatPrintBtn = document.getElementById('flat-print-btn');
-
-  function renderFlatDossier() {
-    if (!flatProjectsSummary) return;
-    flatProjectsSummary.innerHTML = ring3Projects.map(p => `
-      <div><strong>${p.title}</strong> (${p.tags.slice(0, 4).join(', ')}) — ${p.subtitle}.</div>
-    `).join('');
-  }
-  renderFlatDossier();
-
-  function switchView(viewName) {
-    currentView = viewName;
-    playSound('click');
-
-    if (viewName === 'radial') {
-      if (btnViewRadial) btnViewRadial.classList.add('active');
-      if (btnViewFlat) btnViewFlat.classList.remove('active');
-      if (dockBtnRadial) dockBtnRadial.classList.add('active');
-      if (dockBtnCv) dockBtnCv.classList.remove('active');
-      if (viewRadialStage) viewRadialStage.classList.add('active');
-      if (viewFlatStage) viewFlatStage.classList.remove('active');
-    } else {
-      if (btnViewRadial) btnViewRadial.classList.remove('active');
-      if (btnViewFlat) btnViewFlat.classList.add('active');
-      if (dockBtnRadial) dockBtnRadial.classList.remove('active');
-      if (dockBtnCv) dockBtnCv.classList.add('active');
-      if (viewRadialStage) viewRadialStage.classList.remove('active');
-      if (viewFlatStage) viewFlatStage.classList.add('active');
-    }
-  }
-
-  if (btnViewRadial) btnViewRadial.addEventListener('click', () => switchView('radial'));
-  if (btnViewFlat) btnViewFlat.addEventListener('click', () => switchView('flat'));
-  if (dockBtnRadial) dockBtnRadial.addEventListener('click', () => switchView('radial'));
-  if (dockBtnCv) dockBtnCv.addEventListener('click', () => switchView('flat'));
-  if (flatPrintBtn) flatPrintBtn.addEventListener('click', () => window.print());
-
-  // =========================================================================
-  // 8. D&D 3D Dice Roller Engine (Physical Floating Dice)
-  // =========================================================================
-  const diceStageOverlay = document.getElementById('dice-stage-overlay');
-  const d20Visual = document.getElementById('d20-visual');
-  const diceResultBanner = document.getElementById('dice-result-banner');
-  const coreDiceBtn = document.getElementById('core-dice-btn');
-
-  function triggerD20Roll() {
-    if (!diceStageOverlay || !d20Visual) return;
-    playSound('dice');
-
-    diceStageOverlay.classList.add('open');
-    diceStageOverlay.setAttribute('aria-hidden', 'false');
-
-    d20Visual.classList.add('rolling');
-    d20Visual.textContent = '...';
-    if (diceResultBanner) diceResultBanner.textContent = 'Rolling d20...';
-
-    setTimeout(() => {
-      d20Visual.classList.remove('rolling');
-      const roll = Math.floor(Math.random() * 20) + 1;
-      d20Visual.textContent = roll;
-
-      let msg = `🎲 Rolled a ${roll}!`;
-      if (roll === 20) {
-        playSound('crit');
-        msg = `🌟 NATURAL 20! CRITICAL SUCCESS! The Clean Architecture Gods Smile Upon You!`;
-      } else if (roll === 1) {
-        msg = `💀 NATURAL 1! CRITICAL FAIL! A stray NullReferenceException lurks!`;
-      } else if (roll >= 15) {
-        msg = `✨ Great roll (${roll})! Systems functioning with high performance.`;
-      }
-      if (diceResultBanner) diceResultBanner.textContent = msg;
-    }, 600);
-  }
-
-  if (coreDiceBtn) coreDiceBtn.addEventListener('click', triggerD20Roll);
-  if (dockBtnDice) dockBtnDice.addEventListener('click', triggerD20Roll);
-
-  if (diceStageOverlay) {
-    diceStageOverlay.addEventListener('click', () => {
-      diceStageOverlay.classList.remove('open');
-      diceStageOverlay.setAttribute('aria-hidden', 'true');
+      projectsGrid.appendChild(card);
     });
-  }
 
-  // =========================================================================
-  // 9. The Altar of AsmODan (Quake CLI Engine)
-  // =========================================================================
-  const quakeDrawer = document.getElementById('quake-terminal');
-  const toggleTerminalBtn = document.getElementById('toggle-terminal-btn');
-  const closeTerminalDot = document.getElementById('close-terminal-dot');
-  const footerCliBtn = document.getElementById('footer-cli-btn');
-  const terminalInput = document.getElementById('terminal-input');
-  const terminalBody = document.getElementById('terminal-body');
-  const termChips = document.querySelectorAll('.term-chip');
-
-  function openTerminal() {
-    if (quakeDrawer) {
-      playSound('click');
-      quakeDrawer.classList.add('open');
-      quakeDrawer.setAttribute('aria-hidden', 'false');
-      if (terminalInput) {
-        setTimeout(() => terminalInput.focus(), 150);
-      }
+    if (window.lucide) {
+      window.lucide.createIcons();
     }
   }
 
-  function closeTerminal() {
-    if (quakeDrawer) {
-      quakeDrawer.classList.remove('open');
-      quakeDrawer.setAttribute('aria-hidden', 'true');
-    }
-  }
+  renderProjects('all');
 
-  function toggleTerminal() {
-    if (quakeDrawer && quakeDrawer.classList.contains('open')) {
-      closeTerminal();
-    } else {
-      openTerminal();
-    }
-  }
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter') || 'all';
+      renderProjects(filter);
+    });
+  });
 
-  if (toggleTerminalBtn) toggleTerminalBtn.addEventListener('click', toggleTerminal);
-  if (closeTerminalDot) closeTerminalDot.addEventListener('click', closeTerminal);
-  if (footerCliBtn) footerCliBtn.addEventListener('click', toggleTerminal);
-  if (dockBtnAltar) dockBtnAltar.addEventListener('click', toggleTerminal);
-
-  // Global Keyboard listener for ` (backtick/tilde) and ESC
-  window.addEventListener('keydown', (e) => {
-    if (e.key === '`' || e.key === '~') {
-      if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.id !== 'terminal-input') {
-        return;
-      }
-      if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') {
-        return;
-      }
-      e.preventDefault();
-      toggleTerminal();
-    } else if (e.key === 'Escape') {
-      if (diceStageOverlay && diceStageOverlay.classList.contains('open')) {
-        diceStageOverlay.classList.remove('open');
-      }
-      if (sideDrawer && sideDrawer.classList.contains('open')) {
-        closeDrawer();
-      }
-      if (quakeDrawer && quakeDrawer.classList.contains('open')) {
-        closeTerminal();
-      }
-      const contactModal = document.getElementById('contact-modal');
-      if (contactModal && contactModal.classList.contains('open')) {
-        contactModal.classList.remove('open');
+  // Jump from project card to topology inspector
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-target-topo]');
+    if (btn) {
+      const topoKey = btn.getAttribute('data-target-topo');
+      renderTopology(topoKey);
+      const targetSection = document.getElementById('topology');
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
       }
     }
   });
 
-  function appendTermLine(text, type = 'output') {
-    if (!terminalBody) return;
-    const line = document.createElement('div');
-    line.className = `term-line ${type}`;
-    line.textContent = text;
-    terminalBody.appendChild(line);
-    terminalBody.scrollTop = terminalBody.scrollHeight;
+  // =========================================================================
+  // 3. Technical Competencies Matrix
+  // =========================================================================
+  const compGrid = document.getElementById('competencies-grid');
+  if (compGrid) {
+    compGrid.innerHTML = '';
+    skills.forEach(cat => {
+      const card = document.createElement('div');
+      card.className = 'comp-card';
+
+      const itemsHtml = cat.skills.map(s => `
+        <div class="comp-item">
+          <div class="comp-meta">
+            <span>${s.name}</span>
+            <span class="mono text-amber" style="font-size: 0.8rem;">${s.level}%</span>
+          </div>
+          <div class="comp-detail mono">${s.detail}</div>
+          <div class="comp-bar">
+            <div class="comp-bar-fill" style="width: ${s.level}%;"></div>
+          </div>
+        </div>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="comp-header">
+          <div class="comp-icon-box">
+            <i data-lucide="${cat.icon}" style="width: 18px; height: 18px;"></i>
+          </div>
+          <h3 class="comp-title">${cat.category}</h3>
+        </div>
+        <div class="comp-items-list">${itemsHtml}</div>
+      `;
+
+      compGrid.appendChild(card);
+    });
+
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
   }
 
-  function handleCommand(rawCmd) {
-    const cmd = rawCmd.trim();
-    if (!cmd) return;
+  // =========================================================================
+  // 4. Chronicle & Education Timeline
+  // =========================================================================
+  const timelineNodes = document.getElementById('timeline-nodes');
+  if (timelineNodes) {
+    timelineNodes.innerHTML = '';
+    timeline.forEach(item => {
+      const node = document.createElement('div');
+      node.className = 'timeline-node-card';
+      node.innerHTML = `
+        <div class="timeline-bullet"></div>
+        <div class="timeline-content-panel">
+          <div class="timeline-top-row">
+            <span class="timeline-period mono">${item.period}</span>
+            <span class="timeline-badge mono">${item.badge}</span>
+          </div>
+          <h3 class="timeline-heading">${item.title}</h3>
+          <div class="timeline-subheading mono">${item.subtitle}</div>
+          <p class="timeline-body">${item.description}</p>
+        </div>
+      `;
+      timelineNodes.appendChild(node);
+    });
+  }
 
-    terminalHistory.push(cmd);
-    historyIndex = terminalHistory.length;
+  // =========================================================================
+  // 5. Work Culture & Engineering Values
+  // =========================================================================
+  const valuesContainer = document.getElementById('team-values-container');
+  if (valuesContainer) {
+    valuesContainer.innerHTML = '';
+    values.forEach(v => {
+      const panel = document.createElement('div');
+      panel.className = 'value-item-panel';
+      panel.innerHTML = `
+        <div class="value-icon">
+          <i data-lucide="${v.icon}" style="width: 20px; height: 20px;"></i>
+        </div>
+        <h3 class="value-heading">${v.title}</h3>
+        <p class="value-body">${v.desc}</p>
+      `;
+      valuesContainer.appendChild(panel);
+    });
 
-    appendTermLine(`asmodan > ${cmd}`, 'command');
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  }
 
-    const parts = cmd.split(' ');
-    const mainCmd = parts[0].toLowerCase();
-    const arg = parts.slice(1).join(' ').trim();
+  // =========================================================================
+  // 6. Embedded Engineering CLI Console
+  // =========================================================================
+  const termOutput = document.getElementById('terminal-output');
+  const termInput = document.getElementById('terminal-input');
+  const chips = document.querySelectorAll('.console-quick-chips .chip');
 
-    switch (mainCmd) {
+  function appendOutput(text, type = 'out') {
+    if (!termOutput) return;
+    const row = document.createElement('div');
+    row.className = `term-row ${type} mono`;
+    row.innerHTML = text;
+    termOutput.appendChild(row);
+    termOutput.scrollTop = termOutput.scrollHeight;
+  }
+
+  function handleCommand(cmd) {
+    const raw = cmd.trim();
+    if (!raw) return;
+
+    appendOutput(`asm-o-dan &gt; ${raw}`, 'cmd');
+
+    const clean = raw.toLowerCase();
+
+    switch (clean) {
       case 'help':
-        appendTermLine(
-          "AsmODan Radial Ritual Commands:\n" +
-          "  roll <dice>     — D&D dice roller (e.g. 'roll d20', 'roll 1d20+5')\n" +
-          "  cast <spell>    — Cast tech-spells: 'cast clean-arch', 'cast vector-search'\n" +
-          "  whoami          — AsmODan Character Sheet & Lore\n" +
-          "  ls [dir]        — List files in virtual grimoire (/, /grimoire)\n" +
-          "  cat <file>      — View artifact content (e.g. cat bio.md, cat dnd_stats.json)\n" +
-          "  projects        — List 5 relics from Outer Seal\n" +
-          "  contact         — Direct summoning channels\n" +
-          "  cv / resume     — Switch to Flat HR Dossier view\n" +
-          "  theme [toggle]  — Switch between Dark Obsidian and Parchment Light mode\n" +
-          "  clear           — Cleanse the altar display",
-          'output'
-        );
-        break;
-
-      case 'roll':
-      case 'dice':
-      case 'd20':
-        triggerD20Roll();
-        appendTermLine("🎲 Physical d20 rolled on the central altar!", "dice");
-        break;
-
-      case 'cast':
-        if (!arg) {
-          appendTermLine("Available Spells: clean-arch, vector-search, malloc-free. Type 'cast <spell>'.", 'system');
-        } else {
-          playSound('crit');
-          appendTermLine(`✨ [SPELL CAST: ${arg.toUpperCase()}] Invocation deployed across the radial seals.`, 'spell');
-        }
+        appendOutput(`Доступные команды:<br>
+• <span class="term-hl">whoami</span> — Справка о разработчике и позиции<br>
+• <span class="term-hl">stack</span> — Ключевые компетенции (.NET 8, Python, C, Qdrant)<br>
+• <span class="term-hl">projects</span> — Список систем в репозитории<br>
+• <span class="term-hl">arch</span> — Переключиться на топологию DrugsEngine<br>
+• <span class="term-hl">cv</span> — Скачать официальное резюме в PDF<br>
+• <span class="term-hl">contact</span> — Контакты (Telegram, Email, GitHub)<br>
+• <span class="term-hl">clear</span> — Очистить консоль`);
         break;
 
       case 'whoami':
-        appendTermLine(
-          `Avatar: ${charSheet.name} (${charSheet.alias})\n` +
-          `Title: ${charSheet.title}\n` +
-          `Alignment: ${charSheet.alignment}\n` +
-          `Specialties: C# (.NET 8/9), Python AI, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C\n` +
-          `Status: Open for Remote / Full-time Backend roles`,
-          'output'
-        );
+        appendOutput(`👤 <strong>Даниил Гандапас (@Asm-o-Dan)</strong><br>
+Роль: Systems & Backend Software Engineer<br>
+Вуз: Тираспольский институт физики и техники (Software Engineering)<br>
+Статус: Открыт к предложениям (Full-time / Remote)<br>
+Специализация: Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C`);
         break;
 
-      case 'ls':
-        if (arg === 'grimoire' || arg === '/grimoire' || arg === 'grimoire/') {
-          appendTermLine(virtualFS["/grimoire"].join("   "), 'accent');
-        } else {
-          appendTermLine(virtualFS["/"].join("   "), 'accent');
-        }
-        break;
-
-      case 'cat':
-        if (!arg) {
-          appendTermLine("Usage: cat <filename> (e.g. cat bio.md, cat dnd_stats.json, cat manifest.txt)", 'error');
-        } else {
-          const cleanArg = arg.replace(/^\//, '');
-          if (virtualFS.files[cleanArg]) {
-            appendTermLine(virtualFS.files[cleanArg], 'output');
-          } else {
-            appendTermLine(`cat: ${arg}: No such artifact in grimoire. Type 'ls' to view available scrolls.`, 'error');
-          }
-        }
+      case 'stack':
+        appendOutput(`🛠️ <strong>Технологический арсенал</strong>:<br>
+• Языки: C# (.NET 8/9), Python, Pure ANSI C, SQL<br>
+• Архитектура: Clean Architecture, CQRS, DDD, Event-Driven, Microservices<br>
+• БД и Векторы: PostgreSQL, Qdrant Vector DB, Dapper, EF Core<br>
+• Инструменты: ASP.NET Core, Tesseract OCR, Telegram.Bot, Docker, Git`);
         break;
 
       case 'projects':
-        let projText = "Outer Seal Relics:\n";
-        ring3Projects.forEach((p, idx) => {
-          projText += ` [${idx + 1}] ${p.title} (${p.tags.slice(0, 3).join(', ')})\n     Pattern: ${p.architecture.pattern}\n     GitHub: ${p.githubUrl}\n`;
-        });
-        appendTermLine(projText, 'output');
+        appendOutput(`📦 <strong>Инженерные системы</strong>:<br>
+1. <strong>DrugsEngine & PythonService</strong> — C# Clean Architecture, CQRS, Qdrant Vector DB<br>
+2. <strong>Tanks1984</strong> — Deterministic game engine in pure C with manual memory<br>
+3. <strong>Telegram Bot Suite</strong> — Async OCR pipeline (Tesseract) & state machines<br>
+4. <strong>FirstApi & EduProject</strong> — High-performance CQRS REST API (Dapper + EF Core)<br>
+5. <strong>Automation Engines</strong> — Distributed data sync & scrapers`);
         break;
 
-      case 'contact':
-        appendTermLine(
-          "Direct Summoning Channels:\n" +
-          " • Telegram: https://t.me/SomeSimpleTag (@SomeSimpleTag)\n" +
-          " • Email: dgandapas1@gmail.com\n" +
-          " • GitHub: https://github.com/Asm-o-Dan",
-          'output'
-        );
+      case 'arch':
+        renderTopology('drugs-engine');
+        document.getElementById('topology')?.scrollIntoView({ behavior: 'smooth' });
+        appendOutput(`Переход к интерактивному инспектору архитектуры DrugsEngine.`);
         break;
 
       case 'cv':
-      case 'resume':
-        switchView('flat');
-        closeTerminal();
+        const link = document.createElement('a');
+        link.href = 'resume.pdf';
+        link.download = 'Daniil_Gandapas_Resume.pdf';
+        link.click();
+        appendOutput(`Загрузка файла resume.pdf инициирована.`);
         break;
 
-      case 'theme':
-        toggleTheme();
-        appendTermLine(`Altar theme updated to: ${document.documentElement.getAttribute('data-theme')}`, 'system');
+      case 'contact':
+        appendOutput(`📫 <strong>Прямая связь</strong>:<br>
+• Telegram: <a href="https://t.me/SomeSimpleTag" target="_blank" class="term-hl">@SomeSimpleTag</a><br>
+• Email: <a href="mailto:dgandapas1@gmail.com" class="term-hl">dgandapas1@gmail.com</a><br>
+• GitHub: <a href="https://github.com/Asm-o-Dan" target="_blank" class="term-hl">github.com/Asm-o-Dan</a>`);
         break;
 
       case 'clear':
-        if (terminalBody) {
-          terminalBody.innerHTML = '';
-        }
+        if (termOutput) termOutput.innerHTML = '';
         break;
 
       default:
-        appendTermLine(`Unknown incantation: '${cmd}'. Type 'help' for grimoire commands.`, 'error');
-        break;
+        appendOutput(`Неизвестная команда: <code>${raw}</code>. Введите <span class="term-hl">help</span> для списка доступных инструкций.`, 'sys');
     }
   }
 
-  // Terminal input listener
-  if (terminalInput) {
-    terminalInput.addEventListener('keydown', (e) => {
+  if (termInput) {
+    termInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        const val = terminalInput.value;
-        terminalInput.value = '';
+        const val = termInput.value;
+        termInput.value = '';
         handleCommand(val);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (historyIndex > 0) {
-          historyIndex--;
-          terminalInput.value = terminalHistory[historyIndex] || '';
-        }
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (historyIndex < terminalHistory.length - 1) {
-          historyIndex++;
-          terminalInput.value = terminalHistory[historyIndex] || '';
-        } else {
-          historyIndex = terminalHistory.length;
-          terminalInput.value = '';
-        }
       }
     });
   }
 
-  // Quick action chips click
-  termChips.forEach(chip => {
+  chips.forEach(chip => {
     chip.addEventListener('click', () => {
       const cmd = chip.getAttribute('data-cmd');
-      if (cmd) {
-        handleCommand(cmd);
-      }
+      if (cmd) handleCommand(cmd);
     });
   });
 
   // =========================================================================
-  // 10. Theme Switcher Controller
+  // 7. Theme Management (Light / Dark)
   // =========================================================================
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  const themeSunIcon = document.getElementById('theme-icon-sun');
-  const themeMoonIcon = document.getElementById('theme-icon-moon');
+  const sunIcon = document.getElementById('theme-icon-sun');
+  const moonIcon = document.getElementById('theme-icon-moon');
 
-  function updateThemeIcons(theme) {
-    if (themeSunIcon && themeMoonIcon) {
-      if (theme === 'light') {
-        themeSunIcon.style.display = 'none';
-        themeMoonIcon.style.display = 'block';
-      } else {
-        themeSunIcon.style.display = 'block';
-        themeMoonIcon.style.display = 'none';
-      }
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('sys_theme', theme);
+    if (!sunIcon || !moonIcon) return;
+    if (theme === 'light') {
+      sunIcon.style.display = 'none';
+      moonIcon.style.display = 'block';
+    } else {
+      sunIcon.style.display = 'block';
+      moonIcon.style.display = 'none';
     }
   }
 
-  function toggleTheme() {
-    playSound('click');
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    try {
-      localStorage.setItem('asmodan_theme', next);
-    } catch (e) {}
-    updateThemeIcons(next);
-  }
+  const savedTheme = localStorage.getItem('sys_theme') || 'dark';
+  applyTheme(savedTheme);
 
   if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', toggleTheme);
-  }
-
-  try {
-    const savedTheme = localStorage.getItem('asmodan_theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      updateThemeIcons(savedTheme);
-    }
-  } catch (e) {}
-
-  // =========================================================================
-  // 11. Summon / Contact Modal & Toast Notifications
-  // =========================================================================
-  const contactModal = document.getElementById('contact-modal');
-  const openContactModalBtn = document.getElementById('open-contact-modal-btn');
-  const contactModalClose = document.getElementById('contact-modal-close');
-  const toastHub = document.getElementById('toast-hub');
-
-  function showToast(message) {
-    if (!toastHub) return;
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<i data-lucide="check" style="width: 14px; height: 14px;" class="text-emerald"></i> <span>${message}</span>`;
-    toastHub.appendChild(toast);
-    refreshIcons();
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.3s ease';
-      setTimeout(() => toast.remove(), 300);
-    }, 2400);
-  }
-
-  function openContactModal() {
-    playSound('click');
-    if (contactModal) {
-      contactModal.classList.add('open');
-      contactModal.setAttribute('aria-hidden', 'false');
-    }
-  }
-
-  if (openContactModalBtn) openContactModalBtn.addEventListener('click', openContactModal);
-  if (dockBtnSummon) dockBtnSummon.addEventListener('click', openContactModal);
-
-  if (contactModalClose && contactModal) {
-    contactModalClose.addEventListener('click', () => {
-      contactModal.classList.remove('open');
-      contactModal.setAttribute('aria-hidden', 'true');
+    themeToggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
     });
   }
 
-  // Copy to clipboard
-  document.addEventListener('click', (e) => {
-    const copyBtn = e.target.closest('[data-copy]');
-    if (copyBtn) {
-      const textToCopy = copyBtn.getAttribute('data-copy');
-      if (navigator.clipboard && textToCopy) {
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          showToast(`Скопировано: ${textToCopy}`);
-        }).catch(() => {
-          showToast(`Скопировано: ${textToCopy}`);
+  // =========================================================================
+  // 8. Mobile Drawer Menu
+  // =========================================================================
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileDrawer = document.getElementById('mobile-drawer');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  if (mobileMenuBtn && mobileDrawer) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileDrawer.classList.toggle('open');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileDrawer.classList.remove('open');
+      });
+    });
+  }
+
+  // =========================================================================
+  // 9. Toast System & Clipboard Copy
+  // =========================================================================
+  const toastHub = document.getElementById('toast-hub');
+
+  function showToast(message, iconName = 'check') {
+    if (!toastHub) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast-msg mono';
+    toast.innerHTML = `
+      <i data-lucide="${iconName}" style="width: 16px; height: 16px; color: var(--sys-amber);"></i>
+      <span>${message}</span>
+    `;
+    toastHub.appendChild(toast);
+    if (window.lucide) window.lucide.createIcons();
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(100%)';
+      toast.style.transition = 'all 0.25s ease';
+      setTimeout(() => toast.remove(), 250);
+    }, 3500);
+  }
+
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.getAttribute('data-copy');
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(`Скопировано в буфер: ${text}`);
         });
       }
-    }
+    });
   });
 
+  // Contact Form Submission Simulation
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('form-name').value;
+      showToast(`Спасибо, ${name}! Сообщение принято. Скоро свяжусь с вами.`);
+      contactForm.reset();
+    });
+  }
+
+  // =========================================================================
+  // 10. Scrollspy Navigation Indicator
+  // =========================================================================
+  const navLinks = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let currentId = '';
+    const scrollPos = window.scrollY + 130;
+
+    sections.forEach(section => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      if (scrollPos >= top && scrollPos < top + height) {
+        currentId = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${currentId}`) {
+        link.classList.add('active');
+      }
+    });
+  });
 });
