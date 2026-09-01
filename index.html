@@ -2,479 +2,635 @@
 <html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>AsmODan (Даниил Гандапас) — The Radial Ritual Circle & Systems Archmage</title>
-  <meta name="description" content="AsmODan (Даниил Гандапас) — Радиальный ритуальный круг и 3 концентрические печати: C# .NET 8, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C.">
-  <meta name="keywords" content="AsmODan, Asm-o-Dan, Даниил Гандапас, Systems Archmage, C#, .NET 8, Python, Clean Architecture, CQRS, Qdrant, Vector Search, D&D Portfolio, Pure C">
-  <meta name="author" content="Даниил Гандапас (AsmODan)">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Даниил Гандапас (Asm-o-Dan) — Systems & Backend Software Engineer</title>
+  <meta name="description" content="Инженерное портфолио Даниила Гандапаса (Asm-o-Dan): C# .NET 8/9, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C, Telegram & OCR конвейеры.">
+  <meta name="keywords" content="Даниил Гандапас, Asm-o-Dan, Backend Developer, Systems Engineer, C#, .NET 8, Clean Architecture, CQRS, Qdrant, Vector Search, Pure C, Tiraspol">
+  <meta name="author" content="Даниил Гандапас">
 
-  <!-- OpenGraph / Social Meta Tags -->
-  <meta property="og:title" content="AsmODan (Даниил Гандапас) — The Radial Ritual Circle">
-  <meta property="og:description" content="Structure is freedom. Architecture is intention. Радиальный интерфейс системного инженера.">
+  <!-- OpenGraph Meta Tags -->
+  <meta property="og:title" content="Даниил Гандапас (Asm-o-Dan) — Systems & Backend Software Engineer">
+  <meta property="og:description" content="Архитектура ПО — это искусство проводить границы там, где прекращается распространение ошибок. Высоконагруженные бэкенд-системы на .NET, чистый Си и векторный поиск Qdrant.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE">
 
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛧</text></svg>">
-
-  <!-- Google Fonts -->
+  <!-- Fonts: Plus Jakarta Sans for structural precision, Inter for body, JetBrains Mono for data/code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Stylesheet -->
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Ambient Eldritch Glow Background -->
-  <div class="ambient-glow" aria-hidden="true"></div>
 
-  <!-- The Altar of AsmODan (Quake Dropdown Terminal & Dice Engine) -->
-  <div class="quake-terminal-drawer" id="quake-terminal" aria-hidden="true">
-    <div class="terminal-container">
-      <div class="terminal-bar">
-        <div class="terminal-dots">
-          <span class="terminal-dot red" id="close-terminal-dot" title="Закрыть алтарь"></span>
-          <span class="terminal-dot yellow"></span>
-          <span class="terminal-dot green"></span>
+  <!-- Subtle Precision Caliper Grid Background -->
+  <div class="systems-grid-bg" aria-hidden="true"></div>
+
+  <!-- ========================================================================= -->
+  <!-- TELEMETRY HEADER & NAVIGATION                                             -->
+  <!-- ========================================================================= -->
+  <header class="sys-header" id="sys-header">
+    <div class="container header-inner">
+      
+      <!-- Brand & Telemetry Ident -->
+      <a href="#hero" class="sys-brand">
+        <span class="brand-monogram">ASM</span>
+        <div class="brand-text-col">
+          <span class="brand-name">Даниил Гандапас</span>
+          <span class="brand-meta mono">Asm-o-Dan // Systems & Backend</span>
         </div>
-        <div class="terminal-title">
-          <span class="rune-symbol">⛧</span> asmodan@grimoire: ~ (Radial Arcane Engine v9.0 | Lawful Neutral)
-        </div>
-        <div class="terminal-hotkey-hint">Press <kbd class="kbd-badge">`</kbd> or <kbd class="kbd-badge">ESC</kbd> to toggle</div>
-      </div>
-
-      <div class="terminal-body" id="terminal-body">
-        <div class="term-line system">AsmODan Radial Ritual Engine v9.0 online.</div>
-        <div class="term-line system">3 Concentric Seals active: [Ring 1: Chronicle], [Ring 2: Skills], [Ring 3: Projects].</div>
-        <div class="term-line output">Current Avatar: Даниил Гандапас (AsmODan) | Level 20 Systems Archmage</div>
-      </div>
-
-      <!-- Quick Command Buttons -->
-      <div class="terminal-quick-bar">
-        <button class="term-chip" data-cmd="help">help</button>
-        <button class="term-chip" data-cmd="whoami">whoami</button>
-        <button class="term-chip" data-cmd="roll d20">🎲 roll d20</button>
-        <button class="term-chip" data-cmd="cast clean-arch">✨ cast clean-arch</button>
-        <button class="term-chip" data-cmd="cast vector-search">🔮 cast vector-search</button>
-        <button class="term-chip" data-cmd="ls">ls</button>
-        <button class="term-chip" data-cmd="cat dnd_stats.json">cat dnd_stats.json</button>
-        <button class="term-chip" data-cmd="contact">contact</button>
-        <button class="term-chip" data-cmd="clear">clear</button>
-      </div>
-
-      <!-- Input Line -->
-      <div class="terminal-input-wrap">
-        <span class="terminal-prompt">asmodan &gt;</span>
-        <input 
-          type="text" 
-          id="terminal-input" 
-          class="terminal-input" 
-          placeholder="Type command (help, roll d20, cast clean-arch, ls)..." 
-          autocomplete="off" 
-          spellcheck="false"
-        >
-      </div>
-    </div>
-  </div>
-
-  <!-- Top Glass HUD / Header -->
-  <header class="hud-header" id="hud-header">
-    <div class="hud-container">
-      <!-- Brand / Identity -->
-      <a href="#radial-sanctum" class="brand-badge-link" id="brand-logo-link">
-        <span class="brand-code-tag">ASM</span>
-        <span class="brand-name">AsmODan</span>
-        <span class="brand-arcane-title">/ Level 20 Archmage</span>
-        <span class="brand-status-dot" title="Open for Backend Roles"></span>
       </a>
 
-      <!-- View Switcher (Desktop) -->
-      <div class="perspective-nav desktop-only">
-        <button class="nav-segment-btn active" id="btn-view-radial" data-view="radial">
-          <i data-lucide="circle-dot" style="width: 15px; height: 15px;"></i>
-          <span>Радиальный Ритуал</span>
-        </button>
-        <button class="nav-segment-btn" id="btn-view-flat" data-view="flat">
-          <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
-          <span>Свиток HR / CV</span>
-        </button>
-      </div>
+      <!-- Desktop Nav Links -->
+      <nav class="sys-nav desktop-only" aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li><a href="#hero" class="nav-item active">Обзор</a></li>
+          <li><a href="#topology" class="nav-item">Архитектура</a></li>
+          <li><a href="#projects" class="nav-item">Системы & Кейсы</a></li>
+          <li><a href="#competencies" class="nav-item">Стек</a></li>
+          <li><a href="#chronicle" class="nav-item">Хроника & Вуз</a></li>
+          <li><a href="#contact" class="nav-item">Связь</a></li>
+        </ul>
+      </nav>
 
-      <!-- Right HUD Action Tools -->
-      <div class="hud-actions">
-        <!-- Audio FX Toggle -->
-        <button class="hud-tool-btn audio-toggle-btn" id="audio-toggle-btn" title="Включить / выключить звуки алтаря">
-          <i data-lucide="volume-2" id="audio-icon-on" style="width: 16px; height: 16px;"></i>
-          <i data-lucide="volume-x" id="audio-icon-off" style="width: 16px; height: 16px; display: none;"></i>
-          <span class="hud-btn-text">FX</span>
-        </button>
+      <!-- Action Cluster -->
+      <div class="header-actions">
+        <!-- Live Status Pill -->
+        <div class="status-indicator desktop-only" title="Статус поиска: Открыт к предложениям">
+          <span class="beacon-dot"></span>
+          <span class="status-text mono">OPEN FOR ROLES</span>
+        </div>
 
-        <!-- Altar CLI Toggle Button (Desktop) -->
-        <button class="hud-tool-btn terminal-trigger-btn desktop-only" id="toggle-terminal-btn" title="Открыть алтарь CLI (Клавиша `)">
-          <span class="rune-glyph">⛧</span>
-          <span class="hud-btn-text">Altar CLI</span>
-          <kbd class="kbd-tiny">`</kbd>
-        </button>
+        <!-- Download CV Direct -->
+        <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-action-outline" id="header-cv-btn" title="Скачать официальное резюме в PDF">
+          <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+          <span>Резюме (PDF)</span>
+        </a>
 
-        <!-- Theme Toggle -->
-        <button class="hud-tool-btn" id="theme-toggle-btn" aria-label="Сменить тему" title="Переключить тему">
+        <!-- Theme Switcher -->
+        <button class="sys-icon-btn" id="theme-toggle-btn" aria-label="Сменить тему оформления" title="Сменить тему">
           <i data-lucide="sun" id="theme-icon-sun" style="width: 16px; height: 16px;"></i>
           <i data-lucide="moon" id="theme-icon-moon" style="width: 16px; height: 16px; display: none;"></i>
         </button>
 
-        <!-- Direct Summon Button (Desktop) -->
-        <button class="hud-cta-btn desktop-only" id="open-contact-modal-btn">
-          <i data-lucide="send" style="width: 14px; height: 14px;"></i>
-          <span>Призвать</span>
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-toggle-btn mobile-only" id="mobile-menu-btn" aria-label="Открыть мобильное меню">
+          <i data-lucide="menu" id="mobile-menu-icon" style="width: 22px; height: 22px;"></i>
         </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <div class="mobile-drawer-inner">
+        <a href="#hero" class="mobile-link">Главный экран</a>
+        <a href="#topology" class="mobile-link">Инспектор архитектуры</a>
+        <a href="#projects" class="mobile-link">Проекты и кейсы</a>
+        <a href="#competencies" class="mobile-link">Компетенции и стек</a>
+        <a href="#chronicle" class="mobile-link">Опыт и образование (ТИФТ)</a>
+        <a href="#contact" class="mobile-link">Прямые контакты</a>
+        <div class="mobile-drawer-footer">
+          <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-primary" style="justify-content: center; width: 100%;">
+            <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+            <span>Скачать резюме (PDF)</span>
+          </a>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- ========================================================================= -->
-  <!-- MAIN STAGE: THE RADIAL RITUAL CIRCLE (3 CONCENTRIC SEALS)                 -->
-  <!-- ========================================================================= -->
-  <main class="radial-stage" id="main-stage">
-    
-    <!-- VIEW A: RADIAL RITUAL ENGINE (DEFAULT) -->
-    <section class="radial-ritual-viewport active" id="view-radial-stage" aria-label="Radial Ritual Engine">
-      
-      <!-- Seal Rings Guide HUD (Left Top on Desktop) -->
-      <div class="rings-legend-hud desktop-only">
-        <div class="legend-title">Печати Ритуала:</div>
-        <div class="legend-item ring-3-leg" data-ring="3">
-          <span class="legend-dot dot-cyan"></span>
-          <span class="legend-name">Круг 3: Проекты-Реликвии (5)</span>
-        </div>
-        <div class="legend-item ring-2-leg" data-ring="2">
-          <span class="legend-dot dot-gold"></span>
-          <span class="legend-name">Круг 2: Навыки & Заклинания (6)</span>
-        </div>
-        <div class="legend-item ring-1-leg" data-ring="1">
-          <span class="legend-dot dot-emerald"></span>
-          <span class="legend-name">Круг 1: Опыт & ТИФТ (4)</span>
-        </div>
-        <div class="legend-hint">Кликните любой узел для раскрытия манускрипта</div>
-      </div>
-
-      <!-- Mobile Ring Selector Tabs (Visible on Mobile/Tablet) -->
-      <div class="mobile-rings-tabs" id="mobile-rings-tabs">
-        <button class="mobile-ring-tab-btn active" data-ring="3">
-          <span class="legend-dot dot-cyan"></span>
-          <span>III. Проекты</span>
-        </button>
-        <button class="mobile-ring-tab-btn" data-ring="2">
-          <span class="legend-dot dot-gold"></span>
-          <span>II. Навыки</span>
-        </button>
-        <button class="mobile-ring-tab-btn" data-ring="1">
-          <span class="legend-dot dot-emerald"></span>
-          <span>I. Опыт / Вуз</span>
-        </button>
-      </div>
-
-      <!-- The Radial Canvas Container -->
-      <div class="radial-circle-system" id="radial-circle-system">
-
-        <!-- SVG Concentric Orbital Paths & Visual Runes (Desktop/Tablet) -->
-        <svg class="radial-orbit-svg" id="radial-orbit-svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-          <defs>
-            <radialGradient id="coreGlowGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="rgba(0, 240, 255, 0.25)" />
-              <stop offset="70%" stop-color="rgba(244, 63, 94, 0.12)" />
-              <stop offset="100%" stop-color="transparent" />
-            </radialGradient>
-            <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          <!-- Core Ambient Radial Glow -->
-          <circle cx="500" cy="500" r="220" fill="url(#coreGlowGrad)" />
-
-          <!-- Ring 1 Track (Chronicle: r=240) -->
-          <circle cx="500" cy="500" r="240" class="orbit-path ring-1-path" />
-          
-          <!-- Ring 2 Track (Skills: r=340) -->
-          <circle cx="500" cy="500" r="340" class="orbit-path ring-2-path" />
-
-          <!-- Ring 3 Track (Projects: r=440) -->
-          <circle cx="500" cy="500" r="440" class="orbit-path ring-3-path" />
-
-          <!-- Dynamic Energy Beam from Core to Active Node -->
-          <line x1="500" y1="500" x2="500" y2="500" class="active-energy-beam" id="active-energy-beam" filter="url(#glowFilter)" />
-        </svg>
-
-        <!-- ========================================================= -->
-        <!-- ⛧ CENTRAL CORE: AsmODan Sanctum                           -->
-        <!-- ========================================================= -->
-        <div class="ritual-core-card" id="ritual-core" aria-label="Центральное Ядро AsmODan">
-          <div class="core-inner-wrap">
-            <div class="core-avatar-portal">
-              <img 
-                src="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE" 
-                alt="Даниил Гандапас" 
-                class="core-avatar-img"
-              >
-              <div class="core-avatar-halo" aria-hidden="true"></div>
-            </div>
-
-            <div class="core-level-pill">
-              <span class="pulse-dot"></span>
-              <span>LVL 20 ARCHMAGE</span>
-            </div>
-
-            <h1 class="core-name">Даниил Гандапас</h1>
-            <div class="core-alias"><span class="text-crimson font-bold">⛧ AsmODan</span> <span class="core-role">Backend Sorcerer</span></div>
-
-            <!-- Interactive D&D 5e Stat Block (6 Attributes) -->
-            <div class="core-dnd-stats" id="core-dnd-stats">
-              <!-- Rendered dynamically via JS -->
-            </div>
-
-            <!-- Quick Action Row in Core -->
-            <div class="core-actions-row">
-              <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="core-btn-cv" id="core-cv-download-btn" title="Скачать резюме в PDF">
-                <i data-lucide="file-down" style="width: 14px; height: 14px;"></i>
-                <span>Резюме</span>
-              </a>
-              <button class="core-btn-dice" id="core-dice-btn" title="Бросить кубик d20!">
-                <span>🎲 d20</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ========================================================= -->
-        <!-- ⭕ RING 1: Inner Seal (Chronicle & Roots — 4 Nodes)       -->
-        <!-- ========================================================= -->
-        <div class="orbital-ring ring-1-nodes" id="ring-1-container" data-ring="1">
-          <!-- Rendered dynamically via JS from ring1Chronicle -->
-        </div>
-
-        <!-- ========================================================= -->
-        <!-- ⭕ RING 2: Middle Seal (Skills & Spellbook — 6 Nodes)     -->
-        <!-- ========================================================= -->
-        <div class="orbital-ring ring-2-nodes" id="ring-2-container" data-ring="2">
-          <!-- Rendered dynamically via JS from ring2Skills -->
-        </div>
-
-        <!-- ========================================================= -->
-        <!-- ⭕ RING 3: Outer Seal (Projects & Relics — 5 Nodes)       -->
-        <!-- ========================================================= -->
-        <div class="orbital-ring ring-3-nodes" id="ring-3-container" data-ring="3">
-          <!-- Rendered dynamically via JS from ring3Projects -->
-        </div>
-
-      </div>
-
-      <!-- Slide-Out Radial Side Inspector Drawer (Desktop Side-Sheet / Mobile Bottom-Sheet) -->
-      <aside class="radial-side-drawer" id="radial-side-drawer" aria-label="Инспектор выбранной печати">
-        <div class="drawer-drag-handle" id="drawer-drag-handle" aria-hidden="true"></div>
-        <div class="drawer-inner">
-          <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Закрыть инспектор">
-            <i data-lucide="x" style="width: 18px; height: 18px;"></i>
-          </button>
-          <div class="drawer-scroll-content" id="drawer-scroll-content">
-            <!-- Populated dynamically when any node is clicked -->
-          </div>
-        </div>
-      </aside>
-
-    </section>
-
+  <main>
     <!-- ========================================================================= -->
-    <!-- VIEW B: FLAT HR DOSSIER & PRINTABLE SCROLL (FOR INSTANT SCREENING)       -->
+    <!-- HERO SECTION: THE ARCHITECTURAL THESIS                                    -->
     <!-- ========================================================================= -->
-    <section class="flat-dossier-viewport" id="view-flat-stage" aria-label="Classic HR Scroll">
-      <div class="container-workbench" style="max-width: 900px;">
+    <section class="hero-section" id="hero">
+      <div class="container hero-layout">
         
-        <div class="dossier-top-bar">
-          <div>
-            <span class="block-title-tag">HR Fast-Track & Screening</span>
-            <h2 class="dossier-heading">Манускрипт Резюме Даниила Гандапаса</h2>
+        <!-- Left: Thesis & Candidate Profile -->
+        <div class="hero-dossier">
+          
+          <div class="eyebrow-tag">
+            <span class="mono">ENGINEERING SPECIFICATION // .NET 8 • CLEAN ARCH • QDRANT • C</span>
           </div>
-          <button class="btn-action-primary" id="flat-print-btn">
-            <i data-lucide="printer" style="width: 15px; height: 15px;"></i>
-            <span>Печать / Экспорт в PDF</span>
-          </button>
+
+          <h1 class="hero-heading">
+            Проектирую бэкенд, который <span class="accent-text">не гниёт под нагрузкой.</span>
+          </h1>
+
+          <p class="hero-lead">
+            Меня зовут <strong>Даниил Гандапас</strong>. Я backend-инженер, сочетающий строгие архитектурные границы <strong>C# (.NET 8/9, Clean Architecture, CQRS)</strong>, аппаратное понимание памяти из <strong>чистого Си</strong> и семантический векторный поиск в <strong>Qdrant</strong>.
+          </p>
+
+          <blockquote class="hero-quote mono">
+            «Архитектура ПО — это искусство проводить границы там, где прекращается распространение ошибок.»
+          </blockquote>
+
+          <!-- HR Quick Facts Telemetry Strip -->
+          <div class="hr-facts-grid" id="hr-facts-container">
+            <div class="hr-fact-cell">
+              <span class="fact-label mono">ОБРАЗОВАНИЕ</span>
+              <span class="fact-value">ТИФТ (Программная инженерия)</span>
+            </div>
+            <div class="hr-fact-cell">
+              <span class="fact-label mono">ФОРМАТ РАБОТЫ</span>
+              <span class="fact-value">Удаленно / Полная занятость</span>
+            </div>
+            <div class="hr-fact-cell">
+              <span class="fact-label mono">ЛОКАЦИЯ</span>
+              <span class="fact-value">Тирасполь (GMT+3) / Remote</span>
+            </div>
+            <div class="hr-fact-cell">
+              <span class="fact-label mono">ЯЗЫКИ</span>
+              <span class="fact-value">Русский (Native), English (Technical)</span>
+            </div>
+          </div>
+
+          <!-- Hero Action Button Cluster -->
+          <div class="hero-ctas">
+            <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-primary" id="hero-download-cv-btn">
+              <i data-lucide="download" style="width: 18px; height: 18px;"></i>
+              <span>Скачать CV в PDF</span>
+            </a>
+            
+            <a href="#topology" class="btn-secondary" id="hero-explore-arch-btn">
+              <i data-lucide="layers" style="width: 18px; height: 18px;"></i>
+              <span>Инспектор архитектуры</span>
+            </a>
+
+            <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="hero-tg-btn">
+              <i data-lucide="send" style="width: 18px; height: 18px;"></i>
+              <span>Telegram: @SomeSimpleTag</span>
+            </a>
+          </div>
         </div>
 
-        <!-- Classic Printable CV Parchment -->
-        <article class="flat-cv-sheet">
-          <div class="cv-sheet-top">
-            <h1 class="cv-sheet-name">Даниил Гандапас <span class="cv-alias-badge">@AsmODan</span></h1>
-            <div class="cv-sheet-subtitle">Backend & Systems Software Engineer • C# .NET 8 • Clean Architecture • CQRS</div>
-            <div class="cv-contacts-line">
-              <span>Тирасполь / Remote</span> • 
-              <span><a href="mailto:dgandapas1@gmail.com">dgandapas1@gmail.com</a></span> • 
-              <span>Telegram: <a href="https://t.me/SomeSimpleTag">@SomeSimpleTag</a></span> • 
-              <span>GitHub: <a href="https://github.com/Asm-o-Dan">github.com/Asm-o-Dan</a></span>
+        <!-- Right: Candidate Telemetry Console -->
+        <div class="hero-telemetry-panel">
+          <div class="panel-bezel">
+            <div class="bezel-header">
+              <span class="terminal-dot dot-green"></span>
+              <span class="bezel-title mono">SYS_DIAGNOSTICS // CANDIDATE_PROFILE</span>
+              <span class="mono bezel-status">ACTIVE</span>
+            </div>
+
+            <div class="bezel-body">
+              <!-- Portrait Frame -->
+              <div class="portrait-strip">
+                <div class="portrait-wrapper">
+                  <img 
+                    src="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE" 
+                    alt="Даниил Гандапас"
+                    class="portrait-img"
+                    id="profile-img"
+                  >
+                  <div class="portrait-stamp mono">VERIFIED ENGINEER</div>
+                </div>
+
+                <div class="portrait-caption">
+                  <div class="caption-name">Даниил Гандапас</div>
+                  <div class="caption-handle mono">github.com/Asm-o-Dan</div>
+                  <div class="caption-role mono">Backend & Systems Specialist</div>
+                </div>
+              </div>
+
+              <!-- 4 Telemetry Metrics -->
+              <div class="telemetry-metrics-grid">
+                <div class="telemetry-metric-item">
+                  <div class="metric-num mono text-amber">100%</div>
+                  <div class="metric-name mono">Domain Isolation</div>
+                  <div class="metric-desc">0 внешних библиотек в доменном ядре</div>
+                </div>
+
+                <div class="telemetry-metric-item">
+                  <div class="metric-num mono text-cyan">&lt; 15 ms</div>
+                  <div class="metric-name mono">Vector Search</div>
+                  <div class="metric-desc">Косинусный поиск по Qdrant DB</div>
+                </div>
+
+                <div class="telemetry-metric-item">
+                  <div class="metric-num mono text-emerald">0 B</div>
+                  <div class="metric-name mono">Memory Leaks</div>
+                  <div class="metric-desc">Valgrind clean на чистом Си</div>
+                </div>
+
+                <div class="telemetry-metric-item">
+                  <div class="metric-num mono text-amber">3.8x</div>
+                  <div class="metric-name mono">Dapper Speedup</div>
+                  <div class="metric-desc">CQRS разделение Read / Write моделей</div>
+                </div>
+              </div>
+
+              <!-- Direct Verification Links -->
+              <div class="bezel-footer mono">
+                <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer" class="bezel-link">
+                  <i data-lucide="github" style="width: 14px; height: 14px;"></i>
+                  <span>GitHub (@Asm-o-Dan)</span>
+                </a>
+                <a href="mailto:dgandapas1@gmail.com" class="bezel-link">
+                  <i data-lucide="mail" style="width: 14px; height: 14px;"></i>
+                  <span>dgandapas1@gmail.com</span>
+                </a>
+              </div>
             </div>
           </div>
-
-          <div class="cv-block">
-            <div class="cv-block-title">Краткое резюме / Summary</div>
-            <p class="cv-block-text">
-              Backend-инженер со специализацией в <strong>C# (.NET 8/9)</strong>, <strong>Python</strong>, многослойной архитектуре (<strong>Clean Architecture, CQRS, DDD</strong>) и векторных базах данных (<strong>Qdrant</strong>). Имею фундаментальную системную базу на низкоуровневом <strong>Си</strong> (ручное управление памятью, детерминированные циклы). Проектирую отказоустойчивые микросервисы, асинхронные воркеры с Tesseract OCR и чистые API с разделением команд и запросов.
-            </p>
-          </div>
-
-          <div class="cv-block">
-            <div class="cv-block-title">Образование</div>
-            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.95rem;">
-              <span>Тираспольский институт физики и техники (ТИФТ)</span>
-              <span class="mono text-cyan">Программная инженерия</span>
-            </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
-              Фундаментальные структуры данных и алгоритмы, высшая математика, теория баз данных, системное программирование и архитектура ПО.
-            </p>
-          </div>
-
-          <div class="cv-block">
-            <div class="cv-block-title">Ключевые системы на GitHub</div>
-            <div class="cv-systems-summary" id="flat-projects-summary">
-              <!-- Rendered dynamically -->
-            </div>
-          </div>
-        </article>
+        </div>
 
       </div>
     </section>
 
+    <!-- ========================================================================= -->
+    <!-- THE SIGNATURE ELEMENT: INTERACTIVE ARCHITECTURAL BLUEPRINT                -->
+    <!-- ========================================================================= -->
+    <section class="section-container" id="topology">
+      <div class="container">
+        
+        <div class="section-intro">
+          <div class="eyebrow-tag">
+            <span class="mono">SIGNATURE ELEMENT // SYSTEM TOPOLOGY INSPECTOR</span>
+          </div>
+          <h2 class="section-title">Интерактивный инспектор архитектуры</h2>
+          <p class="section-subtitle">
+            Выберите топологию системы для исследования инженерных компромиссов, инвариантов слоев и реальных фрагментов кода.
+          </p>
+        </div>
+
+        <!-- Topology System Switcher Bar -->
+        <div class="topology-switcher-bar">
+          <button class="topo-switch-btn active" data-topo="drugs-engine">
+            <i data-lucide="layers" style="width: 16px; height: 16px;"></i>
+            <span>DrugsEngine: Clean Architecture & CQRS</span>
+          </button>
+          <button class="topo-switch-btn" data-topo="vector-pipeline">
+            <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+            <span>Qdrant Vector AI & Semantic Bridge</span>
+          </button>
+          <button class="topo-switch-btn" data-topo="pure-c-loop">
+            <i data-lucide="cpu" style="width: 16px; height: 16px;"></i>
+            <span>Tanks1984: Pure C Deterministic Loop</span>
+          </button>
+        </div>
+
+        <!-- The Interactive Topology Workbench -->
+        <div class="topology-workbench">
+          
+          <!-- Left: Layer Decomposition Selector -->
+          <div class="workbench-layers-col">
+            <div class="workbench-col-header mono">
+              <span class="header-tag">ARCHITECTURAL LAYERS</span>
+              <span class="header-hint">Кликните слой для инспекции</span>
+            </div>
+            <div class="layers-list" id="topology-layers-list">
+              <!-- Rendered dynamically by main.js -->
+            </div>
+          </div>
+
+          <!-- Right: Deep Dive Inspector (Invariants, Rules, Code) -->
+          <div class="workbench-inspector-col">
+            <div class="inspector-panel">
+              <div class="inspector-header">
+                <div class="inspector-title-row">
+                  <span class="inspector-badge mono" id="inspector-layer-badge">LAYER 01</span>
+                  <h3 class="inspector-layer-name" id="inspector-layer-title">Domain Layer</h3>
+                </div>
+                <div class="inspector-rule mono" id="inspector-layer-rule">Зависимости: 0 внешних пакетов</div>
+              </div>
+
+              <div class="inspector-body">
+                <div class="inspector-section-label mono">АРХИТЕКТУРНЫЙ КОНТРАКТ & ИНВАРИАНТЫ:</div>
+                <p class="inspector-description" id="inspector-layer-desc">
+                  Описание слоя и гарантии изоляции бизнес-правил.
+                </p>
+
+                <div class="inspector-section-label mono" style="margin-top: 1.25rem;">ФРАГМЕНТ РЕАЛИЗАЦИИ ИЗ РЕПОЗИТОРИЯ:</div>
+                <div class="code-preview-wrap">
+                  <div class="code-bar mono">
+                    <span>source_code.cs</span>
+                    <span class="code-lang">C# / .NET 8</span>
+                  </div>
+                  <pre class="code-block"><code class="mono" id="inspector-layer-code">// Code snippet</code></pre>
+                </div>
+              </div>
+
+              <div class="inspector-footer">
+                <div class="metric-pills-row" id="inspector-metrics-row">
+                  <!-- Metrics populated dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- CASE STUDIES & PRODUCTION SYSTEMS                                         -->
+    <!-- ========================================================================= -->
+    <section class="section-container" id="projects">
+      <div class="container">
+        
+        <div class="section-intro">
+          <div class="eyebrow-tag">
+            <span class="mono">CASE STUDIES // PRODUCTION SYSTEMS SHOWCASE</span>
+          </div>
+          <h2 class="section-title">Инженерные кейсы и проекты</h2>
+          <p class="section-subtitle">
+            Каждая система спроектирована под конкретный технический и продуктовый вызов: от семантического векторного поиска до детерминированных циклов на Си.
+          </p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="projects-filter-bar">
+          <div class="filter-buttons" id="project-filters">
+            <button class="btn-filter active" data-filter="all">Все системы</button>
+            <button class="btn-filter" data-filter="c#">C# / .NET</button>
+            <button class="btn-filter" data-filter="architecture">Clean Architecture / CQRS</button>
+            <button class="btn-filter" data-filter="python">Python / AI</button>
+            <button class="btn-filter" data-filter="c">Pure C</button>
+            <button class="btn-filter" data-filter="automation">Telegram / OCR</button>
+          </div>
+          <div class="projects-count mono" id="project-count-badge">5 систем в витрине</div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projects-grid">
+          <!-- Populated dynamically via main.js from projectsData -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TECHNICAL COMPETENCIES MATRIX                                             -->
+    <!-- ========================================================================= -->
+    <section class="section-container" id="competencies">
+      <div class="container">
+        
+        <div class="section-intro">
+          <div class="eyebrow-tag">
+            <span class="mono">SKILL INVENTORY // COMPETENCY MATRIX</span>
+          </div>
+          <h2 class="section-title">Технологический стек и глубина владения</h2>
+          <p class="section-subtitle">
+            Осознанный выбор инструментов под задачи отказоустойчивости, изоляции логики и масштабирования.
+          </p>
+        </div>
+
+        <div class="competencies-grid" id="competencies-grid">
+          <!-- Populated dynamically via main.js from skillsData -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- CHRONICLE & EDUCATION TIMELINE                                            -->
+    <!-- ========================================================================= -->
+    <section class="section-container" id="chronicle">
+      <div class="container">
+        
+        <div class="section-intro">
+          <div class="eyebrow-tag">
+            <span class="mono">CAREER & ACADEMIC TRACK // CHRONICLE</span>
+          </div>
+          <h2 class="section-title">Опыт и образование</h2>
+          <p class="section-subtitle">
+            Академическая подготовка в институте физики и техники и эволюция от низкоуровневого Си к распределенным корпоративным сервисам.
+          </p>
+        </div>
+
+        <div class="timeline-wrapper">
+          <div class="timeline-ruler"></div>
+          <div class="timeline-nodes" id="timeline-nodes">
+            <!-- Populated dynamically via main.js from timelineData -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- WORK CULTURE & ENGINEERING VALUES                                         -->
+    <!-- ========================================================================= -->
+    <section class="section-container" id="principles">
+      <div class="container">
+        
+        <div class="section-intro">
+          <div class="eyebrow-tag">
+            <span class="mono">ENGINEERING PRINCIPLES // HOW I WORK</span>
+          </div>
+          <h2 class="section-title">Принципы инженерной культуры</h2>
+          <p class="section-subtitle">
+            Базовые стандарты, обеспечивающие комфорт совместной работы в продуктовой или платформенной команде.
+          </p>
+        </div>
+
+        <div class="values-matrix" id="team-values-container">
+          <!-- Populated dynamically via main.js from teamValues -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- EMBEDDED ENGINEERING CLI TERMINAL                                         -->
+    <!-- ========================================================================= -->
+    <section class="section-container" id="console">
+      <div class="container">
+        
+        <div class="console-wrapper">
+          <div class="console-bar mono">
+            <div class="bar-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="bar-title">dan@systems-host: ~ (interactive telemetry console)</div>
+            <div class="bar-status">SYSTEM READY</div>
+          </div>
+
+          <div class="console-output" id="terminal-output">
+            <div class="term-row sys mono">Precision Systems Console initialized.</div>
+            <div class="term-row sys mono">Type <span class="term-hl">help</span> for commands, or use quick action chips below.</div>
+            <div class="term-row out mono">Candidate: Даниил Гандапас (@Asm-o-Dan) // Backend & Systems</div>
+          </div>
+
+          <div class="console-quick-chips">
+            <button class="chip mono" data-cmd="whoami">whoami</button>
+            <button class="chip mono" data-cmd="stack">stack</button>
+            <button class="chip mono" data-cmd="projects">projects</button>
+            <button class="chip mono" data-cmd="cv">cv</button>
+            <button class="chip mono" data-cmd="contact">contact</button>
+            <button class="chip mono" data-cmd="clear">clear</button>
+          </div>
+
+          <div class="console-input-row">
+            <span class="console-prompt mono">asm-o-dan &gt;</span>
+            <input 
+              type="text" 
+              class="console-input mono" 
+              id="terminal-input" 
+              placeholder="Введите команду (help, whoami, stack, projects, cv)..." 
+              autocomplete="off" 
+              spellcheck="false"
+            >
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- DIRECT CONTACT & INQUIRY SECTION                                          -->
+    <!-- ========================================================================= -->
+    <section class="section-container" id="contact">
+      <div class="container">
+        
+        <div class="section-intro">
+          <div class="eyebrow-tag">
+            <span class="mono">COMMUNICATION CHANNELS // GET IN TOUCH</span>
+          </div>
+          <h2 class="section-title">Контакты для связи и интервью</h2>
+          <p class="section-subtitle">
+            Открыт для предложений о работе (Full-time / Remote), архитектурного проектирования и обсуждения сложных бэкенд-задач.
+          </p>
+        </div>
+
+        <div class="contact-deck">
+          
+          <!-- Contact Cards -->
+          <div class="contact-dossier-col">
+            <div class="contact-methods-card">
+              
+              <!-- Telegram -->
+              <div class="contact-item">
+                <div class="contact-item-left">
+                  <div class="contact-icon-box"><i data-lucide="send"></i></div>
+                  <div>
+                    <div class="contact-label mono">TELEGRAM (ПРИОРИТЕТ)</div>
+                    <div class="contact-value">@SomeSimpleTag</div>
+                  </div>
+                </div>
+                <div class="contact-item-actions">
+                  <button class="btn-copy mono" data-copy="@SomeSimpleTag" title="Скопировать ник">
+                    <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+                    <span>Копировать</span>
+                  </button>
+                  <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-out mono" title="Написать в Telegram">
+                    <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="contact-item">
+                <div class="contact-item-left">
+                  <div class="contact-icon-box"><i data-lucide="mail"></i></div>
+                  <div>
+                    <div class="contact-label mono">EMAIL</div>
+                    <div class="contact-value">dgandapas1@gmail.com</div>
+                  </div>
+                </div>
+                <div class="contact-item-actions">
+                  <button class="btn-copy mono" data-copy="dgandapas1@gmail.com" title="Скопировать email">
+                    <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+                    <span>Копировать</span>
+                  </button>
+                  <a href="mailto:dgandapas1@gmail.com" class="btn-out mono" title="Отправить письмо">
+                    <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- GitHub -->
+              <div class="contact-item">
+                <div class="contact-item-left">
+                  <div class="contact-icon-box"><i data-lucide="github"></i></div>
+                  <div>
+                    <div class="contact-label mono">GITHUB PROFILE</div>
+                    <div class="contact-value">github.com/Asm-o-Dan</div>
+                  </div>
+                </div>
+                <div class="contact-item-actions">
+                  <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer" class="btn-copy mono">
+                    <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                    <span>Открыть</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="fast-action-card">
+              <h3 class="fast-action-title">Быстрое обсуждение вакансии</h3>
+              <p class="fast-action-desc">
+                Отвечаю оперативно в течение рабочего дня. Готов предоставить подробные материалы по архитектуре и коду.
+              </p>
+              <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center; width: 100%;">
+                <i data-lucide="message-square" style="width: 16px; height: 16px;"></i>
+                <span>Написать в Telegram</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="contact-form-col">
+            <div class="contact-form-panel">
+              <form id="contact-form" class="sys-form">
+                <div class="form-row">
+                  <label for="form-name" class="form-label mono">ВАШЕ ИМЯ ИЛИ КОМПАНИЯ</label>
+                  <input type="text" id="form-name" class="form-input" placeholder="Например: Иван / Tech Recruiter" required>
+                </div>
+
+                <div class="form-row">
+                  <label for="form-contact" class="form-label mono">КОНТАКТ ДЛЯ СВЯЗИ (TELEGRAM / EMAIL)</label>
+                  <input type="text" id="form-contact" class="form-input" placeholder="telegram @handle или email" required>
+                </div>
+
+                <div class="form-row">
+                  <label for="form-message" class="form-label mono">СУТЬ ВАКАНСИИ ИЛИ ПРОЕКТА</label>
+                  <textarea id="form-message" class="form-textarea" placeholder="Стек проекта, задачи, формат работы..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" id="form-submit-btn" style="width: 100%; justify-content: center;">
+                  <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+                  <span>Отправить сообщение</span>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
   </main>
 
   <!-- ========================================================================= -->
-  <!-- MOBILE PERSISTENT HUD ACTION DOCK (THUMB ZONE OPTIMIZED)                  -->
+  <!-- FOOTER                                                                    -->
   <!-- ========================================================================= -->
-  <nav class="mobile-hud-dock" id="mobile-hud-dock" aria-label="Mobile Navigation Dock">
-    <button class="mobile-dock-btn active" id="dock-btn-radial" data-action="view-radial" title="Радиальный Ритуал">
-      <i data-lucide="circle-dot" class="dock-icon"></i>
-      <span class="dock-label">Ритуал</span>
-    </button>
-    <button class="mobile-dock-btn" id="dock-btn-cv" data-action="view-flat" title="Свиток Резюме">
-      <i data-lucide="file-text" class="dock-icon"></i>
-      <span class="dock-label">Резюме</span>
-    </button>
-    <button class="mobile-dock-btn dock-btn-highlight" id="dock-btn-dice" data-action="roll-dice" title="Бросить d20">
-      <span class="dock-dice-badge">🎲</span>
-      <span class="dock-label">d20</span>
-    </button>
-    <button class="mobile-dock-btn" id="dock-btn-altar" data-action="open-altar" title="Алтарь CLI">
-      <span class="dock-rune-symbol">⛧</span>
-      <span class="dock-label">Алтарь</span>
-    </button>
-    <button class="mobile-dock-btn" id="dock-btn-summon" data-action="open-summon" title="Призвать">
-      <i data-lucide="send" class="dock-icon"></i>
-      <span class="dock-label">Призвать</span>
-    </button>
-  </nav>
-
-  <!-- 3D Physics Dice Roller Floating Overlay -->
-  <div class="dice-stage-overlay" id="dice-stage-overlay" aria-hidden="true">
-    <div class="dice-box">
-      <div class="d20-visual" id="d20-visual">20</div>
-      <div class="dice-result-banner" id="dice-result-banner">🎲 Click anywhere or press SPACE to roll!</div>
-    </div>
-  </div>
-
-  <!-- Direct Summon / Contact Modal -->
-  <div class="modal-overlay" id="contact-modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-labelledby="contact-modal-title">
-      <button class="modal-close-x" id="contact-modal-close" aria-label="Закрыть">
-        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
-      </button>
-
-      <div class="modal-header-box">
-        <div class="card-tag">Summon Conduits</div>
-        <h3 class="modal-title" id="contact-modal-title">Связаться с AsmODan</h3>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">Открыт к предложениям о работе (Remote / Full-time) и сложным инженерным вызовам.</p>
+  <footer class="sys-footer">
+    <div class="container footer-layout">
+      <div class="footer-left">
+        <span class="mono footer-logo">ASM // DANIIL GANDAPAS</span>
+        <p class="footer-manifesto mono">
+          «Structure is freedom. Architecture is intention. I don't just write code — I structure possibility.»
+        </p>
       </div>
-
-      <div class="contact-methods-list">
-        <div class="contact-method-item">
-          <div class="method-left">
-            <i data-lucide="send" class="method-icon text-cyan"></i>
-            <div>
-              <div class="method-name">Telegram</div>
-              <div class="method-val">@SomeSimpleTag</div>
-            </div>
-          </div>
-          <div class="method-actions">
-            <button class="btn-copy-chip" data-copy="@SomeSimpleTag" title="Скопировать ник">
-              <i data-lucide="copy" style="width: 15px; height: 15px;"></i>
-            </button>
-            <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-open-chip" title="Открыть чат">
-              <i data-lucide="external-link" style="width: 15px; height: 15px;"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="contact-method-item">
-          <div class="method-left">
-            <i data-lucide="mail" class="method-icon text-emerald"></i>
-            <div>
-              <div class="method-name">Email</div>
-              <div class="method-val">dgandapas1@gmail.com</div>
-            </div>
-          </div>
-          <div class="method-actions">
-            <button class="btn-copy-chip" data-copy="dgandapas1@gmail.com" title="Скопировать Email">
-              <i data-lucide="copy" style="width: 15px; height: 15px;"></i>
-            </button>
-            <a href="mailto:dgandapas1@gmail.com" class="btn-open-chip" title="Написать письмо">
-              <i data-lucide="external-link" style="width: 15px; height: 15px;"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="contact-method-item">
-          <div class="method-left">
-            <i data-lucide="github" class="method-icon"></i>
-            <div>
-              <div class="method-name">GitHub</div>
-              <div class="method-val">github.com/Asm-o-Dan</div>
-            </div>
-          </div>
-          <div class="method-actions">
-            <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer" class="btn-open-chip" title="Перейти на GitHub">
-              <i data-lucide="external-link" style="width: 15px; height: 15px;"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer-cta">
-        <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-action-primary" style="width: 100%; justify-content: center;">
-          <i data-lucide="message-square" style="width: 16px; height: 16px;"></i>
-          <span>Написать напрямую в Telegram</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification Container -->
-  <div class="toast-hub" id="toast-hub"></div>
-
-  <!-- Footer -->
-  <footer class="hud-footer">
-    <div class="hud-container footer-flex">
-      <div class="footer-copy">
-        <span class="mono text-cyan">AsmODan // The Radial Ritual Circle v9.0</span> • 3 Concentric Seals & Clean Architecture.
-      </div>
-      <div class="footer-links">
-        <button class="footer-btn" id="footer-cli-btn">⛧ Altar CLI [ ` ]</button>
+      <div class="footer-right mono">
+        <div>© 2026 Asm-o-Dan. Engineered with Clean Architecture principles.</div>
+        <div style="color: var(--sys-ink-mid); margin-top: 0.25rem;">Zero runtime frameworks. Pure semantic HTML, CSS & JS.</div>
       </div>
     </div>
   </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-hub" id="toast-hub" aria-live="polite"></div>
 
   <!-- Scripts -->
   <script src="projects-data.js"></script>
