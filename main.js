@@ -453,23 +453,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 8. Mobile Drawer Menu
+  // 8. Off-Canvas Mobile Drawer & Backdrop
   // =========================================================================
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileDrawer = document.getElementById('mobile-drawer');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
+  const mobileBackdrop = document.getElementById('mobile-drawer-backdrop');
+  const mobileDrawerClose = document.getElementById('mobile-drawer-close');
+  const drawerLinks = document.querySelectorAll('.drawer-link');
 
-  if (mobileMenuBtn && mobileDrawer) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileDrawer.classList.toggle('open');
-    });
-
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileDrawer.classList.remove('open');
-      });
-    });
+  function openDrawer() {
+    if (mobileDrawer) mobileDrawer.classList.add('open');
+    if (mobileBackdrop) mobileBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeDrawer() {
+    if (mobileDrawer) mobileDrawer.classList.remove('open');
+    if (mobileBackdrop) mobileBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', openDrawer);
+  }
+
+  if (mobileDrawerClose) {
+    mobileDrawerClose.addEventListener('click', closeDrawer);
+  }
+
+  if (mobileBackdrop) {
+    mobileBackdrop.addEventListener('click', closeDrawer);
+  }
+
+  drawerLinks.forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileDrawer?.classList.contains('open')) {
+      closeDrawer();
+    }
+  });
 
   // =========================================================================
   // 9. Toast System & Clipboard Copy
