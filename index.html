@@ -3,638 +3,426 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Даниил Гандапас (Asm-o-Dan) — Systems & Backend Software Engineer</title>
-  <meta name="description" content="Инженерное портфолио Даниила Гандапаса (Asm-o-Dan): C# .NET 8/9, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C, Telegram & OCR конвейеры.">
-  <meta name="keywords" content="Даниил Гандапас, Asm-o-Dan, Backend Developer, Systems Engineer, C#, .NET 8, Clean Architecture, CQRS, Qdrant, Vector Search, Pure C, Tiraspol">
+  <title>Даниил Гандапас — C# / .NET Backend Developer</title>
+  <meta name="description" content="Инженерное портфолио Даниила Гандапаса (Asm-o-Dan): C# .NET 8/9, ASP.NET Core, PostgreSQL, Clean Architecture, CQRS, Quartz.NET, Docker.">
   <meta name="author" content="Даниил Гандапас">
 
   <!-- OpenGraph Meta Tags -->
-  <meta property="og:title" content="Даниил Гандапас (Asm-o-Dan) — Systems & Backend Software Engineer">
-  <meta property="og:description" content="Архитектура ПО — это искусство проводить границы там, где прекращается распространение ошибок. Высоконагруженные бэкенд-системы на .NET, чистый Си и векторный поиск Qdrant.">
+  <meta property="og:title" content="Даниил Гандапас — C# / .NET Backend Developer">
+  <meta property="og:description" content="Разработка серверных приложений на C# (.NET 8/9, ASP.NET Core, EF Core, PostgreSQL, Quartz.NET, Docker Compose).">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE">
 
-  <!-- Fonts: Plus Jakarta Sans for structural precision, Inter for body, JetBrains Mono for data/code -->
+  <!-- Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Main Stylesheet (Cache-Busted) -->
-  <link rel="stylesheet" href="styles.css?v=2.1.0">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=3.0.0">
 </head>
 <body>
 
-  <!-- Subtle Precision Caliper Grid Background -->
-  <div class="systems-grid-bg" aria-hidden="true"></div>
-
   <!-- ========================================================================= -->
-  <!-- TELEMETRY HEADER & NAVIGATION                                             -->
+  <!-- NAVIGATION BAR                                                            -->
   <!-- ========================================================================= -->
-  <header class="sys-header" id="sys-header">
-    <div class="container header-inner">
-      
-      <!-- Brand & Telemetry Ident -->
-      <a href="#hero" class="sys-brand">
-        <span class="brand-monogram">ASM</span>
-        <div class="brand-text-col">
-          <span class="brand-name">Даниил Гандапас</span>
-          <span class="brand-meta mono">Asm-o-Dan // Systems & Backend</span>
-        </div>
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand">
+        <span class="brand-monogram">DG</span>
+        <span class="brand-name">Даниил Гандапас</span>
+        <span class="brand-role">.NET Backend</span>
       </a>
 
-      <!-- Desktop Nav Links -->
-      <nav class="sys-nav desktop-only" aria-label="Main Navigation">
-        <ul class="nav-menu">
-          <li><a href="#hero" class="nav-item active">Обзор</a></li>
-          <li><a href="#topology" class="nav-item">Архитектура</a></li>
-          <li><a href="#projects" class="nav-item">Проекты</a></li>
-          <li><a href="#competencies" class="nav-item">Стек</a></li>
-          <li><a href="#chronicle" class="nav-item">Хроника</a></li>
-          <li><a href="#contact" class="nav-item">Связь</a></li>
-        </ul>
+      <nav class="nav-links desktop-only" aria-label="Основная навигация">
+        <a href="#about" class="nav-link">О себе</a>
+        <a href="#projects" class="nav-link">Проекты</a>
+        <a href="#architecture" class="nav-link">Архитектура</a>
+        <a href="#skills" class="nav-link">Стек</a>
+        <a href="#experience" class="nav-link">Опыт</a>
+        <a href="#contact" class="nav-link">Контакты</a>
       </nav>
 
-      <!-- Action Cluster -->
-      <div class="header-actions">
-        <!-- Live Status Pill -->
-        <div class="status-indicator desktop-wide-only" title="Статус поиска: Открыт к предложениям">
-          <span class="beacon-dot"></span>
-          <span class="status-text mono">OPEN FOR ROLES</span>
+      <div class="nav-actions">
+        <div class="status-badge desktop-only" title="Ищу позицию Junior / Intern .NET Backend">
+          <span class="status-dot"></span>
+          <span>Ищу работу (Remote)</span>
         </div>
 
-        <!-- Download CV Direct -->
-        <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-action-outline" id="header-cv-btn" title="Скачать официальное резюме в PDF">
-          <i data-lucide="download" style="width: 14px; height: 14px;"></i>
-          <span>CV (PDF)</span>
+        <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-cv" title="Скачать резюме в PDF">
+          <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+          <span>Резюме</span>
         </a>
 
-        <!-- Theme Switcher -->
-        <button class="sys-icon-btn" id="theme-toggle-btn" aria-label="Сменить тему оформления" title="Сменить тему">
-          <i data-lucide="sun" id="theme-icon-sun" style="width: 16px; height: 16px;"></i>
-          <i data-lucide="moon" id="theme-icon-moon" style="width: 16px; height: 16px; display: none;"></i>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Сменить тему оформления">
+          <i data-lucide="sun" id="icon-sun" style="width: 16px; height: 16px;"></i>
+          <i data-lucide="moon" id="icon-moon" style="width: 16px; height: 16px; display: none;"></i>
         </button>
 
-        <!-- Mobile Menu Toggle (Only on tablets & mobile) -->
-        <button class="mobile-toggle-btn mobile-only" id="mobile-menu-btn" aria-label="Открыть мобильное меню">
-          <i data-lucide="menu" id="mobile-menu-icon" style="width: 20px; height: 20px;"></i>
+        <button class="menu-toggle mobile-only" id="menu-toggle" aria-label="Открыть меню">
+          <i data-lucide="menu" style="width: 20px; height: 20px;"></i>
         </button>
       </div>
     </div>
 
-    <!-- Off-Canvas Mobile Drawer Backdrop & Panel -->
-    <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop" aria-hidden="true"></div>
-    <aside class="mobile-drawer" id="mobile-drawer" aria-label="Мобильное меню" aria-hidden="true">
-      <div>
-        <div class="mobile-drawer-header">
-          <div class="drawer-brand">
-            <span class="brand-monogram">ASM</span>
-            <div style="display:flex; flex-direction:column;">
-              <span style="font-weight:700; font-size:0.95rem;">Даниил Гандапас</span>
-              <span class="mono" style="font-size:0.7rem; color:var(--sys-ink-low);">Backend & Systems</span>
-            </div>
-          </div>
-          <button class="drawer-close-btn" id="mobile-drawer-close" aria-label="Закрыть меню">
-            <i data-lucide="x" style="width: 18px; height: 18px;"></i>
-          </button>
-        </div>
-
-        <div style="margin: 1.25rem 0 0.5rem;">
-          <div class="status-indicator" style="width: fit-content;">
-            <span class="beacon-dot"></span>
-            <span class="status-text mono">OPEN FOR ROLES</span>
-          </div>
-        </div>
-
-        <nav class="drawer-nav">
-          <a href="#hero" class="drawer-link"><i data-lucide="terminal" style="width:16px; height:16px; color:var(--sys-amber);"></i><span>Главный экран</span></a>
-          <a href="#topology" class="drawer-link"><i data-lucide="layers" style="width:16px; height:16px; color:var(--sys-cyan);"></i><span>Инспектор архитектуры</span></a>
-          <a href="#projects" class="drawer-link"><i data-lucide="code-2" style="width:16px; height:16px; color:var(--sys-amber);"></i><span>Проекты и кейсы</span></a>
-          <a href="#competencies" class="drawer-link"><i data-lucide="cpu" style="width:16px; height:16px; color:var(--sys-emerald);"></i><span>Компетенции & стек</span></a>
-          <a href="#chronicle" class="drawer-link"><i data-lucide="clock" style="width:16px; height:16px; color:var(--sys-cyan);"></i><span>Опыт и ТИФТ</span></a>
-          <a href="#contact" class="drawer-link"><i data-lucide="send" style="width:16px; height:16px; color:var(--sys-amber);"></i><span>Контакты для связи</span></a>
-        </nav>
-      </div>
-
-      <div class="mobile-drawer-footer">
-        <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-primary" style="justify-content: center; width: 100%;">
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer" id="mobile-drawer">
+      <nav class="mobile-nav">
+        <a href="#about" class="mobile-link">О себе</a>
+        <a href="#projects" class="mobile-link">Проекты</a>
+        <a href="#architecture" class="mobile-link">Архитектура</a>
+        <a href="#skills" class="mobile-link">Стек</a>
+        <a href="#experience" class="mobile-link">Опыт</a>
+        <a href="#contact" class="mobile-link">Контакты</a>
+      </nav>
+      <div class="mobile-actions">
+        <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-primary" style="width: 100%; justify-content: center;">
           <i data-lucide="download" style="width: 16px; height: 16px;"></i>
           <span>Скачать резюме (PDF)</span>
         </a>
-        <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="justify-content: center; width: 100%;">
-          <i data-lucide="send" style="width: 16px; height: 16px;"></i>
-          <span>Telegram: @SomeSimpleTag</span>
-        </a>
       </div>
-    </aside>
+    </div>
   </header>
 
   <main>
     <!-- ========================================================================= -->
-    <!-- HERO SECTION: THE ARCHITECTURAL THESIS                                    -->
+    <!-- HERO SECTION                                                              -->
     <!-- ========================================================================= -->
     <section class="hero-section" id="hero">
-      <div class="container hero-layout">
-        
-        <!-- Left: Thesis & Candidate Profile -->
-        <div class="hero-dossier">
+      <div class="section-container">
+        <div class="hero-grid">
           
-          <div class="eyebrow-tag">
-            <span class="mono">ENGINEERING SPECIFICATION // .NET 8 • CLEAN ARCH • QDRANT • C</span>
-          </div>
+          <div class="hero-content">
+            <div class="badge-role">C# / .NET Backend Developer</div>
+            <h1 class="hero-title">Даниил Гандапас</h1>
+            <p class="hero-subtitle">
+              Разрабатываю серверные приложения на <strong>C# (.NET 8/9, ASP.NET Core, Entity Framework Core)</strong> и <strong>PostgreSQL</strong>. Проектирую чистую слоистую архитектуру, настраиваю фоновые задачи через Quartz.NET и асинхронные очереди.
+            </p>
 
-          <h1 class="hero-heading">
-            Проектирую бэкенд, который <span class="accent-text">не гниёт под нагрузкой.</span>
-          </h1>
-
-          <p class="hero-lead">
-            Меня зовут <strong>Даниил Гандапас</strong>. Я backend-инженер, сочетающий строгие архитектурные границы <strong>C# (.NET 8/9, Clean Architecture, CQRS)</strong>, аппаратное понимание памяти из <strong>чистого Си</strong> и семантический векторный поиск в <strong>Qdrant</strong>.
-          </p>
-
-          <blockquote class="hero-quote mono">
-            «Архитектура ПО — это искусство проводить границы там, где прекращается распространение ошибок.»
-          </blockquote>
-
-          <!-- HR Quick Facts Telemetry Strip -->
-          <div class="hr-facts-grid" id="hr-facts-container">
-            <div class="hr-fact-cell">
-              <span class="fact-label mono">ОБРАЗОВАНИЕ</span>
-              <span class="fact-value">ТИФТ (Программная инженерия)</span>
-            </div>
-            <div class="hr-fact-cell">
-              <span class="fact-label mono">ФОРМАТ РАБОТЫ</span>
-              <span class="fact-value">Удаленно / Полная занятость</span>
-            </div>
-            <div class="hr-fact-cell">
-              <span class="fact-label mono">ЛОКАЦИЯ</span>
-              <span class="fact-value">Тирасполь (GMT+3) / Remote</span>
-            </div>
-            <div class="hr-fact-cell">
-              <span class="fact-label mono">ЯЗЫКИ</span>
-              <span class="fact-value">Русский (Native), English (Technical)</span>
-            </div>
-          </div>
-
-          <!-- Hero Action Button Cluster -->
-          <div class="hero-ctas">
-            <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-primary" id="hero-download-cv-btn">
-              <i data-lucide="download" style="width: 18px; height: 18px;"></i>
-              <span>Скачать CV в PDF</span>
-            </a>
-            
-            <a href="#topology" class="btn-secondary" id="hero-explore-arch-btn">
-              <i data-lucide="layers" style="width: 18px; height: 18px;"></i>
-              <span>Инспектор архитектуры</span>
-            </a>
-
-            <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="hero-tg-btn">
-              <i data-lucide="send" style="width: 18px; height: 18px;"></i>
-              <span>Telegram: @SomeSimpleTag</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Right: Candidate Telemetry Console -->
-        <div class="hero-telemetry-panel">
-          <div class="panel-bezel">
-            <div class="bezel-header">
-              <span class="terminal-dot dot-green"></span>
-              <span class="bezel-title mono">SYS_DIAGNOSTICS // CANDIDATE_PROFILE</span>
-              <span class="mono bezel-status">ACTIVE</span>
-            </div>
-
-            <div class="bezel-body">
-              <!-- Portrait Frame -->
-              <div class="portrait-strip">
-                <div class="portrait-wrapper">
-                  <img 
-                    src="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE" 
-                    alt="Даниил Гандапас"
-                    class="portrait-img"
-                    id="profile-img"
-                  >
-                  <div class="portrait-stamp mono">VERIFIED ENGINEER</div>
-                </div>
-
-                <div class="portrait-caption">
-                  <div class="caption-name">Даниил Гандапас</div>
-                  <div class="caption-handle mono">github.com/Asm-o-Dan</div>
-                  <div class="caption-role mono">Backend & Systems Specialist</div>
-                </div>
+            <div class="facts-list">
+              <div class="fact-item">
+                <span class="fact-title">Гражданство:</span>
+                <span class="fact-desc">РФ (готов к удалённому оформлению по ТК РФ, ГПХ, НПД)</span>
               </div>
-
-              <!-- 4 Telemetry Metrics -->
-              <div class="telemetry-metrics-grid">
-                <div class="telemetry-metric-item">
-                  <div class="metric-num mono text-amber">100%</div>
-                  <div class="metric-name mono">Domain Isolation</div>
-                  <div class="metric-desc">0 внешних библиотек в доменном ядре</div>
-                </div>
-
-                <div class="telemetry-metric-item">
-                  <div class="metric-num mono text-cyan">&lt; 15 ms</div>
-                  <div class="metric-name mono">Vector Search</div>
-                  <div class="metric-desc">Косинусный поиск по Qdrant DB</div>
-                </div>
-
-                <div class="telemetry-metric-item">
-                  <div class="metric-num mono text-emerald">0 B</div>
-                  <div class="metric-name mono">Memory Leaks</div>
-                  <div class="metric-desc">Valgrind clean на чистом Си</div>
-                </div>
-
-                <div class="telemetry-metric-item">
-                  <div class="metric-num mono text-amber">3.8x</div>
-                  <div class="metric-name mono">Dapper Speedup</div>
-                  <div class="metric-desc">CQRS разделение Read / Write моделей</div>
-                </div>
+              <div class="fact-item">
+                <span class="fact-title">Локация:</span>
+                <span class="fact-desc">Тирасполь (UTC+2) / Полная занятость на удалёнке</span>
               </div>
+              <div class="fact-item">
+                <span class="fact-title">Образование:</span>
+                <span class="fact-desc">ПГУ им. Т.Г. Шевченко, Программная инженерия (3 курс, аккредитация в РФ)</span>
+              </div>
+              <div class="fact-item">
+                <span class="fact-title">Практика:</span>
+                <span class="fact-desc">DEX Technology (C# .NET стажёр, GitFlow, Code Review), ITSkills Academy (преподаватель)</span>
+              </div>
+            </div>
 
-              <!-- Direct Verification Links -->
-              <div class="bezel-footer mono">
-                <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer" class="bezel-link">
-                  <i data-lucide="github" style="width: 14px; height: 14px;"></i>
-                  <span>GitHub (@Asm-o-Dan)</span>
+            <div class="hero-actions">
+              <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf" class="btn-primary">
+                <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                <span>Скачать CV (PDF)</span>
+              </a>
+              <a href="https://t.me/Asm_o_Dan" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+                <span>Написать в Telegram</span>
+              </a>
+              <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+                <i data-lucide="github" style="width: 16px; height: 16px;"></i>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <div class="card-avatar-wrap">
+              <img 
+                src="https://media.licdn.com/dms/image/v2/D5603AQFCFSnoyzBl5g/profile-displayphoto-scale_400_400/B56Zp5uWA.HQAg-/0/1762978785317?e=1788393600&v=beta&t=cSzGwEgfDf12O1o9k55vdRqIRbE7l8aamv-clsdMksE" 
+                alt="Даниил Гандапас"
+                class="card-avatar"
+              >
+            </div>
+            <div class="card-info">
+              <div class="card-name">Даниил Гандапас</div>
+              <div class="card-role">Junior .NET Backend Developer</div>
+              <div class="card-contact-row">
+                <a href="https://t.me/Asm_o_Dan" target="_blank" rel="noopener noreferrer" class="card-contact-link">
+                  <i data-lucide="send" style="width: 14px; height: 14px;"></i>
+                  <span>@Asm_o_Dan</span>
                 </a>
-                <a href="mailto:dgandapas1@gmail.com" class="bezel-link">
+                <a href="mailto:dgandapas1@gmail.com" class="card-contact-link">
                   <i data-lucide="mail" style="width: 14px; height: 14px;"></i>
                   <span>dgandapas1@gmail.com</span>
                 </a>
               </div>
             </div>
+            <div class="card-metrics-grid">
+              <div class="metric-box">
+                <div class="metric-val">.NET 8/9</div>
+                <div class="metric-lbl">Основной стек</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">PostgreSQL</div>
+                <div class="metric-lbl">EF Core & Dapper</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">Quartz.NET</div>
+                <div class="metric-lbl">Фоновый сбор</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">Docker</div>
+                <div class="metric-lbl">Контейнеризация</div>
+              </div>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </section>
 
     <!-- ========================================================================= -->
-    <!-- THE SIGNATURE ELEMENT: INTERACTIVE ARCHITECTURAL BLUEPRINT                -->
+    <!-- ABOUT SECTION                                                             -->
     <!-- ========================================================================= -->
-    <section class="section-container" id="topology">
-      <div class="container">
-        
-        <div class="section-intro">
-          <div class="eyebrow-tag">
-            <span class="mono">SIGNATURE ELEMENT // SYSTEM TOPOLOGY INSPECTOR</span>
-          </div>
-          <h2 class="section-title">Интерактивный инспектор архитектуры</h2>
-          <p class="section-subtitle">
-            Выберите топологию системы для исследования инженерных компромиссов, инвариантов слоев и реальных фрагментов кода.
+    <section class="section" id="about">
+      <div class="section-container">
+        <div class="section-head">
+          <h2 class="section-title">О себе и подходе к разработке</h2>
+          <p class="section-lead">
+            Сфокусирован на надежности, чистой архитектуре и практической пользе решений для бизнеса.
           </p>
         </div>
 
-        <!-- Topology System Switcher Bar -->
-        <div class="topology-switcher-bar">
-          <button class="topo-switch-btn active" data-topo="drugs-engine">
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon"><i data-lucide="layers"></i></div>
+            <h3 class="about-card-title">Чистая архитектура и CQRS</h3>
+            <p class="about-card-desc">
+              Изолирую бизнес-логику внутри Domain Layer от деталей реализации баз данных и внешних фреймворков. Применяю CQRS для явного разделения операций записи (через EF Core) и быстрого чтения (через Dapper).
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-icon"><i data-lucide="clock"></i></div>
+            <h3 class="about-card-title">Асинхронность и фоновые процессы</h3>
+            <p class="about-card-desc">
+              Проектирую устойчивые планировщики сбора данных на Quartz.NET и BackgroundService с повторными попытками при сбоях и логированием. Использую RabbitMQ для развязки сервисов.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-icon"><i data-lucide="git-pull-request"></i></div>
+            <h3 class="about-card-title">Командный рабочий процесс</h3>
+            <p class="about-card-desc">
+              Практический опыт работы в команде по Agile/Scrum в DEX Technology: строгое ветвление по GitFlow в GitLab, культура содержательных коммитов, покрытие логики тестами xUnit и участие в Code Review.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PROJECTS SECTION                                                          -->
+    <!-- ========================================================================= -->
+    <section class="section" id="projects">
+      <div class="section-container">
+        <div class="section-head">
+          <h2 class="section-title">Проекты в портфолио</h2>
+          <p class="section-lead">
+            Реальные репозитории с открытым исходным кодом, архитектурным описанием и тестами.
+          </p>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">Все проекты</button>
+          <button class="filter-btn" data-filter="dotnet">.NET / C#</button>
+          <button class="filter-btn" data-filter="backend">Backend & Базы данных</button>
+          <button class="filter-btn" data-filter="frontend">Frontend & SPA</button>
+        </div>
+
+        <div class="projects-grid" id="projects-container">
+          <!-- Populated dynamically via main.js from projectsData -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- INTERACTIVE ARCHITECTURE BLUEPRINT SECTION                                -->
+    <!-- ========================================================================= -->
+    <section class="section" id="architecture">
+      <div class="section-container">
+        <div class="section-head">
+          <h2 class="section-title">Интерактивный инспектор архитектуры</h2>
+          <p class="section-lead">
+            Декомпозиция слоев архитектуры платформы DrugsEngine: правила изоляции, контракты и примеры кода.
+          </p>
+        </div>
+
+        <div class="architecture-tabs">
+          <button class="tab-btn active" data-topo="drugs-engine">
             <i data-lucide="layers" style="width: 16px; height: 16px;"></i>
             <span>DrugsEngine: Clean Architecture & CQRS</span>
           </button>
-          <button class="topo-switch-btn" data-topo="vector-pipeline">
+          <button class="tab-btn" data-topo="vector-pipeline">
             <i data-lucide="search" style="width: 16px; height: 16px;"></i>
-            <span>Qdrant Vector AI & Semantic Bridge</span>
-          </button>
-          <button class="topo-switch-btn" data-topo="pure-c-loop">
-            <i data-lucide="cpu" style="width: 16px; height: 16px;"></i>
-            <span>Tanks1984: Pure C Deterministic Loop</span>
+            <span>Qdrant: Векторный семантический поиск</span>
           </button>
         </div>
 
-        <!-- The Interactive Topology Workbench -->
-        <div class="topology-workbench">
-          
-          <!-- Left: Layer Decomposition Selector -->
-          <div class="workbench-layers-col">
-            <div class="workbench-col-header mono">
-              <span class="header-tag">ARCHITECTURAL LAYERS</span>
-              <span class="header-hint">Кликните слой для инспекции</span>
-            </div>
-            <div class="layers-list" id="topology-layers-list">
-              <!-- Rendered dynamically by main.js -->
+        <div class="architecture-workbench">
+          <div class="workbench-layers">
+            <div class="workbench-layers-header">Слои архитектуры</div>
+            <div class="layers-list" id="layers-list">
+              <!-- Populated dynamically -->
             </div>
           </div>
 
-          <!-- Right: Deep Dive Inspector (Invariants, Rules, Code) -->
-          <div class="workbench-inspector-col">
-            <div class="inspector-panel">
-              <div class="inspector-header">
-                <div class="inspector-title-row">
-                  <span class="inspector-badge mono" id="inspector-layer-badge">LAYER 01</span>
-                  <h3 class="inspector-layer-name" id="inspector-layer-title">Domain Layer</h3>
-                </div>
-                <div class="inspector-rule mono" id="inspector-layer-rule">Зависимости: 0 внешних пакетов</div>
+          <div class="workbench-details">
+            <div class="details-header">
+              <div>
+                <span class="details-badge" id="layer-badge">Domain Layer</span>
+                <h3 class="details-title" id="layer-title">01. Domain Layer</h3>
               </div>
+              <div class="details-rule" id="layer-rule">Зависимости: 0 внешних пакетов</div>
+            </div>
 
-              <div class="inspector-body">
-                <div class="inspector-section-label mono">АРХИТЕКТУРНЫЙ КОНТРАКТ & ИНВАРИАНТЫ:</div>
-                <p class="inspector-description" id="inspector-layer-desc">
-                  Описание слоя и гарантии изоляции бизнес-правил.
-                </p>
+            <p class="details-desc" id="layer-desc">
+              Сущности, агрегаты, Value Objects и доменные исключения.
+            </p>
 
-                <div class="inspector-section-label mono" style="margin-top: 1.25rem;">ФРАГМЕНТ РЕАЛИЗАЦИИ ИЗ РЕПОЗИТОРИЯ:</div>
-                <div class="code-preview-wrap">
-                  <div class="code-bar mono">
-                    <span>source_code.cs</span>
-                    <span class="code-lang">C# / .NET 8</span>
-                  </div>
-                  <pre class="code-block"><code class="mono" id="inspector-layer-code">// Code snippet</code></pre>
-                </div>
+            <div class="code-box">
+              <div class="code-box-header">
+                <span class="code-box-lang">C# / .NET 8</span>
+                <span class="code-box-file">Domain/Entities/Product.cs</span>
               </div>
-
-              <div class="inspector-footer">
-                <div class="metric-pills-row" id="inspector-metrics-row">
-                  <!-- Metrics populated dynamically -->
-                </div>
-              </div>
+              <pre class="code-content"><code id="layer-code">// Code snippet</code></pre>
             </div>
           </div>
-
         </div>
 
       </div>
     </section>
 
     <!-- ========================================================================= -->
-    <!-- CASE STUDIES & PRODUCTION SYSTEMS                                         -->
+    <!-- TECHNICAL SKILLS SECTION                                                  -->
     <!-- ========================================================================= -->
-    <section class="section-container" id="projects">
-      <div class="container">
-        
-        <div class="section-intro">
-          <div class="eyebrow-tag">
-            <span class="mono">CASE STUDIES // PRODUCTION SYSTEMS SHOWCASE</span>
-          </div>
-          <h2 class="section-title">Инженерные кейсы и проекты</h2>
-          <p class="section-subtitle">
-            Каждая система спроектирована под конкретный технический и продуктовый вызов: от семантического векторного поиска до детерминированных циклов на Си.
+    <section class="section" id="skills">
+      <div class="section-container">
+        <div class="section-head">
+          <h2 class="section-title">Технологический стек</h2>
+          <p class="section-lead">
+            Инструменты и технологии, проверенные на практике в учебных и производственных проектах.
           </p>
         </div>
 
-        <!-- Filter Controls -->
-        <div class="projects-filter-bar">
-          <div class="filter-buttons" id="project-filters">
-            <button class="btn-filter active" data-filter="all">Все системы</button>
-            <button class="btn-filter" data-filter="c#">C# / .NET</button>
-            <button class="btn-filter" data-filter="architecture">Clean Architecture / CQRS</button>
-            <button class="btn-filter" data-filter="python">Python / AI</button>
-            <button class="btn-filter" data-filter="c">Pure C</button>
-            <button class="btn-filter" data-filter="automation">Telegram / OCR</button>
-          </div>
-          <div class="projects-count mono" id="project-count-badge">5 систем в витрине</div>
-        </div>
-
-        <!-- Projects Grid -->
-        <div class="projects-grid" id="projects-grid">
-          <!-- Populated dynamically via main.js from projectsData -->
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- TECHNICAL COMPETENCIES MATRIX                                             -->
-    <!-- ========================================================================= -->
-    <section class="section-container" id="competencies">
-      <div class="container">
-        
-        <div class="section-intro">
-          <div class="eyebrow-tag">
-            <span class="mono">SKILL INVENTORY // COMPETENCY MATRIX</span>
-          </div>
-          <h2 class="section-title">Технологический стек и глубина владения</h2>
-          <p class="section-subtitle">
-            Осознанный выбор инструментов под задачи отказоустойчивости, изоляции логики и масштабирования.
-          </p>
-        </div>
-
-        <div class="competencies-grid" id="competencies-grid">
+        <div class="skills-grid" id="skills-container">
           <!-- Populated dynamically via main.js from skillsData -->
         </div>
-
       </div>
     </section>
 
     <!-- ========================================================================= -->
-    <!-- CHRONICLE & EDUCATION TIMELINE                                            -->
+    <!-- EXPERIENCE & EDUCATION SECTION                                            -->
     <!-- ========================================================================= -->
-    <section class="section-container" id="chronicle">
-      <div class="container">
-        
-        <div class="section-intro">
-          <div class="eyebrow-tag">
-            <span class="mono">CAREER & ACADEMIC TRACK // CHRONICLE</span>
-          </div>
+    <section class="section" id="experience">
+      <div class="section-container">
+        <div class="section-head">
           <h2 class="section-title">Опыт и образование</h2>
-          <p class="section-subtitle">
-            Академическая подготовка в институте физики и техники и эволюция от низкоуровневого Си к распределенным корпоративным сервисам.
+          <p class="section-lead">
+            Практическая работа в индустрии, преподавание и профильное университетское образование.
           </p>
         </div>
 
-        <div class="timeline-wrapper">
-          <div class="timeline-ruler"></div>
-          <div class="timeline-nodes" id="timeline-nodes">
-            <!-- Populated dynamically via main.js from timelineData -->
-          </div>
+        <div class="timeline" id="timeline-container">
+          <!-- Populated dynamically via main.js from timelineData -->
         </div>
-
       </div>
     </section>
 
     <!-- ========================================================================= -->
-    <!-- WORK CULTURE & ENGINEERING VALUES                                         -->
+    <!-- CONTACT SECTION                                                           -->
     <!-- ========================================================================= -->
-    <section class="section-container" id="principles">
-      <div class="container">
-        
-        <div class="section-intro">
-          <div class="eyebrow-tag">
-            <span class="mono">ENGINEERING PRINCIPLES // HOW I WORK</span>
-          </div>
-          <h2 class="section-title">Принципы инженерной культуры</h2>
-          <p class="section-subtitle">
-            Базовые стандарты, обеспечивающие комфорт совместной работы в продуктовой или платформенной команде.
+    <section class="section" id="contact">
+      <div class="section-container">
+        <div class="section-head">
+          <h2 class="section-title">Контакты</h2>
+          <p class="section-lead">
+            Готов ответить на вопросы, выполнить тестовое задание или выйти на технический звонок.
           </p>
         </div>
 
-        <div class="values-matrix" id="team-values-container">
-          <!-- Populated dynamically via main.js from teamValues -->
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- EMBEDDED ENGINEERING CLI TERMINAL                                         -->
-    <!-- ========================================================================= -->
-    <section class="section-container" id="console">
-      <div class="container">
-        
-        <div class="console-wrapper">
-          <div class="console-bar mono">
-            <div class="bar-dots">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <div class="bar-title">dan@systems-host: ~ (interactive telemetry console)</div>
-            <div class="bar-status">SYSTEM READY</div>
-          </div>
-
-          <div class="console-output" id="terminal-output">
-            <div class="term-row sys mono">Precision Systems Console initialized.</div>
-            <div class="term-row sys mono">Type <span class="term-hl">help</span> for commands, or use quick action chips below.</div>
-            <div class="term-row out mono">Candidate: Даниил Гандапас (@Asm-o-Dan) // Backend & Systems</div>
-          </div>
-
-          <div class="console-quick-chips">
-            <button class="chip mono" data-cmd="whoami">whoami</button>
-            <button class="chip mono" data-cmd="stack">stack</button>
-            <button class="chip mono" data-cmd="projects">projects</button>
-            <button class="chip mono" data-cmd="cv">cv</button>
-            <button class="chip mono" data-cmd="contact">contact</button>
-            <button class="chip mono" data-cmd="clear">clear</button>
-          </div>
-
-          <div class="console-input-row">
-            <span class="console-prompt mono">asm-o-dan &gt;</span>
-            <input 
-              type="text" 
-              class="console-input mono" 
-              id="terminal-input" 
-              placeholder="Введите команду (help, whoami, stack, projects, cv)..." 
-              autocomplete="off" 
-              spellcheck="false"
-            >
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- DIRECT CONTACT & INQUIRY SECTION                                          -->
-    <!-- ========================================================================= -->
-    <section class="section-container" id="contact">
-      <div class="container">
-        
-        <div class="section-intro">
-          <div class="eyebrow-tag">
-            <span class="mono">COMMUNICATION CHANNELS // GET IN TOUCH</span>
-          </div>
-          <h2 class="section-title">Контакты для связи и интервью</h2>
-          <p class="section-subtitle">
-            Открыт для предложений о работе (Full-time / Remote), архитектурного проектирования и обсуждения сложных бэкенд-задач.
-          </p>
-        </div>
-
-        <div class="contact-deck">
+        <div class="contact-grid">
           
-          <!-- Contact Cards -->
-          <div class="contact-dossier-col">
-            <div class="contact-methods-card">
-              
-              <!-- Telegram -->
-              <div class="contact-item">
-                <div class="contact-item-left">
-                  <div class="contact-icon-box"><i data-lucide="send"></i></div>
-                  <div>
-                    <div class="contact-label mono">TELEGRAM (ПРИОРИТЕТ)</div>
-                    <div class="contact-value">@SomeSimpleTag</div>
-                  </div>
-                </div>
-                <div class="contact-item-actions">
-                  <button class="btn-copy mono" data-copy="@SomeSimpleTag" title="Скопировать ник">
-                    <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
-                    <span>Копировать</span>
-                  </button>
-                  <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-out mono" title="Написать в Telegram">
-                    <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
-                  </a>
-                </div>
+          <div class="contact-channels">
+            <div class="contact-card">
+              <div class="contact-icon-box"><i data-lucide="send"></i></div>
+              <div class="contact-info">
+                <div class="contact-type">Telegram (быстрый ответ)</div>
+                <div class="contact-value">@Asm_o_Dan</div>
               </div>
-
-              <!-- Email -->
-              <div class="contact-item">
-                <div class="contact-item-left">
-                  <div class="contact-icon-box"><i data-lucide="mail"></i></div>
-                  <div>
-                    <div class="contact-label mono">EMAIL</div>
-                    <div class="contact-value">dgandapas1@gmail.com</div>
-                  </div>
-                </div>
-                <div class="contact-item-actions">
-                  <button class="btn-copy mono" data-copy="dgandapas1@gmail.com" title="Скопировать email">
-                    <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
-                    <span>Копировать</span>
-                  </button>
-                  <a href="mailto:dgandapas1@gmail.com" class="btn-out mono" title="Отправить письмо">
-                    <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
-                  </a>
-                </div>
+              <div class="contact-actions">
+                <button class="btn-copy" data-copy="@Asm_o_Dan" title="Скопировать ник">
+                  <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+                  <span>Копировать</span>
+                </button>
+                <a href="https://t.me/Asm_o_Dan" target="_blank" rel="noopener noreferrer" class="btn-open" title="Открыть диалог в Telegram">
+                  <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                </a>
               </div>
-
-              <!-- GitHub -->
-              <div class="contact-item">
-                <div class="contact-item-left">
-                  <div class="contact-icon-box"><i data-lucide="github"></i></div>
-                  <div>
-                    <div class="contact-label mono">GITHUB PROFILE</div>
-                    <div class="contact-value">github.com/Asm-o-Dan</div>
-                  </div>
-                </div>
-                <div class="contact-item-actions">
-                  <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer" class="btn-copy mono">
-                    <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
-                    <span>Открыть</span>
-                  </a>
-                </div>
-              </div>
-
             </div>
 
-            <div class="fast-action-card">
-              <h3 class="fast-action-title">Быстрое обсуждение вакансии</h3>
-              <p class="fast-action-desc">
-                Отвечаю оперативно в течение рабочего дня. Готов предоставить подробные материалы по архитектуре и коду.
-              </p>
-              <a href="https://t.me/SomeSimpleTag" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center; width: 100%;">
+            <div class="contact-card">
+              <div class="contact-icon-box"><i data-lucide="mail"></i></div>
+              <div class="contact-info">
+                <div class="contact-type">Электронная почта</div>
+                <div class="contact-value">dgandapas1@gmail.com</div>
+              </div>
+              <div class="contact-actions">
+                <button class="btn-copy" data-copy="dgandapas1@gmail.com" title="Скопировать почту">
+                  <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+                  <span>Копировать</span>
+                </button>
+                <a href="mailto:dgandapas1@gmail.com" class="btn-open" title="Написать письмо">
+                  <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div class="contact-icon-box"><i data-lucide="github"></i></div>
+              <div class="contact-info">
+                <div class="contact-type">GitHub профиль</div>
+                <div class="contact-value">github.com/Asm-o-Dan</div>
+              </div>
+              <div class="contact-actions">
+                <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer" class="btn-open" title="Перейти в GitHub">
+                  <i data-lucide="external-link" style="width: 14px; height: 14px;"></i>
+                  <span>Открыть</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-box">
+            <h3 class="contact-box-title">Формат сотрудничества</h3>
+            <ul class="contact-box-list">
+              <li><strong>Позиция:</strong> Junior .NET Developer / .NET Стажёр</li>
+              <li><strong>Формат:</strong> Полная занятость (удалённо), гибкий график при необходимости</li>
+              <li><strong>Оформление:</strong> ТК РФ (дистанционный договор), ГПХ или Самозанятость (НПД РФ)</li>
+              <li><strong>Гражданство:</strong> Российская Федерация</li>
+              <li><strong>Тестовое задание:</strong> Готов выполнить практическое тестовое задание в сжатые сроки</li>
+            </ul>
+            <div style="margin-top: 24px;">
+              <a href="https://t.me/Asm_o_Dan" target="_blank" rel="noopener noreferrer" class="btn-primary" style="width: 100%; justify-content: center;">
                 <i data-lucide="message-square" style="width: 16px; height: 16px;"></i>
-                <span>Написать в Telegram</span>
+                <span>Написать в Telegram @Asm_o_Dan</span>
               </a>
             </div>
           </div>
 
-          <!-- Contact Form -->
-          <div class="contact-form-col">
-            <div class="contact-form-panel">
-              <form id="contact-form" class="sys-form">
-                <div class="form-row">
-                  <label for="form-name" class="form-label mono">ВАШЕ ИМЯ ИЛИ КОМПАНИЯ</label>
-                  <input type="text" id="form-name" class="form-input" placeholder="Например: Иван / Tech Recruiter" required>
-                </div>
-
-                <div class="form-row">
-                  <label for="form-contact" class="form-label mono">КОНТАКТ ДЛЯ СВЯЗИ (TELEGRAM / EMAIL)</label>
-                  <input type="text" id="form-contact" class="form-input" placeholder="telegram @handle или email" required>
-                </div>
-
-                <div class="form-row">
-                  <label for="form-message" class="form-label mono">СУТЬ ВАКАНСИИ ИЛИ ПРОЕКТА</label>
-                  <textarea id="form-message" class="form-textarea" placeholder="Стек проекта, задачи, формат работы..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn-primary" id="form-submit-btn" style="width: 100%; justify-content: center;">
-                  <i data-lucide="send" style="width: 16px; height: 16px;"></i>
-                  <span>Отправить сообщение</span>
-                </button>
-              </form>
-            </div>
-          </div>
-
         </div>
-
       </div>
     </section>
   </main>
@@ -642,26 +430,29 @@
   <!-- ========================================================================= -->
   <!-- FOOTER                                                                    -->
   <!-- ========================================================================= -->
-  <footer class="sys-footer">
-    <div class="container footer-layout">
+  <footer class="footer">
+    <div class="footer-container">
       <div class="footer-left">
-        <span class="mono footer-logo">ASM // DANIIL GANDAPAS</span>
-        <p class="footer-manifesto mono">
-          «Structure is freedom. Architecture is intention. I don't just write code — I structure possibility.»
-        </p>
+        <span class="footer-name">Даниил Гандапас</span>
+        <span class="footer-role">C# / .NET Backend Developer</span>
       </div>
-      <div class="footer-right mono">
-        <div>© 2026 Asm-o-Dan. Engineered with Clean Architecture principles.</div>
-        <div style="color: var(--sys-ink-mid); margin-top: 0.25rem;">Zero runtime frameworks. Pure semantic HTML, CSS & JS.</div>
+      <div class="footer-right">
+        <span>© 2026 Даниил Гандапас</span>
+        <span>•</span>
+        <a href="https://github.com/Asm-o-Dan" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span>•</span>
+        <a href="https://t.me/Asm_o_Dan" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <span>•</span>
+        <a href="resume.pdf" download="Daniil_Gandapas_Resume.pdf">Резюме (PDF)</a>
       </div>
     </div>
   </footer>
 
-  <!-- Toast Notification Container -->
+  <!-- Toast Notification -->
   <div class="toast-hub" id="toast-hub" aria-live="polite"></div>
 
-  <!-- Scripts (Cache-Busted) -->
-  <script src="projects-data.js?v=2.1.0"></script>
-  <script src="main.js?v=2.1.0"></script>
+  <!-- Scripts -->
+  <script src="projects-data.js?v=3.0.0"></script>
+  <script src="main.js?v=3.0.0"></script>
 </body>
 </html>

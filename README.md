@@ -1,53 +1,63 @@
-# ⛧ AsmODan (Даниил Гандапас) — The Radial Ritual Circle & 3 Arcane Seals
+# Персональный сайт-портфолио Даниила Гандапаса
 
-> *"Structure is freedom. Architecture is intention. I am the demon of low-level memory and architectural order."*
+Репозиторий персонального сайта и инженерной витрины проектов: [asm-o-dan.github.io/portfolio](https://asm-o-dan.github.io/portfolio)
 
-Инженерный радиальный ритуальный интерфейс (**AsmODan Radial Arcane Engine v8.0**) **Даниила Гандапаса** (`AsmODan` / `Asm-o-Dan`) — Backend & Systems Software Engineer / Level 20 Systems Archmage (C# / .NET 8, Python AI, Clean Architecture, CQRS, Qdrant Vector DB, Pure ANSI C, Telegram & OCR Bots).
-
----
-
-## 🔮 Радиальная Концепция: Ядро & 3 Концентрические Печати
-
-1. **⛧ Центральное Ядро (The Core / Inner Sanctum)**:
-   - Личность и аватар AsmODan с защитным вращающимся нимбом.
-   - **Интерактивный D&D 5e Stat Block**: `STR 18`, `DEX 18`, `CON 20`, `INT 20`, `WIS 19`, `CHA 17`.
-   - Кнопка броска кубика **🎲 d20** и быстрое скачивание резюме `resume.pdf`.
-
-2. **⭕ Круг 1: Внутренняя Печать (Образование и Опыт — Chronicle)**:
-   - 🏛️ **ТИФТ** — Физико-технический факультет (Инженерия ПО, алгоритмы, системное программирование).
-   - 🔮 **DrugsEngine & Qdrant** (2024 — Наст. время, Clean Architecture + CQRS + Python RPC).
-   - 👁️ **Telegram Bot Suite & OCR** (2023 — 2024, Tesseract OCR, асинхронные пайплайны).
-   - 🛡️ **Tanks1984** (2022 — 2023, Pure ANSI C, ручное управление памятью).
-
-3. **⭕ Круг 2: Средняя Печать (Навыки & Заклинания — Spellbook)**:
-   - ⚡ `C# .NET 8/9` (Async/Await, LINQ, Generic Host, Memory<T>)
-   - 🏛️ `Clean Architecture & CQRS` (Domain isolation, MediatR, DDD)
-   - 🐍 `Python & AI / NLP` (FastAPI, AsyncIO, PyTorch, Embeddings)
-   - 🌌 `Qdrant & Vector DB` (1536-dim Cosine search, Payload filtering)
-   - 🗄️ `PostgreSQL & Databases` (Dual-ORM EF Core + Dapper, Indexes)
-   - ⚙️ `Pure ANSI C & Memory` (Pointers, malloc/free, zero leaks)
-
-4. **⭕ Круг 3: Внешняя Печать (Проекты-Реликвии — Artifacts)**:
-   - 🗡️ **DrugsEngine** (Clean Architecture + CQRS + Qdrant Vector Search)
-   - 🛡️ **Tanks1984** (Игровой движок на чистом Си)
-   - 👁️ **Telegram OCR** (Tesseract OCR + Async Worker Pool)
-   - 📜 **FirstApi** (REST API + EF Core + Dapper)
-   - 🐝 **Automation Swarm** (Python AsyncIO воркеры)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-live-2563eb?style=flat&logo=github)](https://asm-o-dan.github.io/portfolio)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-## ⚡ Интерактивные фичи
+## 🎯 Назначение
 
-- **Dynamic Energy Beam**: При наведении или клике на любой узел из центрального ядра прорисовывается светящийся лазерный луч к выбранной печати.
-- **Slide-Out Side Inspector Drawer**: Выдвижная панель справа с полным разбором архитектуры, проблем/решений, слоев и ссылок на GitHub.
-- **Режим "Свиток для HR / CV"**: Мгновенное переключение в классический строгий документ для быстрого скрининга и печати в PDF (`@media print`).
-- **⛧ The Altar of AsmODan (Quake CLI)**: Терминал по клавише **`` ` ``** (тильда).
-- **Web Audio FX**: Тактильный синтез звуков орбит, кликов и броска кубика d20.
+Сайт предназначен для презентации практического опыта, архитектурных решений и ключевых проектов работодателям и техническим специалистам.
+
+Специализация: **C# / .NET Backend Developer (Junior / Intern)**.
 
 ---
 
-## 📫 Контакты
+## ✨ Ключевые разделы
 
-- **Telegram**: [@SomeSimpleTag](https://t.me/SomeSimpleTag)
-- **GitHub**: [github.com/Asm-o-Dan](https://github.com/Asm-o-Dan)
-- **Email**: [dgandapas1@gmail.com](mailto:dgandapas1@gmail.com)
+- **О себе:** Гражданство РФ, готовность к удалённой работе, стек (.NET 8/9, ASP.NET Core, EF Core, PostgreSQL, Quartz.NET).
+- **Витрина проектов:**
+  - **[DrugsEngine](https://github.com/Asm-o-Dan/DrugsEngine)** — REST API с чистой слоистой архитектурой (Clean Architecture), CQRS, PostgreSQL, фоновым сбором на Quartz.NET и векторным семантическим поиском Qdrant.
+  - **[Asia Capitals Quiz](https://github.com/Asm-o-Dan/Final_Work)** — интерактивная викторина и справочник 47 стран Азии на Vue.js 2 (SPA, Vue Router, SCSS).
+  - **[Charity Fund IS](https://github.com/Asm-o-Dan/charity-fund-is)** — информационная система фонда (.NET 8, ADO.NET, MS SQL Server, SQLite).
+  - **[ITSkills English Hub](https://github.com/Asm-o-Dan/itskills-english-hub)** — веб-сервис с интерактивными карточками терминов для студентов.
+  - **[Lirix](https://github.com/Asm-o-Dan/lirix)** — сервис синхронизации текста и аккордов для Android.
+- **Интерактивный инспектор архитектуры:** послойный разбор (Domain / Application / Infrastructure) платформы DrugsEngine с контрактами, правилами изоляции и примерами C# кода.
+- **Технологический стек:** структурированная матрица компетенций по языкам, базам данных, архитектурным паттернам и инструментам.
+- **Опыт и образование:** коммерческая практика в DEX Technology (C# .NET, GitFlow, Code Review), преподавание в ITSkills Academy и профильное образование в ПГУ им. Т.Г. Шевченко (Программная инженерия, 3 курс).
+- **Прямые контакты:** Telegram, Email, GitHub и ссылка на скачивание резюме в PDF.
+
+---
+
+## 🛠 Техническая реализация
+
+- **Чистый стек:** Семантический HTML5, CSS3 (кастомные переменные для тёмной и светлой темы, строгая 4px-сетка без лишних фреймворков), нативный JavaScript ES6+.
+- **Интерактивность:** Фильтрация проектов по категориям, интерактивный переключатель архитектурных слоёв, переключение тёмной/светлой темы с сохранением в `localStorage`, копирование контактов в буфер обмена.
+- **Иконки:** [Lucide Icons](https://lucide.dev/).
+- **Адаптивность:** Полная поддержка мобильных устройств, планшетов и десктопов.
+
+---
+
+## 🚀 Локальный запуск
+
+Сайт полностью статичен и не требует сборки:
+
+```bash
+git clone https://github.com/Asm-o-Dan/portfolio.git
+cd portfolio
+# Запуск через любой локальный HTTP-сервер, например:
+npx serve .
+# или Python:
+python -m http.server 8000
+```
+
+---
+
+## 📬 Контакты
+
+- **Даниил Гандапас**
+- **Telegram:** [@Asm_o_Dan](https://t.me/Asm_o_Dan)
+- **Email:** [dgandapas1@gmail.com](mailto:dgandapas1@gmail.com)
+- **GitHub:** [github.com/Asm-o-Dan](https://github.com/Asm-o-Dan)
