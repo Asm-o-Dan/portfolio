@@ -21,7 +21,6 @@
 - **Витрина проектов:**
   - **[DrugsEngine](https://github.com/Asm-o-Dan/DrugsEngine)** — REST API с чистой слоистой архитектурой (Clean Architecture), CQRS, PostgreSQL, фоновым сбором на Quartz.NET и векторным семантическим поиском Qdrant.
   - **[Asia Capitals Quiz](https://github.com/Asm-o-Dan/Final_Work)** — интерактивная викторина и справочник 47 стран Азии на Vue.js 2 (SPA, Vue Router, SCSS).
-  - **[Charity Fund IS](https://github.com/Asm-o-Dan/charity-fund-is)** — информационная система фонда (.NET 8, ADO.NET, MS SQL Server, SQLite).
   - **[ITSkills English Hub](https://github.com/Asm-o-Dan/itskills-english-hub)** — веб-сервис с интерактивными карточками терминов для студентов.
   - **[Lirix](https://github.com/Asm-o-Dan/lirix)** — сервис синхронизации текста и аккордов для Android.
 - **Интерактивный инспектор архитектуры:** послойный разбор (Domain / Application / Infrastructure) платформы DrugsEngine с контрактами, правилами изоляции и примерами C# кода.

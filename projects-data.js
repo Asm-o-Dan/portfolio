@@ -373,14 +373,6 @@ const projectsData = [
     githubUrl: "https://github.com/Asm-o-Dan/itskills-english-hub"
   },
   {
-    id: "charity-fund-is",
-    title: "Charity Fund IS",
-    subtitle: "Учёт поступлений и распределения помощи благотворительного фонда",
-    description: "Настольное приложение на WinForms с доступом к данным через ADO.NET, ролями и транзакциями.",
-    stack: ["C#", ".NET 8", "ADO.NET", "MS SQL Server", "SQLite", "WinForms"],
-    githubUrl: "https://github.com/Asm-o-Dan/charity-fund-is"
-  },
-  {
     id: "asia-capitals-quiz",
     title: "Asia Capitals Quiz",
     subtitle: "Справочник и викторина по 47 странам Азии",
@@ -395,7 +387,7 @@ const projectsData = [
 // =========================================================================
 const skillsData = [
   { category: "Язык и платформа", items: ["C#", ".NET 8", "ASP.NET Core Web API", "LINQ", "async/await", "xUnit"] },
-  { category: "Данные", items: ["PostgreSQL", "EF Core (Fluent API, миграции)", "MS SQL Server", "SQLite", "ADO.NET", "Qdrant"] },
+  { category: "Данные", items: ["PostgreSQL", "EF Core (Fluent API, миграции)", "Qdrant"] },
   { category: "Архитектура", items: ["Clean Architecture", "CQRS (MediatR)", "FluentValidation", "REST, OData", "Domain events"] },
   { category: "Интеграция и эксплуатация", items: ["Kafka", "RabbitMQ", "Docker, Docker Compose", "Serilog", "OpenTelemetry", "Git, GitFlow"] },
   { category: "Дополнительно", items: ["Python (FastAPI)", "Kotlin (Android)", "JavaScript, Vue 2"] }
